@@ -61,21 +61,26 @@
 					
 					<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
 						<div class="accordion" id="round-accordion-${loop.index}">
-							<div class="card">
-								<div class="card-header" id="headingOne">
-									<h2 class="mb-0">
-										<button class="btn btn-link" type="button" data-toggle="collapse"
-											data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
-											<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
-											Victor - ${listofVictors.get(loop.index)}
-										</button>
-									</h2>
-								</div>
-	
+							<div class="card bg-primary">
+								<button class="btn btn-link no-underline-link" type="button" data-toggle="collapse"
+									data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
+									<div class="row">
+										<div class="col-6 pl-4">
+											<h5 class="my-2 text-white">
+												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
+											</h5>
+										</div>
+										<div class="col-6 text-left">
+											<h5 class="my-2 text-white">
+												Victor: ${listofVictors.get(loop.index)}
+											</h5>
+										</div>
+									</div>
+								</button>
 								<div id="round-accordion-collapse-${loop.index}" class="collapse" aria-labelledby="headingOne"
 									data-parent="#round-accordion-${loop.index}">
 									<div class="card-body no-padding">
-										 <table class="table table-striped table-dark">
+										 <table class="table table-striped table-dark no-margin-bottom">
 											 <thead>
 											    <tr>
 											    	<th scope="col">Place</th>

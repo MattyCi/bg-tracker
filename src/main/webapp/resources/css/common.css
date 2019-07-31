@@ -10,3 +10,11 @@
 .no-padding {
     padding: 0 !important;
 }
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+.no-underline-link {
+	text-decoration: none !important;
+}
