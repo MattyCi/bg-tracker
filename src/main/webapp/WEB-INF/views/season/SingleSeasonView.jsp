@@ -58,92 +58,46 @@
 			<div class="row">
 				<div class="col-12 mx-auto text-center mt-4">
 					<h3>Rounds</h3>
-
-					<div class="accordion" id="accordionExample">
-						<div class="card">
-							<div class="card-header" id="headingOne">
-								<h2 class="mb-0">
-									<button class="btn btn-link" type="button" data-toggle="collapse"
-										data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-										Round Date - <fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
-									</button>
-								</h2>
-							</div>
-
-							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-								data-parent="#accordionExample">
-								<div class="card-body">
-								
+					
+					<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
+						<div class="accordion" id="round-accordion-${loop.index}">
+							<div class="card">
+								<div class="card-header" id="headingOne">
+									<h2 class="mb-0">
+										<button class="btn btn-link" type="button" data-toggle="collapse"
+											data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
+											<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
+											Victor - ${listofVictors.get(loop.index)}
+										</button>
+									</h2>
+								</div>
+	
+								<div id="round-accordion-collapse-${loop.index}" class="collapse" aria-labelledby="headingOne"
+									data-parent="#round-accordion-${loop.index}">
+									<div class="card-body no-padding">
+										 <table class="table table-striped table-dark">
+											 <thead>
+											    <tr>
+											    	<th scope="col">Place</th>
+											    	<th scope="col">Points Earned</th>
+											    	<th scope="col">Player Name</th>
+												</tr>
+											</thead>
+											<tbody>
+											    <c:forEach var="roundResult" items="${round.getRoundResults()}">
+														<tr>
+															<td>${roundResult.getPlace()}</td>
+															<td>DEMO</td>
+														    <td>${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()}</td>
+														</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-
-
-
-					<table class="table table-hover table-dark no-bottom-margin">
-						<thead>
-							<tr>
-								<th scope="col">Points Earned</th>
-								<th scope="col">Round Date</th>
-								<th scope="col">Victor</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
-							    <tr data-toggle="collapse" data-target="#round-analysis-header${loop.index},#round-analysis${loop.index}" class="accordion-toggle">
-							    	<td>
-							    		DEMO
-							    	</td>
-							    	<td>
-										<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
-									</td>
-									<td>
-							    		${listofVictors.get(loop.index)}
-							    	</td>
-							    </tr>
-							    
-							    <thead class="thead-light">
-								    <tr>
-								    	<th scope="col" class="hiddenRow">
-									    	<div class="accordion-body collapse" id="round-analysis-header${loop.index}">
-									        	Points Earned
-								        	</div>
-									    </th>
-									    <th scope="col" class="hiddenRow">
-									    	<div class="accordion-body collapse" id="round-analysis-header${loop.index}">
-									        	Place
-								        	</div>
-									    </th>
-									    <th scope="col" class="hiddenRow">
-									    	<div class="accordion-body collapse" id="round-analysis-header${loop.index}">
-									        	Player Name
-								        	</div>
-									    </th>
-									</tr>
-								</thead>
-							    <c:forEach var="roundResult" items="${round.getRoundResults()}">
-										<tr class="table-light text-secondary">
-											<td class="hiddenRow">
-										    	<div class="accordion-body collapse" id="round-analysis${loop.index}">
-										        	DEMO
-									        	</div>
-										    </td>
-										    <td class="hiddenRow">
-										    	<div class="accordion-body collapse" id="round-analysis${loop.index}">
-										        	${roundResult.getPlace()}
-									        	</div>
-										    </td>
-										    <td class="hiddenRow">
-										    	<div class="accordion-body collapse" id="round-analysis${loop.index}">
-										        	${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()}
-									        	</div>
-										    </td>
-										</tr>
-								</c:forEach>
-						    </c:forEach>
-						</tbody>
-					</table>
+					</c:forEach>
 				</div>
 			</div>
 			
