@@ -1,0 +1,52 @@
+package org.bgtrack.models.daos;
+
+import java.util.List;
+
+import org.bgtrack.models.Round;
+import org.bgtrack.models.user.Reguser;
+import org.bgtrack.utils.HibernateUtil;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+
+/**
+ * This DAO contains methods for performing CRUD operations on rounds.
+ * @author Matt
+ */
+public class RoundDAO {
+	public static List<Round> getRoundsBySeasonId(int seasonId, Boolean eagerLoad) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE asc";
+		@SuppressWarnings("unchecked")
+		List<Round> rounds = (List<Round>) session.createQuery(query).setParameter("seasonId", seasonId).list();
+
+		if (eagerLoad) {
+			for (Round round : rounds) {
+				Hibernate.initialize(round.getRoundResults()); // load the rounds results as well
+			}
+		}
+		
+		session.getTransaction().commit();
+		
+		return rounds;
+	}
+	
+	/*
+	 * Gets the victors for a specified round. It is possible for there to be
+	 * more than one victor per round, ie. in the event of a tie.
+	 */
+	public static List<Reguser> getVictorsForRound(int roundId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "from Reguser as user where user.id in"
+				+ "(select rr.reguser.id from RoundResult as rr where rr.place = 1 and rr.round.roundId=:roundId)";
+		@SuppressWarnings("unchecked")
+		List<Reguser> victors = (List<Reguser>) session.createQuery(query).setParameter("roundId", roundId).list();
+		
+		session.getTransaction().commit();
+		
+		return victors;
+	}
+	
+}

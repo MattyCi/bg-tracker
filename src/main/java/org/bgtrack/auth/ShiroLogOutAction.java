@@ -1,0 +1,1 @@
+package org.bgtrack.auth;public class ShiroLogOutAction extends ShiroBaseAction {	private static final long serialVersionUID = 1L;	public String execute() {		if (isAuthenticated()) {			getShiroUser().logout();		}		return "success";	}}

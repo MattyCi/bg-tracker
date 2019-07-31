@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col-12">
+		<h1 class="text-center">Board Game Tracker</h1>
+	</div>
+</div>
+
+<s:if test="hasActionErrors()">
+	<div class="row">
+		<div class="col-12 col-md-8 mx-auto text-center bg-danger mt-1">
+			<h1 class="display-3 text-white">Error...</h1>
+			<p class="lead text-white pb-4">
+				<s:iterator var="error" value="%{actionErrors}">
+					<s:property value="%{error}" />
+				</s:iterator>
+			</p>
+		</div>
+	</div>
+</s:if>
