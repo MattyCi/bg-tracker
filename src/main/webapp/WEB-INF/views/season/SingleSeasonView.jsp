@@ -65,14 +65,10 @@
 								<button class="btn btn-link no-underline-link" type="button" data-toggle="collapse"
 									data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
 									<div class="row">
-										<div class="col-6 pl-4">
-											<h5 class="my-2 text-white">
+										<div class="col text-center">
+											<h5 class="text-white text-center my-2">
+												<span class="float-left">${loop.index+1}.</span>
 												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
-											</h5>
-										</div>
-										<div class="col-6 text-left">
-											<h5 class="my-2 text-white">
-												Victor: ${listofVictors.get(loop.index)}
 											</h5>
 										</div>
 									</div>
@@ -80,6 +76,11 @@
 								<div id="round-accordion-collapse-${loop.index}" class="collapse" aria-labelledby="headingOne"
 									data-parent="#round-accordion-${loop.index}">
 									<div class="card-body no-padding">
+										<div class="row">
+											<div class="col-12">
+												<h5 class="text-center text-white bg-success height-full py-2">Victor: ${listofVictors.get(loop.index)}</h5>
+											</div>
+										</div>
 										 <table class="table table-striped table-dark no-margin-bottom">
 											 <thead>
 											    <tr>
@@ -127,11 +128,15 @@
 						<input name="playerPlace0" type="number" class="form-control" id="round-player-place-input" placeholder="Place">
 					</div>
 				</div>
-				<div class="form-row">
-					<button type="button" class="btn btn-primary btn-lg mx-auto my-4" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add a Player</button>
+				<div class="row">
+					<div class="col-md-6 mx-auto pt-4">
+						<button type="button" class="btn btn-success btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add a Player</button>
+					</div>
 				</div>
-				<div class="form-row">
-					<button type="submit" class="btn btn-success btn-lg btn-block mb-2">Create Round</button>
+				<div class="row">
+					<div class="col-md-6 mx-auto pt-4">
+						<button type="submit" class="btn btn-success btn-block mb-2">Create Round</button>
+					</div>
 				</div>
 			</form>
 			
