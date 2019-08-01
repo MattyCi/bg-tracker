@@ -115,17 +115,17 @@
 				
 			<form id="round-create-form" action="/bgtracker/createRound" method="POST">
 				<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
-				<div id="player-add-container-0" class="form-row mb-2">
-				    <div class="col">
-					    <select name="roundPlayer0" class="form-control" id="round-player-select">
+				<div id="player-add-container-0" class="form-row mb-2 justify-content-center pt-2">
+				    <div class="col-sm-8 col-lg-6">
+					    <select name="roundPlayer0" data-round-info="true" class="form-control" id="round-player-select">
 							<option value="" selected disabled hidden>Choose Player</option>
 							<c:forEach items="${UserDAO.getAllUsers()}" var="user">
 								<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
 							</c:forEach>
 						</select>
 					</div>
-					<div class="col">
-						<input name="playerPlace0" type="number" class="form-control" id="round-player-place-input" placeholder="Place">
+					<div class="col-sm-4 col-lg-2">
+						<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place">
 					</div>
 				</div>
 				<div class="row">
@@ -135,10 +135,36 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6 mx-auto pt-4">
-						<button type="submit" class="btn btn-success btn-block mb-2">Create Round</button>
+						<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
 					</div>
 				</div>
 			</form>
+			
+			<div id="round-create-confirm-popup" class="popup d-none">
+				<div class="popup-content">
+    				<p class="text-center">Round Create Confirmation </br> <small class="text-muted">Please verify the below results are correct.</small></p>
+					<table id="round-create-confirm-popup-table" class="table table-sm">
+						<thead>
+							<tr class="table-primary">
+								<th scope="col">Player</th>
+								<th scope="col">Place</th>
+							</tr>
+						</thead>
+						<tbody id="round-create-confirm-popup-table-body">
+						</tbody>
+					</table>
+					
+					<div class="row">
+						<div class="col-md-6 mx-auto pt-4">
+							<button id="round-create-confirm-btn" type="button" class="btn btn-success btn-block mb-2">Submit Round Creation</button>
+						</div>
+						<div class="col-md-6 mx-auto pt-4">
+							<button id="round-create-cancel-btn" type="button" class="btn btn-danger btn-block mb-2">Cancel</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
 			
 		</shiro:authenticated>
 
