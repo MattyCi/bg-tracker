@@ -2,6 +2,9 @@ package org.bgtrack.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.OrderBy;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class Round implements Serializable {
 	//bi-directional many-to-one association to RoundResult
 	@OneToMany(mappedBy="round")
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.ALL)
+	@OrderBy(clause = "PLACE ASC")
 	private List<RoundResult> roundResults;
 
 	//bi-directional many-to-one association to Season
