@@ -47,7 +47,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 	public String execute() {
 		
-		/*if (!this.shiroUser.isAuthenticated()) {
+		if (!this.shiroUser.isAuthenticated()) {
 			addActionError(BGTConstants.authenticationError);
 			return BGTConstants.error;
 		}
@@ -55,7 +55,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		if (!this.shiroUser.getPrincipal().toString().equals("matt@test.com")) {
 			addActionError(BGTConstants.authorizationError);
 			return BGTConstants.error;
-		}*/
+		}
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			addActionError(BGTConstants.checkFields);
