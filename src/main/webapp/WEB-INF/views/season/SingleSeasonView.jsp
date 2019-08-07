@@ -26,10 +26,10 @@
 
 			<div class="row">
 				<div class="col-12 col-md-4 mx-auto text-center mt-4">
-					<p class="h2">${season.getGame().getGameName()}</p>
+					<p class="h3">${season.getName()}</p>
 				</div>
 				<div class="col-12 col-md-4 mx-auto text-center mt-4">
-					<p class="h3">${season.getName()}</p>
+					<p class="h2">Game: ${season.getGame().getGameName()}</p>
 				</div>
 			</div>
 			
@@ -58,6 +58,14 @@
 			<div class="row">
 				<div class="col-12 mx-auto text-center mt-4">
 					<h3>Rounds</h3>
+					
+					<c:if test="${empty season.getRounds()}">
+						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
+							<p class="lead text-dark py-2">
+								This season does not have any rounds created yet. Play a game and add the round results below!
+							</p>
+						</div>
+					</c:if>
 					
 					<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
 						<div class="accordion" id="round-accordion-${loop.index}">
@@ -93,7 +101,7 @@
 											    <c:forEach var="roundResult" items="${round.getRoundResults()}">
 														<tr>
 															<td>${roundResult.getPlace()}</td>
-															<td>DEMO</td>
+															<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
 														    <td>${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()}</td>
 														</tr>
 												</c:forEach>

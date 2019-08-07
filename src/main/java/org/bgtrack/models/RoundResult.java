@@ -24,6 +24,11 @@ public class RoundResult implements Serializable {
 	private String roundResultsId;
 
 	private BigInteger place;
+	
+	private double points;
+	
+	@Column(name="LAYERED_POINTS")
+	private double layeredPoints;
 
 	//bi-directional many-to-one association to Reguser
 	@ManyToOne
@@ -68,6 +73,22 @@ public class RoundResult implements Serializable {
 
 	public void setRound(Round round) {
 		this.round = round;
+	}
+
+	public double getPoints() {
+		return this.points;
+	}
+
+	public void setPoints(double points) {
+		this.points = points;
+	}
+
+	public double getLayeredPoints() {
+		return this.layeredPoints;
+	}
+
+	public void setLayeredPoints(double layeredPoints) {
+		this.layeredPoints = layeredPoints;
 	}
 
 }
