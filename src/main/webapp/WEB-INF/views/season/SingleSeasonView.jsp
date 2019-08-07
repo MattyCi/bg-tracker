@@ -75,7 +75,7 @@
 									<div class="row">
 										<div class="col text-center">
 											<h5 class="text-white text-center my-2">
-												<span class="float-left">${loop.index+1}.</span>
+												<span class="float-left">${season.getRounds().size() - loop.index}.</span>
 												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
 											</h5>
 										</div>
