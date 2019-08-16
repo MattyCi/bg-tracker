@@ -1,5 +1,6 @@
 package org.bgtrack.models.daos;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.bgtrack.models.Round;
@@ -50,14 +51,14 @@ public class RoundDAO {
 		return victors;
 	}
 	
-	public static List<RoundResult> getRoundsForUserBySeasonId(String seasonId, String userId) {
+	public static List<RoundResult> getRoundResultsForUserBySeasonId(BigInteger bigInteger, String userId) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		String query = "from RoundResult as rr where rr.round.roundId in"
 				+ "(select r.roundId from Round as r where r.season.seasonId=:seasonId) and rr.reguser.userId=:userId";		
 
 		@SuppressWarnings("unchecked")
-		List<RoundResult> rounds = (List<RoundResult>) session.createQuery(query).setParameter("seasonId", seasonId)
+		List<RoundResult> rounds = (List<RoundResult>) session.createQuery(query).setParameter("seasonId", bigInteger)
 				.setParameter("userId", userId).list();
 		
 		session.getTransaction().commit();

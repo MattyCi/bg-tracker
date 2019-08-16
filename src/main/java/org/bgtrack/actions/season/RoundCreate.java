@@ -61,7 +61,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			addActionError(BGTConstants.checkFields);
 			return BGTConstants.error;
 		} else {
-			this.season = SeasonDAO.getSeasonById(Integer.parseInt(seasonId), false);
+			this.season = SeasonDAO.getSeasonById(Integer.parseInt(seasonId), true);
 			if (season == null) {
 				addActionError(BGTConstants.checkFields);
 				return BGTConstants.error;
@@ -95,8 +95,10 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 		
 		round.setRoundResults(this.roundResultList);
-		
+				
 		HibernateUtil.persistObject(round);
+		
+		recalculateSeasonScoring();
 		
 		if (errorsOccured) {
 			return BGTConstants.error;
@@ -151,9 +153,23 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		default:
 			points = 1;
 		}
-		
+
 		roundResult.setPoints(points);
-		roundResult.setLayeredPoints(determineModifier(roundResult));
+		
+		if (isSeasonScoringTypeLayered()) {
+			roundResult.setLayeredPoints(determineModifier(roundResult));
+		}
+
+	}
+
+	private boolean isSeasonScoringTypeLayered() {
+		
+		if("L".equals(this.season.getScoringType())) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 
 	private double determineModifier(RoundResult roundResult) {
@@ -179,7 +195,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 	// might be more performant to just make a database call for this...
 	private int determineOccuarancesOfPlace(RoundResult roundResult) {
-		List<RoundResult> usersRoundResults = RoundDAO.getRoundsForUserBySeasonId(roundResult.getRound().getSeason().getSeasonId(), 
+		List<RoundResult> usersRoundResults = RoundDAO.getRoundResultsForUserBySeasonId(roundResult.getRound().getSeason().getSeasonId(), 
 				roundResult.getReguser().getUserId());
 		int occurances = 0;
 		
@@ -190,6 +206,13 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 		
 		return occurances;
+	}
+	
+	private void recalculateSeasonScoring() {
+		SeasonStandingHelper seasonStanding = SeasonStandingHelperFactory.getSeasonStandingHelper(this.season.getScoringType());
+		seasonStanding.setSeason(this.season);
+		seasonStanding.buildStandings();
+		//updateSeason(this.season);
 	}
 
 	public String getSeasonName() {

@@ -1,9 +1,11 @@
 package org.bgtrack.models.daos;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.bgtrack.models.Round;
 import org.bgtrack.models.Season;
+import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -39,6 +41,7 @@ public class SeasonDAO {
 		
 		if (eagerLoad) {
 			Hibernate.initialize(season.getRounds()); // load the rounds for the season as well
+			Hibernate.initialize(season.getSeasonStandings());
 			for (Round round : season.getRounds()) {
 				Hibernate.initialize(round.getRoundResults());
 			}
@@ -49,4 +52,20 @@ public class SeasonDAO {
 		return season;
 	}
 	
+	public static List<Reguser> getAllUsersInSeason(BigInteger bigInteger) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "from Reguser as user where user.userId in "
+				+ "(select rr.reguser.userId from RoundResult as rr where rr.round.roundId in"
+				+ "(select r.roundId from Round as r where r.season.seasonId=:seasonId))";
+		@SuppressWarnings("unchecked")
+		List<Reguser> listOfUsersInSeason = (List<Reguser>) session.createQuery(query)
+			.setParameter("seasonId", bigInteger).list();
+		
+		session.getTransaction().commit();
+
+		return listOfUsersInSeason;
+	}
+
 }

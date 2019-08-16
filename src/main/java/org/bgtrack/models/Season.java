@@ -1,6 +1,8 @@
 package org.bgtrack.models;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.OrderBy;
@@ -19,9 +21,9 @@ public class Season implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="SEASON_ID")
-	private String seasonId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private BigInteger seasonId;
 
 	@Column(name="END_DATE")
 	private Timestamp endDate;
@@ -30,10 +32,14 @@ public class Season implements Serializable {
 
 	@Column(name="START_DATE")
 	private Timestamp startDate;
+	
+	@Column(name="SCORING_TYPE")
+	private String scoringType;
 
 	//bi-directional many-to-one association to Round
 	@OneToMany(mappedBy="season")
 	@OrderBy(clause = "ROUND_DATE DESC")
+	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<Round> rounds;
 
 	//bi-directional many-to-one association to Game
@@ -41,14 +47,19 @@ public class Season implements Serializable {
 	@JoinColumn(name="GAME_ID")
 	private Game game;
 
+	//bi-directional many-to-one association to SeasonStanding
+	@OneToMany(mappedBy="season")
+	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.ALL)
+	private List<SeasonStanding> seasonStandings;
+
 	public Season() {
 	}
 
-	public String getSeasonId() {
+	public BigInteger getSeasonId() {
 		return this.seasonId;
 	}
 
-	public void setSeasonId(String seasonId) {
+	public void setSeasonId(BigInteger seasonId) {
 		this.seasonId = seasonId;
 	}
 
@@ -104,6 +115,36 @@ public class Season implements Serializable {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public List<SeasonStanding> getSeasonStandings() {
+		return this.seasonStandings;
+	}
+
+	public void setSeasonStandings(List<SeasonStanding> seasonStandings) {
+		this.seasonStandings = seasonStandings;
+	}
+
+	public SeasonStanding addSeasonStanding(SeasonStanding seasonStanding) {
+		getSeasonStandings().add(seasonStanding);
+		seasonStanding.setSeason(this);
+
+		return seasonStanding;
+	}
+
+	public SeasonStanding removeSeasonStanding(SeasonStanding seasonStanding) {
+		getSeasonStandings().remove(seasonStanding);
+		seasonStanding.setSeason(null);
+
+		return seasonStanding;
+	}
+	
+	public String getScoringType() {
+		return this.scoringType;
+	}
+
+	public void setScoringType(String scoringType) {
+		this.scoringType = scoringType;
 	}
 
 }

@@ -6,6 +6,8 @@ import java.time.Instant;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.bgtrack.models.Season;
+import org.bgtrack.models.SeasonStanding;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -58,6 +60,38 @@ public class HibernateUtil {
 			session.close();
 		}
 		return errorsOccured;
+	}
+	
+	public static void updateObject(Object obj) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.update(obj);
+			tx.commit();
+		} catch (HibernateException e) {
+			tx.rollback();
+			System.err.println("Hibernate error occured: "+e);
+			throw e;
+		} finally {
+			session.close();
+		}
+	}
+
+	public static void deleteEntity(SeasonStanding oldSeasonStanding) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.delete(oldSeasonStanding);
+			tx.commit();
+		} catch (HibernateException e) {
+			tx.rollback();
+			System.err.println("Hibernate error occured: "+e);
+			throw e;
+		} finally {
+			session.close();
+		}
 	}
 	
 }

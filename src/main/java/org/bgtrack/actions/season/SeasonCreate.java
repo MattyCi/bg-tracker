@@ -19,6 +19,7 @@ public class SeasonCreate extends ShiroBaseAction {
 	private String seasonName;
 	private String seasonGameId;
 	private String seasonEndDate;
+	private String seasonScoringType;
 	private boolean errorsOccured = false;
 	
 	public String execute() {
@@ -61,6 +62,7 @@ public class SeasonCreate extends ShiroBaseAction {
 		season.setGame(GameDAO.getGameById(seasonGameId));
 		season.setStartDate(seasonStartTimestamp);
 		season.setEndDate(seasonEndTimestamp);
+		season.setScoringType(seasonScoringType);
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = null;
@@ -101,6 +103,14 @@ public class SeasonCreate extends ShiroBaseAction {
 
 	public void setSeasonEndDate(String seasonEndDate) {
 		this.seasonEndDate = seasonEndDate;
+	}
+
+	public String getSeasonScoringType() {
+		return seasonScoringType;
+	}
+
+	public void setSeasonScoringType(String seasonScoringType) {
+		this.seasonScoringType = seasonScoringType;
 	}
 
 }

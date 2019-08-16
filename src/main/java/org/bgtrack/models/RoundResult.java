@@ -23,22 +23,22 @@ public class RoundResult implements Serializable {
 	@Column(name="ROUND_RESULTS_ID")
 	private String roundResultsId;
 
-	private BigInteger place;
-	
-	private double points;
-	
 	@Column(name="LAYERED_POINTS")
 	private double layeredPoints;
 
-	//bi-directional many-to-one association to Reguser
-	@ManyToOne
-	@JoinColumn(name="USER_ID")
-	private Reguser reguser;
+	private BigInteger place;
+
+	private double points;
 
 	//bi-directional many-to-one association to Round
 	@ManyToOne
 	@JoinColumn(name="ROUND_ID")
 	private Round round;
+
+	//bi-directional many-to-one association to Reguser
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private Reguser reguser;
 
 	public RoundResult() {
 	}
@@ -51,28 +51,20 @@ public class RoundResult implements Serializable {
 		this.roundResultsId = roundResultsId;
 	}
 
+	public double getLayeredPoints() {
+		return this.layeredPoints;
+	}
+
+	public void setLayeredPoints(double layeredPoints) {
+		this.layeredPoints = layeredPoints;
+	}
+
 	public BigInteger getPlace() {
 		return this.place;
 	}
 
 	public void setPlace(BigInteger place) {
 		this.place = place;
-	}
-
-	public Reguser getReguser() {
-		return this.reguser;
-	}
-
-	public void setReguser(Reguser reguser) {
-		this.reguser = reguser;
-	}
-
-	public Round getRound() {
-		return this.round;
-	}
-
-	public void setRound(Round round) {
-		this.round = round;
 	}
 
 	public double getPoints() {
@@ -83,12 +75,20 @@ public class RoundResult implements Serializable {
 		this.points = points;
 	}
 
-	public double getLayeredPoints() {
-		return this.layeredPoints;
+	public Round getRound() {
+		return this.round;
 	}
 
-	public void setLayeredPoints(double layeredPoints) {
-		this.layeredPoints = layeredPoints;
+	public void setRound(Round round) {
+		this.round = round;
+	}
+
+	public Reguser getReguser() {
+		return this.reguser;
+	}
+
+	public void setReguser(Reguser reguser) {
+		this.reguser = reguser;
 	}
 
 }

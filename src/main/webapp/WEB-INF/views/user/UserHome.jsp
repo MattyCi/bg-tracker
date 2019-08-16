@@ -41,28 +41,36 @@
 
 <div id="all-seasons" class="row pt-4 d-none">
 	<c:set var="allSeasonsList" value="${SeasonDAO.getAllSeasons()}" />
-	<c:choose>
-		<c:when test="${empty allSeasonsList}">
-			<div class="col-12 col-md-6 mx-auto">
-				<div class="alert alert-dismissible alert-danger text-center">
-				  <p><strong>Uh oh!</strong>  There aren't any seasons yet. Try to create one first.</p>
-				</div>
-				<form id="seasonCreateForm" action="/bgtracker/createSeason" method="POST">
-					<input name="seasonName" type="text" class="form-control my-2" id="register-first-name" placeholder="Season Name">
-				    <select name="seasonGameId" class="form-control" id="seasonGameSelect">
-						<c:forEach items="${GameDAO.getAllGames()}" var="game">
-							<option value="${game.getGameId()}">${game.getGameName()}</option>
-						</c:forEach>
-					</select>
-				    <input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date">
-					<button type="submit" class="btn btn-success btn-lg btn-block my-4">Create Season</button>
-				</form>
+
+	<div class="col-12 col-md-6 mx-auto">
+		<c:if test="${empty allSeasonsList}">
+			<div class="alert alert-dismissible alert-danger text-center">
+				<p>
+					<strong>Uh oh!</strong> There aren't any seasons yet. Try to create one first.
+				</p>
 			</div>
-		</c:when>
-		<c:otherwise>
-			<%@ include file="../season/AllSeasonView.jsp" %>
-		</c:otherwise>
-	</c:choose>
+		</c:if>
+		
+		<form id="seasonCreateForm" action="/bgtracker/createSeason" method="POST">
+			<input name="seasonName" type="text" class="form-control my-2" id="register-first-name" placeholder="Season Name"> 
+			<select name="seasonGameId" class="form-control" id="seasonGameSelect">
+				<c:forEach items="${GameDAO.getAllGames()}" var="game">
+					<option value="${game.getGameId()}">${game.getGameName()}</option>
+				</c:forEach>
+			</select> 
+			<input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date">
+			<select name="seasonScoringType" class="form-control" id="seasonScoringTypeSelect">
+				<option value="A">Averaged Scoring</option>
+				<option value="L">Layered Scoring</option>
+			</select>
+			<button type="submit" class="btn btn-success btn-lg btn-block my-4">Create Season</button>
+		</form>
+	</div>
+
+	<c:if test="${not empty allSeasonsList}">
+		<%@ include file="../season/AllSeasonView.jsp" %>
+	</c:if>
+
 </div>
 
 <script src="pikaday.js"></script>
