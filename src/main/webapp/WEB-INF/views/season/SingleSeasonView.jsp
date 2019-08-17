@@ -28,32 +28,9 @@
 				<div class="col-12 col-md-4 mx-auto text-center mt-4">
 					<p class="h3">${season.getName()}</p>
 				</div>
-				<div class="col-12 col-md-4 mx-auto text-center mt-4">
-					<p class="h2">Game: ${season.getGame().getGameName()}</p>
-				</div>
 			</div>
 			
-			<div class="row">
-				<div class="col-12 mx-auto text-center mt-4">
-					<h3>Standings</h3>
-					<table class="table table-hover table-dark">
-						<thead>
-							<tr>
-								<th scope="col">Player Name</th>
-								<th scope="col">Total Points</th>
-								<th scope="col">Games Played</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>Mark</td>
-								<td>Otto</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+			<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
 			
 			<div class="row">
 				<div class="col-12 mx-auto text-center mt-4">
@@ -75,7 +52,7 @@
 									<div class="row">
 										<div class="col text-center">
 											<h5 class="text-white text-center my-2">
-												<span class="float-left">${season.getRounds().size() - loop.index}.</span>
+												<span class="float-left">${season.getRounds().size() - loop.index}</span>
 												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
 											</h5>
 										</div>
@@ -138,11 +115,11 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6 mx-auto pt-4">
-						<button type="button" class="btn btn-success btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add a Player</button>
+						<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add a Player</button>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6 mx-auto pt-4">
+					<div class="col-md-6 mx-auto py-4">
 						<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
 					</div>
 				</div>
