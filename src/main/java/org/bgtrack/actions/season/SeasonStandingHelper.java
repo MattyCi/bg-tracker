@@ -85,20 +85,7 @@ public abstract class SeasonStandingHelper {
 
 	private void calculateSeasonPlaces(List<SeasonStanding> seasonStandings) {
 		
-		System.err.println("Sorting seasonStandings!");
-		System.err.println("=== BEFORE SORT ===");
-		for (SeasonStanding seasonStanding : seasonStandings) {
-			System.out.println("User is: "+seasonStanding.getReguser().getFirstName() + seasonStanding.getReguser().getLastName() + 
-					" and they have " + seasonStanding.getAveragedPoints() + " average points!");
-		}
-		
 		Collections.sort(seasonStandings); // needed to sort by player score descending
-		
-		System.err.println("=== AFTER SORT ===");
-		for (SeasonStanding seasonStanding : seasonStandings) {
-			System.out.println("User is: "+seasonStanding.getReguser().getFirstName() + seasonStanding.getReguser().getLastName() + 
-					" and they have " + seasonStanding.getAveragedPoints() + " average points!");
-		}
 		
 		for (int i = 0; i < seasonStandings.size(); i++) {
 			determineSeasonStandingPlace(seasonStandings, i);
