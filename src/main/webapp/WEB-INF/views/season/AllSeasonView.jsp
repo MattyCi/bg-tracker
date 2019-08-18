@@ -11,7 +11,7 @@
   	<c:forEach var = "season" items="${allSeasonsList}" >
 	    <tr>
 	    	<td>
-	    		<a href="/bgtracker/viewSeason?seasonId=${season.getSeasonId()}">${season.getName()}</a></td>
+	    		<a href="/viewSeason?seasonId=${season.getSeasonId()}">${season.getName()}</a></td>
 	    	<td>
 				<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getStartDate()}" />
 			</td>

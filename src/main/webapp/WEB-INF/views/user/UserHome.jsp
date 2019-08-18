@@ -51,7 +51,7 @@
 			</div>
 		</c:if>
 		
-		<form id="seasonCreateForm" action="/bgtracker/createSeason" method="POST">
+		<form id="seasonCreateForm" action="/createSeason" method="POST">
 			<input name="seasonName" type="text" class="form-control my-2" id="register-first-name" placeholder="Season Name"> 
 			<select name="seasonGameId" class="form-control" id="seasonGameSelect">
 				<c:forEach items="${GameDAO.getAllGames()}" var="game">

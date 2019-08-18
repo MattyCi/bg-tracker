@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.matt.apps</groupId>
-	<artifactId>shiro-with-struts-template</artifactId>
+	<artifactId>bg-tracker-app</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>shiro-with-struts-template</name>
+	<name>bg-tracker</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -87,13 +87,44 @@
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>2.0.1</version>
-		</dependency>
 	</dependencies>
 	<build>
-		<finalName>shiro-with-struts-template</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                       		<goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+           	<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-dependency-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals><goal>copy</goal></goals>
+	                    <configuration>
+	                        <artifactItems>
+	                            <artifactItem>
+	                                <groupId>com.github.jsimone</groupId>
+	                                <artifactId>webapp-runner</artifactId>
+	                                <version>9.0.20.0</version>
+	                                <destFileName>webapp-runner.jar</destFileName>
+	                            </artifactItem>
+	                        </artifactItems>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+        </plugins>
+		<finalName>bg-tracker</finalName>
 	</build>
 </project>

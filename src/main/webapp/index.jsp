@@ -19,7 +19,7 @@
 			<div class="row">
 				<div class="col-12 col-md-8 mx-auto text-center mt-4">
 					<h3>Welcome, <small class="text-muted">${regUser.firstName}</small></h3>
-					<form id="logoutForm" action="/bgtracker/userLogOut">
+					<form id="logoutForm" action="/userLogOut">
 						<button type="submit" class="btn btn-danger btn-lg btn-block my-2">Log Out</button>
 					</form>
 				</div>
@@ -38,7 +38,7 @@
 				</div>
 					
 					<div id="login-form" class="col-12 col-md-8 mx-auto d-none">
-					<form id="loginForm" action="/bgtracker/userLogIn" method="POST">
+					<form id="loginForm" action="/userLogIn" method="POST">
 						<input name="username" type="email" class="form-control my-2" id="login-username" aria-describedby="emailHelp" placeholder="Enter email">
 						<input name="password" type="password" class="form-control my-2" id="login-password" placeholder="Password">
 						<button type="submit" class="btn btn-success btn-lg btn-block my-2">Log In</button>
@@ -46,7 +46,7 @@
 				</div>
 				
 				<div id="register-form" class="col-12 col-md-8 mx-auto d-none">
-					<form id="registerForm" action="/bgtracker/userRegister" method="POST">
+					<form id="registerForm" action="/userRegister" method="POST">
 						<input name="username" type="email" class="form-control  my-2" id=register-username aria-describedby="emailHelp" placeholder="Enter email">
 						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password">
 						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Password">

@@ -11,7 +11,7 @@
 	<meta charset="UTF-8">
 	<jsp:include page="../../snippets/CommonIncludes.jspf" />
 	<shiro:notAuthenticated>
-		<meta http-equiv="Refresh" content="0; url=/bgtracker">
+		<meta http-equiv="Refresh" content="0; url=/">
 	</shiro:notAuthenticated>
 </head>
 <body>
@@ -98,7 +98,7 @@
 				</div>
 			</div>
 				
-			<form id="round-create-form" action="/bgtracker/createRound" method="POST">
+			<form id="round-create-form" action="/createRound" method="POST">
 				<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
 				<div id="player-add-container-0" class="form-row mb-2 justify-content-center pt-2">
 				    <div class="col-sm-8 col-lg-6">
