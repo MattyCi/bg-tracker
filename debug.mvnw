@@ -1,1 +1,0 @@
-mvn -X -B -DskipTests clean dependency:list install
