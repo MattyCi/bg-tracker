@@ -140,7 +140,7 @@
                         <outputDirectory>${basedir}/target/bg-tracker/WEB-INF/classes</outputDirectory>
                         <resources>
                             <resource>
-                                <directory>${basedir}/environment-specific</directory>
+                                <directory>${project.basedir}/environment-specific</directory>
                             </resource>
                         </resources>
                     </configuration>
