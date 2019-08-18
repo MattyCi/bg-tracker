@@ -131,7 +131,7 @@
             <executions>
                 <execution>
                     <id>environment-specific-setup</id>
-                    <phase>compile</phase>
+                    <phase>package</phase>
                     <goals>
                         <goal>copy-resources</goal>
                     </goals>
