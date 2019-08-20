@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+  	<package name="default" namespace="/" extends="struts-default">
+
+    <interceptors>
+		<interceptor name="userValidator" class="org.bgtrack.interceptor.UserValidatorInterceptor"/>
+		<interceptor-stack name="shiro-default">
+			<interceptor-ref name="userValidator"/>
+			<interceptor-ref name="params"/> <!-- Run the params interceptor before the default stack. This allows us to access param values in our prepare() methods. -->
+			<interceptor-ref name="defaultStack"/>
+		</interceptor-stack>
+	</interceptors>
+	<default-interceptor-ref name="shiro-default"/>
+		
+	<action name="userLogIn"
+		class="org.bgtrack.auth.ShiroLogInAction">
+		<result name="success">/index.jsp</result>
+		<result name="error">/index.jsp</result>
+	</action>
+	
+	<action name="userLogOut"
+		class="org.bgtrack.auth.ShiroLogOutAction">
+		<result name="success">/index.jsp</result>
+		<result name="error">/index.jsp</result>
+	</action>
+	
+	<action name="userRegister" class="org.bgtrack.auth.ShiroRegisterAction">
+    	<result name="success" type="chain">
+    		<param name="actionName">userLogIn</param>
+    	</result>
+       	<result name="error">/index.jsp</result>
+   	</action>
+   	
+	<action name="createSeason" class="org.bgtrack.actions.season.SeasonCreate">
+    	<result name="success">/WEB-INF/views/season/SingleSeasonView.jsp</result>
+		<result name="error">/index.jsp</result>
+   	</action>
+   	
+  	<action name="createRound" class="org.bgtrack.actions.season.RoundCreate">
+    	<result name="success">/index.jsp</result>
+		<result name="error">/index.jsp</result>
+   	</action>
+
+   	<!-- <action name="viewSeason" >
+		<result>/WEB-INF/views/season/SingleSeasonView.jsp</result>
+	</action> -->
+		
+	<action name="viewSeason" class="org.bgtrack.actions.season.SeasonView">
+    	<result name="success">/WEB-INF/views/season/SingleSeasonView.jsp</result>
+		<result name="error">/index.jsp</result>
+   	</action>
+		
+	</package>
+</struts>

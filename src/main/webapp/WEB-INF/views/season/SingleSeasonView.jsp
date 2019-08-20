@@ -9,12 +9,14 @@
 <head>
 	<title>Board Game Tracker | View Season</title>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="../../snippets/CommonIncludes.jspf" />
 	<shiro:notAuthenticated>
 		<meta http-equiv="Refresh" content="0; url=/">
 	</shiro:notAuthenticated>
 </head>
 <body>
+	
 	<jsp:include page="../../snippets/Nav.jspf" />
 	
 	<div class="container">
@@ -25,8 +27,8 @@
 			<jsp:include page="../../views/user/UserHome.jsp"></jsp:include>
 
 			<div class="row">
-				<div class="col-12 col-md-4 mx-auto text-center mt-4">
-					<p class="h3">${season.getName()}</p>
+				<div class="col-12 mx-auto text-center mt-4">
+					<p class="h1">${season.getName()}</p>
 				</div>
 			</div>
 			
