@@ -119,5 +119,11 @@ window.onload = function(){
     		SeasonController.clearRoundConfirmTable();
     	}
 	}
+	
+	$("#round-create-form").bind("keypress", function(e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    });
     
 }
