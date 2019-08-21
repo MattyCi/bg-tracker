@@ -18,7 +18,10 @@ import org.bgtrack.utils.HibernateUtil;
 public abstract class SeasonStandingHelper {
 	private Season season;
 	private List<SeasonStanding> newSeasonStandings;
+	private List<SeasonStanding> ineligiblePlayerSeasonStandings;
 	private int loopIndex = 0;
+	private int ineligiblePlayerCount = 0;
+	private int[] ineligibleIndexesToRemove;
 	
 	/**
 	 * Rebuilds the season standing model objects for a given season.
@@ -85,36 +88,77 @@ public abstract class SeasonStandingHelper {
 
 	private void calculateSeasonPlaces() {
 		
+		removeIneligblePlayersFromSeasonStandings();
+		
 		Collections.sort(this.newSeasonStandings); // needed to sort by player score descending
 		
+		this.loopIndex = 0;
 		for (int i = 0; i < this.newSeasonStandings.size(); i++) {
 			determineSeasonStandingPlace();
 			loopIndex++;
 		}
+		
+		this.newSeasonStandings.addAll(ineligiblePlayerSeasonStandings);
 
 	}
 
-	private void determineSeasonStandingPlace() {
-
-		if (!isEligibleToCompete()) {
-			this.newSeasonStandings.get(loopIndex).setPlace(999);
-			return;
+	private void removeIneligblePlayersFromSeasonStandings() {
+		
+		ineligiblePlayerSeasonStandings = new ArrayList<SeasonStanding>();
+		ineligibleIndexesToRemove = new int[this.newSeasonStandings.size()];
+		
+		for (SeasonStanding seasonStanding : this.newSeasonStandings) {
+			if (!isEligibleToCompete(seasonStanding)) {
+				ineligibleIndexesToRemove[ineligiblePlayerCount] = loopIndex;
+				ineligiblePlayerCount++;
+			}
+			loopIndex++;
 		}
 		
-		if (isTiedWithPreviousPlayer()) {
-			this.newSeasonStandings.get(loopIndex).setPlace(loopIndex-1);
-		} else {
-			this.newSeasonStandings.get(loopIndex).setPlace(loopIndex+1);
-		}
+		removeIneligibleSeasonStandingIndexes();
 		
 	}
 
-	private boolean isEligibleToCompete() {
+	private boolean isEligibleToCompete(SeasonStanding seasonStanding) {
 		
-		if (this.newSeasonStandings.get(loopIndex).getGamesPlayed() < 8) {
+		if (seasonStanding.getGamesPlayed() < 8) {
 			return false;
 		} else {
 			return true;
+		}
+		
+	}
+	
+	private void removeIneligibleSeasonStandingIndexes() {
+		
+		for (int i = 0; i < ineligiblePlayerCount; i++) {
+			int ineligbleSeasonStandingIndex = ineligibleIndexesToRemove[i];
+			
+			this.newSeasonStandings.get(ineligbleSeasonStandingIndex-i).setPlace(999);
+			this.ineligiblePlayerSeasonStandings.add(this.newSeasonStandings.get(ineligbleSeasonStandingIndex-i));
+			this.newSeasonStandings.remove(ineligbleSeasonStandingIndex-i);
+		}
+	}
+	
+	private void determineSeasonStandingPlace() {
+		
+		if (isFirstInList()) {
+			this.newSeasonStandings.get(loopIndex).setPlace(1);
+		} else if (isTiedWithPreviousPlayer()) {
+			this.newSeasonStandings.get(loopIndex).setPlace(this.newSeasonStandings.get(loopIndex - 1).getPlace());
+		} else {
+			this.newSeasonStandings.get(loopIndex)
+					.setPlace(this.newSeasonStandings.get(loopIndex - 1).getPlace() + 1);
+		}
+		
+	}
+
+	private boolean isFirstInList() {
+		
+		if (loopIndex == 0) {
+			return true;
+		} else {
+			return false;
 		}
 		
 	}
