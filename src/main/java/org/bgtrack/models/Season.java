@@ -50,7 +50,7 @@ public class Season implements Serializable {
 
 	//bi-directional many-to-one association to SeasonStanding
 	@OneToMany(mappedBy="season")
-	@OrderBy(clause = "PLACE ASC")
+	@OrderBy(clause = "PLACE asc, AVERAGED_POINTS desc")
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<SeasonStanding> seasonStandings;
 

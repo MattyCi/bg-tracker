@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.Season;
@@ -19,6 +18,7 @@ import org.bgtrack.utils.HibernateUtil;
 public abstract class SeasonStandingHelper {
 	private Season season;
 	private List<SeasonStanding> newSeasonStandings;
+	private int loopIndex = 0;
 	
 	/**
 	 * Rebuilds the season standing model objects for a given season.
@@ -34,7 +34,7 @@ public abstract class SeasonStandingHelper {
 			
 		}
 		
-		calculateSeasonPlaces(newSeasonStandings);
+		calculateSeasonPlaces();
 		
 		for (SeasonStanding oldSeasonStanding : this.season.getSeasonStandings()) {
 			HibernateUtil.deleteEntity(oldSeasonStanding);
@@ -83,37 +83,53 @@ public abstract class SeasonStandingHelper {
 		return Double.parseDouble(df.format(totalAveragePoints));
 	}
 
-	private void calculateSeasonPlaces(List<SeasonStanding> seasonStandings) {
+	private void calculateSeasonPlaces() {
 		
-		Collections.sort(seasonStandings); // needed to sort by player score descending
+		Collections.sort(this.newSeasonStandings); // needed to sort by player score descending
 		
-		for (int i = 0; i < seasonStandings.size(); i++) {
-			determineSeasonStandingPlace(seasonStandings, i);
+		for (int i = 0; i < this.newSeasonStandings.size(); i++) {
+			determineSeasonStandingPlace();
+			loopIndex++;
 		}
 
 	}
 
-	private void determineSeasonStandingPlace(List<SeasonStanding> seasonStandings, int loopIndex) {
+	private void determineSeasonStandingPlace() {
 
-		if (isTiedWithPreviousPlayer(seasonStandings, loopIndex)) {
-			seasonStandings.get(loopIndex).setPlace(loopIndex-1);
+		if (!isEligibleToCompete()) {
+			this.newSeasonStandings.get(loopIndex).setPlace(999);
+			return;
+		}
+		
+		if (isTiedWithPreviousPlayer()) {
+			this.newSeasonStandings.get(loopIndex).setPlace(loopIndex-1);
 		} else {
-			seasonStandings.get(loopIndex).setPlace(loopIndex+1);
+			this.newSeasonStandings.get(loopIndex).setPlace(loopIndex+1);
 		}
 		
 	}
 
-	private boolean isTiedWithPreviousPlayer(List<SeasonStanding> seasonStandings, int loopIndex) {
+	private boolean isEligibleToCompete() {
+		
+		if (this.newSeasonStandings.get(loopIndex).getGamesPlayed() < 8) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+
+	private boolean isTiedWithPreviousPlayer() {
 		if (loopIndex != 0) {
-			return arePointsEqual(seasonStandings, loopIndex);
+			return arePointsEqual();
 		} else {
 			return false;
 		}
 	}
 
-	private boolean arePointsEqual(List<SeasonStanding> seasonStandings, int loopIndex) {
+	private boolean arePointsEqual() {
 		
-		if (seasonStandings.get(loopIndex).getAveragedPoints() == seasonStandings.get(loopIndex-1).getAveragedPoints()) {
+		if (this.newSeasonStandings.get(loopIndex).getAveragedPoints() == this.newSeasonStandings.get(loopIndex-1).getAveragedPoints()) {
 			return true;
 		} else {
 			return false;
