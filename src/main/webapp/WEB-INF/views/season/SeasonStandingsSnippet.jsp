@@ -17,7 +17,7 @@
 
 					<c:choose>
 						<c:when test="${seasonStanding.getPlace() eq 999}">
-							<c:set var="finalPlayerPlace" value="INELIGIBLE" />
+							<c:set var="finalPlayerPlace" value="N/A" />
 							<c:set var="ineligibilityHighlighting" value="text-warning" />
 						</c:when>
 						<c:otherwise>
