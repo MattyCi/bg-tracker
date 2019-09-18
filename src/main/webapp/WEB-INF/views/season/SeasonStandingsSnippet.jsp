@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-12 mx-auto text-center mt-4">
 		<h3>Current Standings</h3>
-		<table class="table table-hover table-dark">
+		<table class="table table-hover table-primary">
 			<thead>
 				<tr>
 					<th scope="col">Place</th>

@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Board Game Tracker | View Season</title>
+	<title>Season GG: View Season</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="../../snippets/CommonIncludes.jspf" />
@@ -27,74 +27,17 @@
 			<jsp:include page="../../views/user/UserHome.jsp"></jsp:include>
 
 			<div class="row">
-				<div class="col-12 mx-auto text-center mt-4">
+				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
 					<p class="h1">${season.getName()}</p>
+				</div>
+				<div class="col-12 col-lg-6 mx-auto my-auto text-center mt-4">
+					<p class="h2">End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getEndDate()}" /></p>
 				</div>
 			</div>
 			
 			<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
 			
-			<div class="row">
-				<div class="col-12 mx-auto text-center mt-4">
-					<h3>Rounds</h3>
-					
-					<c:if test="${empty season.getRounds()}">
-						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
-							<p class="lead text-dark py-2">
-								This season does not have any rounds created yet. Play a game and add the round results below!
-							</p>
-						</div>
-					</c:if>
-					
-					<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
-						<div class="accordion" id="round-accordion-${loop.index}">
-							<div class="card bg-primary">
-								<button class="btn btn-link no-underline-link" type="button" data-toggle="collapse"
-									data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
-									<div class="row">
-										<div class="col text-center">
-											<h5 class="text-white text-center my-2">
-												<span class="float-left">${season.getRounds().size() - loop.index}</span>
-												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
-											</h5>
-										</div>
-									</div>
-								</button>
-								<div id="round-accordion-collapse-${loop.index}" class="collapse" aria-labelledby="headingOne"
-									data-parent="#round-accordion-${loop.index}">
-									<div class="card-body no-padding">
-										<div class="row">
-											<div class="col-12">
-												<h5 class="text-center text-white bg-success height-full py-2">Victor: ${listofVictors.get(loop.index)}</h5>
-											</div>
-										</div>
-										 <table class="table table-striped table-dark no-margin-bottom">
-											 <thead>
-											    <tr>
-											    	<th scope="col">Place</th>
-											    	<th scope="col">Points Earned</th>
-											    	<th scope="col">Player Name</th>
-												</tr>
-											</thead>
-											<tbody>
-											    <c:forEach var="roundResult" items="${round.getRoundResults()}">
-														<tr>
-															<td>${roundResult.getPlace()}</td>
-															<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
-														    <td>${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()}</td>
-														</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</div>
-			</div>
-			
-			<div class="row">
+						<div class="row">
 				<div class="col-12 mx-auto text-center mt-4">
 					<h3>Add a Round</h3>
 				</div>
@@ -150,6 +93,66 @@
 						</div>
 					</div>
 					
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-12 mx-auto text-center mt-4">
+					<h3>Round Results</h3>
+					
+					<c:if test="${empty season.getRounds()}">
+						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
+							<p class="lead text-dark py-2">
+								This season does not have any rounds created yet. Play a game and add the round results below!
+							</p>
+						</div>
+					</c:if>
+					
+					<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
+						<div class="accordion" id="round-accordion-${loop.index}">
+							<div class="card bg-primary">
+								<button class="btn btn-link no-underline-link" type="button" data-toggle="collapse"
+									data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
+									<div class="row">
+										<div class="col text-center">
+											<h5 class="text-white text-center my-2">
+												<span class="float-left">${season.getRounds().size() - loop.index}</span>
+												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
+											</h5>
+										</div>
+									</div>
+								</button>
+								<div id="round-accordion-collapse-${loop.index}" class="collapse" aria-labelledby="headingOne"
+									data-parent="#round-accordion-${loop.index}">
+									<div class="card-body no-padding">
+										<div class="row">
+											<div class="col-12">
+												<h5 class="text-center text-white bg-success height-full py-2">Victor: ${listofVictors.get(loop.index)}</h5>
+											</div>
+										</div>
+										 <table class="table table-striped table-dark no-margin-bottom">
+											 <thead>
+											    <tr>
+											    	<th scope="col">Place</th>
+											    	<th scope="col">Points Earned</th>
+											    	<th scope="col">Player Name</th>
+												</tr>
+											</thead>
+											<tbody>
+											    <c:forEach var="roundResult" items="${round.getRoundResults()}">
+														<tr>
+															<td>${roundResult.getPlace()}</td>
+															<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
+														    <td>${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()}</td>
+														</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			
