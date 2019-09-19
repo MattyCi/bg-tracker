@@ -2,3 +2,4 @@
 .settings
 Users
 /environment-specific
+/heroku_deploy.sh

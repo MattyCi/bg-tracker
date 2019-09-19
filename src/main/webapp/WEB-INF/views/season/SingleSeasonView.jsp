@@ -35,40 +35,40 @@
 				</div>
 			</div>
 			
-			<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
-			
-						<div class="row">
-				<div class="col-12 mx-auto text-center mt-4">
+			<div class="row">
+				<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
+
+				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
 					<h3>Add a Round</h3>
+			
+					<form id="round-create-form" action="/createRound" method="POST" class="my-auto">
+						<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
+						<div id="player-add-container-0" class="form-row mb-2 justify-content-center pt-2">
+						    <div class="col-sm-8 col-lg-8">
+							    <select name="roundPlayer0" data-round-info="true" class="form-control" id="round-player-select">
+									<option value="" selected disabled hidden>Choose Player</option>
+									<c:forEach items="${UserDAO.getAllUsers()}" var="user">
+										<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="col-sm-4 col-lg-4">
+								<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 pt-4 ml-auto">
+								<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 py-4 ml-auto">
+								<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-				
-			<form id="round-create-form" action="/createRound" method="POST">
-				<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
-				<div id="player-add-container-0" class="form-row mb-2 justify-content-center pt-2">
-				    <div class="col-sm-8 col-lg-6">
-					    <select name="roundPlayer0" data-round-info="true" class="form-control" id="round-player-select">
-							<option value="" selected disabled hidden>Choose Player</option>
-							<c:forEach items="${UserDAO.getAllUsers()}" var="user">
-								<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="col-sm-4 col-lg-2">
-						<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6 mx-auto pt-4">
-						<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add a Player</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6 mx-auto py-4">
-						<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
-					</div>
-				</div>
-			</form>
 			
 			<div id="round-create-confirm-popup" class="popup d-none">
 				<div class="popup-content">
