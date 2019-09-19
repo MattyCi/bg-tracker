@@ -34,6 +34,7 @@ var SeasonController = {
 		
 		if (this.addedPlayerCount > 12) {
 			alert("Sorry, no more than 12 players to a round are allowed.");
+			return;
 		}
 		
 		var inputContainer = document.getElementById("player-add-container-"+(this.addedPlayerCount-1));
@@ -60,17 +61,50 @@ var SeasonController = {
 		var roundResultCount = 0;
 		for (var i = 0, element; element = form.elements[i++];) {
 			if (element.getAttribute("data-round-info") === 'true') {
-				
+				console.log(element.type);
 				if (element.type === "select-one") {
 					roundResultsNames[roundResultCount] = element.selectedOptions[0].innerHTML;
+					
+					if (!this.isValidPlayer(roundResultsNames[roundResultCount])) {
+						alert("Sorry, one or more of the entered player values is not valid.");
+						return;
+					}
+					
 				} else {
 					roundResultsPlaces[roundResultCount] = element.value;
+					
+					if (!this.isValidPlace(roundResultsPlaces[roundResultCount])) {
+						alert("Sorry, one or more of the entered place values is not valid.");
+						return;
+					}
+					
 					roundResultCount++;
 				}
 		    }
 		}
 		
 		this.buildRoundCreateConfirmPopup(roundResultsNames, roundResultsPlaces);
+	},
+	
+	isValidPlayer : function(playerName) {
+		
+		if(playerName && playerName != "Choose Player") {
+			return true;
+		} else {
+			return false;
+		}
+		
+	},
+	
+	isValidPlace : function(place) {
+		var placeNumber = +place;
+		
+		if (!isNaN(placeNumber) && placeNumber < 13 && placeNumber != 0) {
+			return true;
+		} else {
+			return false;
+		}
+
 	},
 	
 	buildRoundCreateConfirmPopup : function(roundResultsNames, roundResultsPlaces) {
