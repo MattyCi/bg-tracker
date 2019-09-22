@@ -13,13 +13,14 @@ import org.bgtrack.utils.HibernateUtil;
  */
 public class UserDAO {
 	public static Reguser getUserByEmail(String email) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
 		String query = "from Reguser where email=:email";
 		Reguser user = (Reguser) session.createQuery(query)
 				.setParameter("email", email).uniqueResult();
 		session.getTransaction().commit();
+		session.close();
 		return user;
 	}
 	

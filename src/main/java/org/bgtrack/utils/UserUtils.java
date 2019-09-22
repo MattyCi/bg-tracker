@@ -1,9 +1,12 @@
 package org.bgtrack.utils;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.subject.Subject;
 import org.bgtrack.models.user.Reguser;
+import org.bgtrack.models.user.daos.UserDAO;
 import org.passay.PasswordValidator;
 
 /**
@@ -45,6 +48,15 @@ public class UserUtils {
 
 		user.setPassword(hashedPassword);
 		user.setSalt(salt.toString());
+	}
+	
+	public static String getCurrentUserId() {
+		Subject currentShiroSubject = SecurityUtils.getSubject();
+		
+		String email = currentShiroSubject.getPrincipal().toString();
+		Reguser currentUser = UserDAO.getUserByEmail(email);
+		
+		return currentUser.getUserId();
 	}
 	
 }

@@ -6,7 +6,9 @@ import java.util.List;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.user.Reguser;
+import org.bgtrack.models.user.daos.UserDAO;
 import org.bgtrack.utils.HibernateUtil;
+import org.bgtrack.utils.UserUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
@@ -22,6 +24,22 @@ public class SeasonDAO {
 		String query = "from Season order by NAME ASC";
 		@SuppressWarnings("unchecked")
 		List<Season> listOfSeasons = (List<Season>) session.createQuery(query).list();
+		session.getTransaction().commit();
+
+		return listOfSeasons;
+	}
+	
+	public static List<Season> getAllSeasonsUserIsIn() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String currentUserId = UserUtils.getCurrentUserId();
+		
+		String query = "from Season as season where season.seasonId in "
+				+ "(select ss.season.seasonId from SeasonStanding as ss where ss.reguser.userId=:currentUserId) "
+				+ "order by NAME ASC";
+		@SuppressWarnings("unchecked")
+		List<Season> listOfSeasons = (List<Season>) session.createQuery(query).setParameter("currentUserId", currentUserId).list();
 		session.getTransaction().commit();
 
 		return listOfSeasons;
@@ -52,16 +70,17 @@ public class SeasonDAO {
 		return season;
 	}
 	
-	public static List<Reguser> getAllUsersInSeason(BigInteger bigInteger) {
+	public static List<Reguser> getAllUsersInSeason(BigInteger seasonId) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
+		//TODO: Refactor... you can use season standing table now
 		String query = "from Reguser as user where user.userId in "
 				+ "(select rr.reguser.userId from RoundResult as rr where rr.round.roundId in"
 				+ "(select r.roundId from Round as r where r.season.seasonId=:seasonId))";
 		@SuppressWarnings("unchecked")
 		List<Reguser> listOfUsersInSeason = (List<Reguser>) session.createQuery(query)
-			.setParameter("seasonId", bigInteger).list();
+			.setParameter("seasonId", seasonId).list();
 		
 		session.getTransaction().commit();
 

@@ -53,6 +53,10 @@
     	<result name="success">/WEB-INF/views/season/SingleSeasonView.jsp</result>
 		<result name="error">/index.jsp</result>
    	</action>
+   	
+  	<action name="viewSeasonList" >
+		<result>/WEB-INF/views/season/SeasonListView.jsp</result>
+	</action>
 		
 	</package>
 </struts>

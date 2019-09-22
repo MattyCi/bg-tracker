@@ -5,7 +5,7 @@
 
 <div class="row pt-2">
 	<div class="col-12 col-md-6 mx-auto">
-		<a href="#" class="list-group-item list-group-item-action flex-column align-items-start active full-height" onclick="SeasonController.showYourSeasons()">
+		<a href="/viewSeasonList?view=usersSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start active full-height">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">Your Seasons</h5>
 			</div>
@@ -13,7 +13,7 @@
 		</a>
 	</div>
 	<div class="col-12 col-md-6 mx-auto">
-		<a href="#" class="list-group-item list-group-item-action flex-column align-items-start" onclick="SeasonController.showAllSeasons()">
+		<a href="/viewSeasonList?view=allSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">All Seasons</h5>
 			</div>
@@ -21,36 +21,9 @@
 				currently not a part of.</p>
 		</a>
 	</div>
-</div>
-
-<div id="your-seasons" class="row pt-4 d-none">
-	<c:set var="yourSeasonsList" value="${SeasonDAO.getAllSeasons()}" />
-	<c:choose>
-		<c:when test="${empty seasonsList}">
-			<div class="col-12 col-md-6 mx-auto">
-				<div class="alert alert-dismissible alert-danger">
-				  	<p><strong>Uh oh!</strong>  You aren't apart of any seasons yet. Try to join one by clicking "All Seasons".</p>
-				</div>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<%@ include file="../season/AllSeasonView.jsp" %>
-		</c:otherwise>
-	</c:choose>
-</div>
-
-<div id="all-seasons" class="row pt-4 d-none">
-	<c:set var="allSeasonsList" value="${SeasonDAO.getAllSeasons()}" />
-
-	<div class="col-12 col-md-6 mx-auto">
-		<c:if test="${empty allSeasonsList}">
-			<div class="alert alert-dismissible alert-danger text-center">
-				<p>
-					<strong>Uh oh!</strong> There aren't any seasons yet. Try to create one first.
-				</p>
-			</div>
-		</c:if>
-		
+	
+	<div class="col-12 col-md-6 mx-auto my-2">
+		<h3 class="text-center">Start a new Season</h3>
 		<form id="seasonCreateForm" action="/createSeason" method="POST">
 			<input name="seasonName" type="text" class="form-control my-2" id="register-first-name" placeholder="Season Name"> 
 			<select name="seasonGameId" class="form-control" id="seasonGameSelect">
@@ -66,11 +39,7 @@
 			<button type="submit" class="btn btn-success btn-lg btn-block my-4">Create Season</button>
 		</form>
 	</div>
-
-	<c:if test="${not empty allSeasonsList}">
-		<%@ include file="../season/AllSeasonView.jsp" %>
-	</c:if>
-
+	
 </div>
 
 <script src="pikaday.js"></script>

@@ -1,4 +1,8 @@
 
+a:link {
+  text-decoration: none;
+}
+
 .logo-img {
 	display: block;
 	margin-left: auto;

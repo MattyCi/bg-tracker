@@ -24,8 +24,6 @@
 		
 		<shiro:authenticated>
 			
-			<jsp:include page="../../views/user/UserHome.jsp"></jsp:include>
-
 			<div class="row">
 				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
 					<p class="h1">${season.getName()}</p>
@@ -102,7 +100,7 @@
 					
 					<c:if test="${empty season.getRounds()}">
 						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
-							<p class="lead text-dark py-2">
+							<p class="lead py-2">
 								This season does not have any rounds created yet. Play a game and add the round results below!
 							</p>
 						</div>

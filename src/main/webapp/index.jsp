@@ -11,25 +11,17 @@
 	<jsp:include page="WEB-INF/snippets/CommonIncludes.jspf" />
 </head>
 <body>
-	<jsp:include page="WEB-INF/snippets/Nav.jspf" />
+	<%@ include file="WEB-INF/snippets/Nav.jspf" %>
 	
 	<div class="container">
 		<%@ include file="WEB-INF/snippets/Header.jspf" %>
 		
 		<shiro:authenticated>
-			<div class="row">
-				<div class="col-12 col-md-8 mx-auto text-center mt-4">
-					<h3>Welcome, <small class="text-muted">${regUser.firstName}</small></h3>
-					<form id="logoutForm" action="/userLogOut">
-						<button type="submit" class="btn btn-danger btn-lg btn-block my-2">Log Out</button>
-					</form>
-				</div>
-			</div>
-			
 			<jsp:include page="WEB-INF/views/user/UserHome.jsp"></jsp:include>
 		</shiro:authenticated>
 		
 		<shiro:notAuthenticated>
+		
 			<div class="row">
 				<div class="col-12 col-md-8 mx-auto text-center mt-4">
 					<a href="#" role="button" class="btn btn-primary btn-lg btn-block" onclick="UserController.showLoginForm()">Log In</a>
@@ -56,7 +48,23 @@
 						<button type="submit" class="btn btn-success btn-lg btn-block  my-2">Register</button>
 					</form>
 				</div>
+				
 			</div>
+
+			<div class="row mt-4">
+				<div class="jumbotron">
+					<h1 class="display-3">Hello, world!</h1>
+					<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling
+						extra attention to featured content or information.</p>
+					<hr class="my-4">
+					<p>It uses utility classes for typography and spacing to space content out within the
+						larger container.</p>
+					<p class="lead">
+						<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+					</p>
+				</div>
+			</div>
+
 		</shiro:notAuthenticated>
 	</div>
 </body>
