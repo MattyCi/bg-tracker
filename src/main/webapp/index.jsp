@@ -22,8 +22,20 @@
 		
 		<shiro:notAuthenticated>
 		
+			<div class="row mt-4">
+				<div class="jumbotron">
+					<p class="lead">One game isn't enough to determine who is the best. A true champion can
+						only be proven throughout an entire season of games. Season GG allows you to track scores over
+						an entire season, so you can finally prove to your friends that you're simply better than
+						them.
+					</p>
+					<hr class="my-4">
+					<p>Get started today by either logging in below, or registering if you haven't already!</p>
+				</div>
+			</div>
+		
 			<div class="row">
-				<div class="col-12 col-md-8 mx-auto text-center mt-4">
+				<div class="col-12 col-md-8 mx-auto text-center">
 					<a href="#" role="button" class="btn btn-primary btn-lg btn-block" onclick="UserController.showLoginForm()">Log In</a>
 				</div>
 				<div class="col-12 col-md-8 mx-auto text-center mt-4">
@@ -49,20 +61,6 @@
 					</form>
 				</div>
 				
-			</div>
-
-			<div class="row mt-4">
-				<div class="jumbotron">
-					<h1 class="display-3">Hello, world!</h1>
-					<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling
-						extra attention to featured content or information.</p>
-					<hr class="my-4">
-					<p>It uses utility classes for typography and spacing to space content out within the
-						larger container.</p>
-					<p class="lead">
-						<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-					</p>
-				</div>
 			</div>
 
 		</shiro:notAuthenticated>
