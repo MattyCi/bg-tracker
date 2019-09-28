@@ -22,12 +22,11 @@
 		
 		<shiro:notAuthenticated>
 		
-			<div class="row mt-4">
-				<div class="jumbotron">
+			<div class="row col-12 col-md-8 mx-auto my-4">
+				<div class="season-gg-jumbotron">
 					<p class="lead">One game isn't enough to determine who is the best. A true champion can
 						only be proven throughout an entire season of games. Season GG allows you to track scores over
-						an entire season, so you can finally prove to your friends that you're simply better than
-						them.
+						an entire season, so you can finally prove to your friends that you're better than them.
 					</p>
 					<hr class="my-4">
 					<p>Get started today by either logging in below, or registering if you haven't already!</p>
@@ -36,10 +35,10 @@
 		
 			<div class="row">
 				<div class="col-12 col-md-8 mx-auto text-center">
-					<a href="#" role="button" class="btn btn-primary btn-lg btn-block" onclick="UserController.showLoginForm()">Log In</a>
+					<button class="btn btn-primary btn-lg btn-block" onclick="UserController.showLoginForm()">Log In</button>
 				</div>
 				<div class="col-12 col-md-8 mx-auto text-center mt-4">
-					<a href="#" role="button" class="btn btn-primary btn-lg btn-block" onclick="UserController.showRegisterForm()">Register</a>
+					<button href="#" role="button" class="btn btn-primary btn-lg btn-block" onclick="UserController.showRegisterForm()">Register</button>
 				</div>
 					
 					<div id="login-form" class="col-12 col-md-8 mx-auto d-none">

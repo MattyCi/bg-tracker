@@ -1,4 +1,23 @@
 
+.season-gg-jumbotron {
+	background-color: #ecf0f1;
+	padding: 2rem 1rem;
+}
+
+@media (max-width: 576px) {
+	.i-middle {
+		margin-top:1em;
+	}
+}
+
+@media (min-width: 576px) {
+	.i-middle {
+		position:absolute;
+		top:50%;
+		margin-top:-.4em;
+	}
+}
+
 a:link {
   text-decoration: none;
 }

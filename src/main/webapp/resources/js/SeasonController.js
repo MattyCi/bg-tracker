@@ -2,7 +2,7 @@
 var SeasonController = {
 	isYourSeasonsVisible : false,
 	isAllSeasonsVisible : false,
-	addedPlayerCount : 1,
+	addedPlayerCount : 0,
 	
 	showAllSeasons : function() {
 		if (this.isAllSeasonsVisible) {
@@ -37,8 +37,10 @@ var SeasonController = {
 			return;
 		}
 		
-		var inputContainer = document.getElementById("player-add-container-"+(this.addedPlayerCount-1));
+		var inputContainer = document.getElementById("player-add-container-"+(this.addedPlayerCount));
 		var clonedContainer = inputContainer.cloneNode(true);
+		
+		this.addedPlayerCount++;
 		
 		clonedContainer.id = 'player-add-container-'+this.addedPlayerCount;
 		
@@ -51,7 +53,48 @@ var SeasonController = {
 		
 		inputContainer.parentNode.insertBefore(clonedContainer, inputContainer.nextSibling);
 		
-		this.addedPlayerCount++;
+		var removeButtonElement = clonedContainer.children[2].children[0];
+		
+		this.showRemovePlayerButton(removeButtonElement);
+		
+		this.initializeClickEventForNewRemoveButton(removeButtonElement);
+		
+		this.removePreviousPlayerRemoveButton();
+		
+	},
+	
+	showRemovePlayerButton : function(removeButtonElement) {
+		
+		console.log(this.addedPlayerCount);
+		
+		if (this.addedPlayerCount != 0) {
+			console.log(removeButtonElement.classList);
+			removeButtonElement.classList.remove("d-none");
+			console.log(removeButtonElement.classList);
+			removeButtonElement.id = "remove-player-button-"+this.addedPlayerCount;
+		}
+
+	},
+	
+	initializeClickEventForNewRemoveButton : function(removeButtonElement) {
+		removeButtonElement.addEventListener("click", this.removeLastAddedPlayerFromForm);
+	},
+	
+	removePreviousPlayerRemoveButton : function() {
+		var previousPlayerRemoveButton = document.getElementById("remove-player-button-"+(this.addedPlayerCount-1));
+		previousPlayerRemoveButton.classList.add("d-none");
+	},
+	
+	removeLastAddedPlayerFromForm : function() {
+		var lastAddedPlayerAddContainer = document.getElementById("player-add-container-"+(SeasonController.addedPlayerCount));
+		lastAddedPlayerAddContainer.remove();
+		
+		var previousRemoveButtonElement = document.getElementById("player-add-container-"+(SeasonController.addedPlayerCount-1)).children[2].children[0];
+		
+		SeasonController.addedPlayerCount--;
+		
+		SeasonController.showRemovePlayerButton(previousRemoveButtonElement);
+
 	},
 	
 	confirmAddRound : function(form) {
@@ -99,7 +142,7 @@ var SeasonController = {
 	isValidPlace : function(place) {
 		var placeNumber = +place;
 		
-		if (!isNaN(placeNumber) && placeNumber < 13 && placeNumber != 0) {
+		if (!isNaN(placeNumber) && placeNumber < 13 && placeNumber > 0) {
 			return true;
 		} else {
 			return false;

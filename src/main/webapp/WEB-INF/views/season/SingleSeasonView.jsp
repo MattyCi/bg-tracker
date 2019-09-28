@@ -37,12 +37,13 @@
 				<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
 
 				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
-					<h3>Add a Round</h3>
+					<h3 class="mb-3">Add a Round</h3>
 			
 					<form id="round-create-form" action="/createRound" method="POST" class="my-auto">
 						<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
-						<div id="player-add-container-0" class="form-row mb-2 justify-content-center pt-2">
-						    <div class="col-sm-8 col-lg-8">
+						<div id="player-add-container-0" class="form-row justify-content-center">
+						    
+						    <div class="col-sm-7 col-lg-8 float-left">
 							    <select name="roundPlayer0" data-round-info="true" class="form-control" id="round-player-select">
 									<option value="" selected disabled hidden>Choose Player</option>
 									<c:forEach items="${UserDAO.getAllUsers()}" var="user">
@@ -50,10 +51,17 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="col-sm-4 col-lg-4">
-								<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place">
+							<div class="col-sm-4 col-lg-3 mt-2 mt-sm-0 float-left">
+								<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place" value="1">
 							</div>
+							<div class="col-sm-1 col-lg-1">
+								<i id="remove-player-button-0" class="text-danger fas fa-minus-circle fa-lg i-middle d-none" style="cursor: pointer;"></i>
+							</div>
+							
+							<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+							
 						</div>
+						
 						<div class="row">
 							<div class="col-md-6 pt-4 ml-auto">
 								<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>

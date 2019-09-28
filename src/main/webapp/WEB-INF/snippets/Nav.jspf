@@ -19,7 +19,7 @@
       </li>
       <shiro:authenticated>
 	      <li class="nav-item">
-	        <a class="text-danger" href="/userLogOut">Log Out</a>
+	        <a class="nav-link text-danger" href="/userLogOut">Log Out</a>
 	      </li>
       </shiro:authenticated>
     </ul>
