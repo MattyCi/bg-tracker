@@ -4,6 +4,10 @@
 	padding: 2rem 1rem;
 }
 
+.no-top-border th {
+	border-top: none !important;
+}
+
 @media (max-width: 576px) {
 	.i-middle {
 		margin-top:1em;
@@ -18,8 +22,13 @@
 	}
 }
 
-a:link {
-  text-decoration: none;
+.sgg-nav-link {
+  	text-decoration: none;
+}
+
+.user-stat-breakdown-link {
+	color: white;
+  	text-decoration: none;
 }
 
 .logo-img {
