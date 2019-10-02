@@ -34,7 +34,9 @@
 			</div>
 			
 			<div class="row">
-				<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
+				<div class="col-12 col-lg-6 mx-auto mt-4">
+					<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
+				</div>
 
 				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
 					<h3 class="mb-3">Add a Round</h3>
@@ -49,7 +51,7 @@
 									<c:forEach items="${UserDAO.getAllUsers()}" var="user">
 										<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
 									</c:forEach>
-								</select>
+								</select> 
 							</div>
 							<div class="col-sm-4 col-lg-3 mt-2 mt-sm-0 float-left">
 								<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place" value="1">
@@ -63,7 +65,7 @@
 						</div>
 						
 						<div class="row">
-							<div class="col-md-6 pt-4 ml-auto">
+							<div class="col-md-6 pt-3 ml-auto">
 								<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
 							</div>
 						</div>
@@ -109,59 +111,20 @@
 					<c:if test="${empty season.getRounds()}">
 						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
 							<p class="lead py-2">
-								This season does not have any rounds created yet. Play a game and add the round results below!
+								This season does not have any rounds created yet. Play a game and add the round results above!
 							</p>
 						</div>
 					</c:if>
-					
-					<c:forEach var="round" items="${season.getRounds()}" varStatus="loop">
-						<div class="accordion" id="round-accordion-${loop.index}">
-							<div class="card bg-primary">
-								<button class="btn btn-link no-underline-link" type="button" data-toggle="collapse"
-									data-target="#round-accordion-collapse-${loop.index}" aria-expanded="true" aria-controls="round-accordion-collapse-${loop.index}">
-									<div class="row">
-										<div class="col text-center">
-											<h5 class="text-white text-center my-2">
-												<span class="float-left">${season.getRounds().size() - loop.index}</span>
-												<fmt:formatDate pattern = "MM/dd/yyyy" value="${round.getRoundDate()}" />
-											</h5>
-										</div>
-									</div>
-								</button>
-								<div id="round-accordion-collapse-${loop.index}" class="collapse" aria-labelledby="headingOne"
-									data-parent="#round-accordion-${loop.index}">
-									<div class="card-body no-padding">
-										<div class="row">
-											<div class="col-12">
-												<h5 class="text-center text-white bg-success height-full py-2">Victor: ${listofVictors.get(loop.index)}</h5>
-											</div>
-										</div>
-										 <table class="table table-striped table-dark no-margin-bottom">
-											 <thead>
-											    <tr>
-											    	<th scope="col">Place</th>
-											    	<th scope="col">Points Earned</th>
-											    	<th scope="col">Player Name</th>
-												</tr>
-											</thead>
-											<tbody>
-											    <c:forEach var="roundResult" items="${round.getRoundResults()}">
-														<tr>
-															<td>${roundResult.getPlace()}</td>
-															<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
-														    <td>${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()}</td>
-														</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
 				</div>
 			</div>
 			
+			<div class="row mb-5">
+				<c:set var="snippetListOfRounds" value="${season.rounds}" />
+				<c:set var="snippetListofVictors" value="${listofVictors}" />
+				<c:set var="snippetSelectedUser" value="${regUser}" />
+				<%@ include file="./RoundResultsSnippet.jspf" %>
+			</div>
+
 		</shiro:authenticated>
 
 	</div>

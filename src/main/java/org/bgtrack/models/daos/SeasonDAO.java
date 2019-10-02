@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bgtrack.models.Round;
 import org.bgtrack.models.Season;
+import org.bgtrack.models.SeasonStanding;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.models.user.daos.UserDAO;
 import org.bgtrack.utils.HibernateUtil;
@@ -85,6 +86,20 @@ public class SeasonDAO {
 		session.getTransaction().commit();
 
 		return listOfUsersInSeason;
+	}
+	
+	public static List<SeasonStanding> getSeasonStandingForUserInSeason(BigInteger seasonId, String userId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "from SeasonStanding where USER_ID=:userId AND SEASON_ID=:seasonId";
+
+		List<SeasonStanding> seasonStandings = (List<SeasonStanding>) session.createQuery(query)
+			.setParameter("userId", userId).setParameter("seasonId", seasonId).list();
+		
+		session.getTransaction().commit();
+
+		return seasonStandings;
 	}
 
 }

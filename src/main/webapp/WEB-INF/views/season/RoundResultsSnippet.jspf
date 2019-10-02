@@ -1,0 +1,64 @@
+
+<c:forEach var="round" items="${snippetListOfRounds}" varStatus="loop">
+
+	<div class="col-12">
+		<hr class="my-4">
+	</div>
+
+	<div class="col-12 col-lg-5 mt-lg-4">
+		<div class="row">
+			<div class="col-5">
+				<h4>Round Date:</h4>
+			</div>
+			<div class="col-7">
+				<h5>
+					<fmt:formatDate pattern="MM/dd/yyyy" value="${round.roundDate}" />
+				</h5>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-5">
+				<h4>Victor:</h4>
+			</div>
+			<div class="col-7">
+				<h5>${snippetListofVictors.get(loop.index)}</h5>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-12 col-lg-7 mt-4 mt-lg-0 4 my-lg-auto mx-auto">
+		<table class="table table-striped no-margin-bottom text-center">
+			<thead>
+				<tr class="no-top-border">
+					<th scope="col">Place</th>
+					<th scope="col">Points Earned</th>
+					<th scope="col">Player Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="roundResult" items="${round.getRoundResults()}">
+
+					<c:set var="userStatLinkClass" value="text-body" />
+
+					<c:if test="${snippetSelectedUser.userId == roundResult.reguser.userId}">
+						<c:set var="highlightCurrentPlayerRow" value="table-info" />
+						<c:set var="userStatLinkClass" value="user-stat-breakdown-link" />
+					</c:if>
+
+					<tr class="${highlightCurrentPlayerRow}">
+						<td>${roundResult.getPlace()}</td>
+						<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
+						<td><a class="${userStatLinkClass}"
+							href="/viewPlayerSeasonStats?selectedSeasonId=${round.season.getSeasonId()}&selectedUserId=${roundResult.getReguser().getUserId()}">
+								${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()} </a></td>
+					</tr>
+
+					<c:remove var="userStatLinkClass" />
+					<c:remove var="highlightCurrentPlayerRow" />
+
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
+</c:forEach>

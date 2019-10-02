@@ -66,4 +66,24 @@ public class RoundDAO {
 		return rounds;
 	}
 	
+	public static List<Round> getRoundsForUserBySeasonId(BigInteger seasonId, String userId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "from Round as r where r.roundId in "
+				+ "(select rr.round.roundId from RoundResult as rr where rr.reguser.userId=:userId) and r.season.seasonId=:seasonId";
+
+		@SuppressWarnings("unchecked")
+		List<Round> rounds = (List<Round>) session.createQuery(query).setParameter("seasonId", seasonId)
+				.setParameter("userId", userId).list();
+		
+		for (Round round : rounds) {
+			Hibernate.initialize(round.getRoundResults());
+		}
+		
+		session.getTransaction().commit();
+		
+		return rounds;
+	}
+	
 }
