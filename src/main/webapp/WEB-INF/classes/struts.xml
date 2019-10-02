@@ -57,6 +57,11 @@
   	<action name="viewSeasonList" >
 		<result>/WEB-INF/views/season/SeasonListView.jsp</result>
 	</action>
+
+	<action name="viewPlayerSeasonStats" class="org.bgtrack.actions.season.CalculateUserSeasonStatsAction">
+    	<result name="success">/WEB-INF/views/season/UserStatsViewForSeason.jsp</result>
+		<result name="error">/index.jsp</result>
+   	</action>
 		
 	</package>
 </struts>
