@@ -35,7 +35,7 @@
 			
 			<div class="row">
 				<div class="col-12 col-lg-6 mx-auto mt-4">
-					<jsp:include page="../../views/season/SeasonStandingsSnippet.jsp"></jsp:include>
+					<%@ include file="../../views/season/SeasonStandingsSnippet.jsp" %>
 				</div>
 
 				<div class="col-12 col-lg-6 mx-auto text-center mt-4">

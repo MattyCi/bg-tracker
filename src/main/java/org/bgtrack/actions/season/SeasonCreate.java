@@ -21,6 +21,8 @@ public class SeasonCreate extends ShiroBaseAction {
 	private String seasonEndDate;
 	private String seasonScoringType;
 	private boolean errorsOccured = false;
+
+	private String createdSeasonId;
 	
 	public String execute() {
 		
@@ -39,7 +41,7 @@ public class SeasonCreate extends ShiroBaseAction {
 			addActionError(BGTConstants.checkFields);
 			return BGTConstants.error;
 		}
-		
+
 		createSeason(seasonName, Integer.parseInt(seasonGameId), seasonEndDate);
 
 		if (errorsOccured) {
@@ -84,6 +86,9 @@ public class SeasonCreate extends ShiroBaseAction {
 		} finally {
 			session.close();
 		}
+		
+		this.setCreatedSeasonId(season.getSeasonId().toString());
+		
 	}
 
 	public String getSeasonName() {
@@ -116,6 +121,14 @@ public class SeasonCreate extends ShiroBaseAction {
 
 	public void setSeasonScoringType(String seasonScoringType) {
 		this.seasonScoringType = seasonScoringType;
+	}
+
+	public String getCreatedSeasonId() {
+		return createdSeasonId;
+	}
+
+	public void setCreatedSeasonId(String createdSeasonId) {
+		this.createdSeasonId = createdSeasonId;
 	}
 
 }

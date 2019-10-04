@@ -36,7 +36,10 @@
    	</action>
    	
 	<action name="createSeason" class="org.bgtrack.actions.season.SeasonCreate">
-    	<result name="success">/WEB-INF/views/season/SingleSeasonView.jsp</result>
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">viewSeason</param>
+    		<param name="seasonId">${createdSeasonId}</param>
+    	</result>
 		<result name="error">/index.jsp</result>
    	</action>
    	

@@ -23,6 +23,8 @@ public abstract class SeasonStandingHelper {
 	private int ineligiblePlayerCount = 0;
 	private int[] ineligibleIndexesToRemove;
 	
+	private Integer minimumRequiredGames;
+	
 	/**
 	 * Rebuilds the season standing model objects for a given season.
 	 * Call <code>setSeason(Season season)</code> before calling this method.
@@ -88,6 +90,8 @@ public abstract class SeasonStandingHelper {
 
 	private void calculateSeasonPlaces() {
 		
+		determineMinimumRequiredGames();
+		
 		removeIneligblePlayersFromSeasonStandings();
 		
 		Collections.sort(this.newSeasonStandings); // needed to sort by player score descending
@@ -100,6 +104,12 @@ public abstract class SeasonStandingHelper {
 		
 		this.newSeasonStandings.addAll(ineligiblePlayerSeasonStandings);
 
+	}
+
+	private void determineMinimumRequiredGames() {
+		Long sumOfGamesPlayedForAllPlayers = SeasonDAO.getSumOfGamesPlayedForAllPlayers(this.season.getSeasonId());
+		int totalPlayersInSeason = newSeasonStandings.size();
+		this.minimumRequiredGames = (int) ((sumOfGamesPlayedForAllPlayers / totalPlayersInSeason) / 2);
 	}
 
 	private void removeIneligblePlayersFromSeasonStandings() {
@@ -121,7 +131,7 @@ public abstract class SeasonStandingHelper {
 
 	private boolean isEligibleToCompete(SeasonStanding seasonStanding) {
 		
-		if (seasonStanding.getGamesPlayed() < 8) {
+		if (seasonStanding.getGamesPlayed() < this.minimumRequiredGames) {
 			return false;
 		} else {
 			return true;

@@ -11,6 +11,7 @@ import org.bgtrack.models.user.daos.UserDAO;
 import org.bgtrack.utils.HibernateUtil;
 import org.bgtrack.utils.UserUtils;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -100,6 +101,20 @@ public class SeasonDAO {
 		session.getTransaction().commit();
 
 		return seasonStandings;
+	}
+	
+	public static Long  getSumOfGamesPlayedForAllPlayers(BigInteger seasonId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "select sum(ss.gamesPlayed) from SeasonStanding ss where SEASON_ID=:seasonId";
+		
+		Query sumQuery = session.createQuery(query).setParameter("seasonId", seasonId);
+		
+		Long  test = (Long ) sumQuery.list().get(0);
+		session.getTransaction().commit();
+		
+		return test;
 	}
 
 }
