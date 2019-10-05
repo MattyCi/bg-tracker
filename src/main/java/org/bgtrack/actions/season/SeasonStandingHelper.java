@@ -108,6 +108,11 @@ public abstract class SeasonStandingHelper {
 
 	private void determineMinimumRequiredGames() {
 		Long sumOfGamesPlayedForAllPlayers = SeasonDAO.getSumOfGamesPlayedForAllPlayers(this.season.getSeasonId());
+		
+		if (sumOfGamesPlayedForAllPlayers == 0) {
+			this.minimumRequiredGames = 1;
+		}
+		
 		int totalPlayersInSeason = newSeasonStandings.size();
 		this.minimumRequiredGames = (int) ((sumOfGamesPlayedForAllPlayers / totalPlayersInSeason) / 2);
 	}

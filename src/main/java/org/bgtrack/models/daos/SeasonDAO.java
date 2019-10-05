@@ -111,10 +111,15 @@ public class SeasonDAO {
 		
 		Query sumQuery = session.createQuery(query).setParameter("seasonId", seasonId);
 		
-		Long  test = (Long ) sumQuery.list().get(0);
+		Long  sumOfGamesPlayedForAllPlayers = (Long) sumQuery.list().get(0);
+		
+		if (sumOfGamesPlayedForAllPlayers == null) {
+			sumOfGamesPlayedForAllPlayers = Long.valueOf(0);
+		}
+		
 		session.getTransaction().commit();
 		
-		return test;
+		return sumOfGamesPlayedForAllPlayers;
 	}
 
 }
