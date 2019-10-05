@@ -44,7 +44,10 @@
    	</action>
    	
   	<action name="createRound" class="org.bgtrack.actions.season.RoundCreate">
-    	<result name="success">/index.jsp</result>
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">viewSeason</param>
+    		<param name="seasonId">${seasonId}</param>
+    	</result>
 		<result name="error">/index.jsp</result>
    	</action>
 
