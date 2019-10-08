@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bgtrack.models.Round;
 import org.bgtrack.models.RoundResult;
+import org.bgtrack.models.Season;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
 import org.hibernate.Hibernate;
@@ -84,6 +85,20 @@ public class RoundDAO {
 		session.getTransaction().commit();
 		
 		return rounds;
+	}
+	
+	public static Round getRoundById(String roundId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		String query = "from Round where ROUND_ID=:roundId";
+		Round round = (Round) session.createQuery(query).setParameter("roundId", roundId).uniqueResult();
+		
+		Hibernate.initialize(round.getSeason().getRounds());
+		Hibernate.initialize(round.getSeason().getSeasonStandings());
+		
+		session.getTransaction().commit();
+		
+		return round;
 	}
 	
 }

@@ -212,7 +212,6 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		SeasonStandingHelper seasonStandingHelper = SeasonStandingHelperFactory.getSeasonStandingHelper(this.season.getScoringType());
 		seasonStandingHelper.setSeason(this.season);
 		seasonStandingHelper.buildStandings();
-		//updateSeason(this.season);
 	}
 
 	public String getSeasonName() {

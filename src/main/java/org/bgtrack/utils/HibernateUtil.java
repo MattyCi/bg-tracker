@@ -78,12 +78,12 @@ public class HibernateUtil {
 		}
 	}
 
-	public static void deleteEntity(SeasonStanding oldSeasonStanding) {
+	public static void deleteEntity(Object obj) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			session.delete(oldSeasonStanding);
+			session.delete(obj);
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();

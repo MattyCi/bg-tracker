@@ -114,6 +114,12 @@ public abstract class SeasonStandingHelper {
 		}
 		
 		int totalPlayersInSeason = newSeasonStandings.size();
+		
+		if (totalPlayersInSeason == 0) {
+			this.minimumRequiredGames = 0;
+			return;
+		}
+		
 		this.minimumRequiredGames = (int) ((sumOfGamesPlayedForAllPlayers / totalPlayersInSeason) / 2);
 	}
 

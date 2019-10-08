@@ -54,7 +54,7 @@ public class SeasonDAO {
 	 * @return
 	 */
 	public static Season getSeasonById(int seasonId, Boolean eagerLoad) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		String query = "from Season where SEASON_ID=:seasonId";
 		Season season = (Season) session.createQuery(query).setParameter("seasonId", seasonId).uniqueResult();
@@ -68,6 +68,8 @@ public class SeasonDAO {
 		}
 				
 		session.getTransaction().commit();
+		
+		session.close();
 		
 		return season;
 	}

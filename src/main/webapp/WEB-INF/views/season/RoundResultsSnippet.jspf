@@ -24,6 +24,16 @@
 				<h5>${snippetListofVictors.get(loop.index)}</h5>
 			</div>
 		</div>
+		<c:if test="${pageName == 'SeasonView'}">
+			<div class="row mt-2">
+				<div class="col-6 pt-4 float-right">
+					<form action="/deleteRound">
+						<input type="hidden" name="roundId" value="${round.roundId}">
+						<button type="submit" class="btn btn-danger">Delete Round</button>
+					</form>
+				</div>
+			</div>
+		</c:if>
 	</div>
 
 	<div class="col-12 col-lg-7 mt-4 mt-lg-0 4 my-lg-auto mx-auto">

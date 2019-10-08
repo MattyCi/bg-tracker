@@ -122,6 +122,7 @@
 				<c:set var="snippetListOfRounds" value="${season.rounds}" />
 				<c:set var="snippetListofVictors" value="${listofVictors}" />
 				<c:set var="snippetSelectedUser" value="${regUser}" />
+				<c:set var="pageName" value="SeasonView" />
 				<%@ include file="./RoundResultsSnippet.jspf" %>
 			</div>
 

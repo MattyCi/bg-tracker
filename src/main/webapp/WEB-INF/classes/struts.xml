@@ -50,6 +50,14 @@
     	</result>
 		<result name="error">/index.jsp</result>
    	</action>
+   	
+ 	<action name="deleteRound" class="org.bgtrack.actions.season.RoundDelete">
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">viewSeason</param>
+    		<param name="seasonId">${seasonId}</param>
+    	</result>
+		<result name="error">/index.jsp</result>
+   	</action>
 
    	<!-- <action name="viewSeason" >
 		<result>/WEB-INF/views/season/SingleSeasonView.jsp</result>
