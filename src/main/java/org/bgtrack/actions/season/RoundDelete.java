@@ -30,6 +30,16 @@ public class RoundDelete extends ShiroBaseAction {
 	public String execute() throws Exception {
 		super.execute();
 
+		if (!this.shiroUser.isAuthenticated()) {
+			addActionError(BGTConstants.authenticationError);
+			return BGTConstants.error;
+		}
+		
+		if (!this.shiroUser.getPrincipal().toString().equals("matt@test.com")) {
+			addActionError(BGTConstants.authorizationError);
+			return BGTConstants.error;
+		}
+		
 		Round roundToDelete = RoundDAO.getRoundById(roundId);
 		
 		Season seasonContainingRound = roundToDelete.getSeason();
