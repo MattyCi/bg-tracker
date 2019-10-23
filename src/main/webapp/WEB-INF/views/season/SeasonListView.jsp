@@ -22,57 +22,46 @@
 		<%@ include file="/WEB-INF/snippets/Header.jspf" %>
 		
 		<shiro:authenticated>
+			
 			<c:choose>
 				<c:when test="${param.view eq 'usersSeasonsList'}">
-					<div id="your-seasons" class="row pt-4">
-						<div class="col-12 text-center">
-							<h1 class="display-4">Your Seasons</h1>
-						</div>
-						<div class="col-12 text-right">
-							<a href="/viewSeasonList?view=allSeasonsList" class="text-secondary">View All Seasons</a>
-						</div>
-					
-						<c:set var="yourSeasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
-						<c:choose>
-							<c:when test="${empty yourSeasonsList}">
-								<div class="col-12 col-md-6 mx-auto">
-									<div class="alert alert-dismissible alert-danger">
-									  	<p><strong>Uh oh!</strong>  You aren't apart of any seasons yet. Try to join one by clicking "All Seasons".</p>
-									</div>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="../season/YourSeasonView.jsp" %>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					<c:set var="seasonListHeaderText" value="Your Seasons" />
+					<c:set var="seasonListLinkText" value="View All Seasons" />
+					<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
+					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
+					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet. Try to join one by clicking \"All Seasons\"." />
 				</c:when>
 				<c:otherwise>
-					<div id="all-seasons" class="row pt-4">
-						<div class="col-12 text-center">
-							<h1 class="display-4">All Seasons</h1>
-						</div>
-						<div class="col-12 text-right">
-							<a href="/viewSeasonList?view=usersSeasonsList" class="text-secondary">View Your Seasons Only</a>
-						</div>
-						
-						<c:set var="allSeasonsList" value="${SeasonDAO.getAllSeasons()}" />
-						<div class="col-12 col-md-6 mx-auto">
-							<c:if test="${empty allSeasonsList}">
-								<div class="alert alert-dismissible alert-danger text-center">
-									<p>
-										<strong>Uh oh!</strong> There aren't any seasons yet. Try to create one first.
-									</p>
-								</div>
-							</c:if>
-						</div>
-						<c:if test="${not empty allSeasonsList}">
-							<%@ include file="../season/AllSeasonView.jsp" %>
-						</c:if>
-					</div>
+					<c:set var="seasonListHeaderText" value="All Seasons" />
+					<c:set var="seasonListLinkText" value="View Your Seasons Only" />
+					<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
+					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasons()}" />
+					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet. Try to join one by clicking \"All Seasons\"." />
 				</c:otherwise>
 			</c:choose>
-		</shiro:authenticated>
+			
+			<div id="your-seasons" class="row pt-4">
+				<div class="col-12 text-center">
+					<h1 class="display-4">${seasonListHeaderText}</h1>
+				</div>
+				<div class="col-12 text-right">
+					<a href="${seasonListLink}" class="text-secondary">${seasonListLinkText}</a>
+				</div>
+			
+				<c:choose>
+					<c:when test="${empty seasonsList}">
+						<div class="col-12 col-md-6 mx-auto">
+							<div class="alert alert-dismissible alert-danger">
+							  	<p><strong>Uh oh!</strong> ${noSeasonsText}</p>
+							</div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="../season/SeasonListSnippet.jspf" %>
+					</c:otherwise>
+				</c:choose>
+			</div>
+					</shiro:authenticated>
 		
 	</div>
 </body>

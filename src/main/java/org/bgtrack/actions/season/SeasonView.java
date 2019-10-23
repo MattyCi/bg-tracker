@@ -3,6 +3,7 @@ package org.bgtrack.actions.season;
 import org.bgtrack.utils.BGTConstants;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ public class SeasonView extends ShiroBaseAction {
 	private Season season;
 	private boolean errorsOccured = false;
 	private List<String> listofVictors;
+	private boolean seasonStatus;
 	
 	public String execute() {
 		
@@ -43,7 +45,9 @@ public class SeasonView extends ShiroBaseAction {
 		}
 		
 		buildVictors(this.getSeason().getRounds());
-
+		
+		determineSeasonStatus();
+		
 		if (errorsOccured) {
 			return BGTConstants.error;
 		}
@@ -77,6 +81,23 @@ public class SeasonView extends ShiroBaseAction {
 			}
 		}
 	}
+	
+	private void determineSeasonStatus() {
+		
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+		
+		System.out.println("CURRENT TIME: "+currentTime);
+		System.out.println("END TIME: "+this.getSeason().getEndDate());
+		
+		if(currentTime.after(this.getSeason().getEndDate())) {
+			
+			this.setSeasonStatus(false);
+			
+		} else {
+			this.setSeasonStatus(true);
+		}
+		
+	}
 
 	public String getSeasonId() {
 		return seasonId;
@@ -100,6 +121,14 @@ public class SeasonView extends ShiroBaseAction {
 
 	public void setListofVictors(List<String> listofVictors) {
 		this.listofVictors = listofVictors;
+	}
+
+	public boolean getSeasonStatus() {
+		return seasonStatus;
+	}
+
+	public void setSeasonStatus(boolean seasonStatus) {
+		this.seasonStatus = seasonStatus;
 	}
 	
 }

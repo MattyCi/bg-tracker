@@ -3,6 +3,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
+<jsp:useBean id="SeasonDAO" class="org.bgtrack.models.daos.SeasonDAO" scope="session"/>
 
 <!DOCTYPE html>
 <html>
@@ -23,21 +24,54 @@
 		<%@ include file="../../snippets/Header.jspf" %>
 		
 		<shiro:authenticated>
-			
-			<div class="row">
-				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
+
+			<div class="row mt-4">
+				<div class="col-12 mx-auto text-center">
 					<p class="h1">${season.getName()}</p>
+					<p class="h3">
+						<c:choose>
+							<c:when test="${seasonStatus}">
+								<span class="badge badge-success">Season Active</span>
+							</c:when>
+							<c:otherwise>
+								<span class="badge badge-danger">Season Ended</span>
+							</c:otherwise>
+						</c:choose>
+					</p>
 				</div>
-				<div class="col-12 col-lg-6 mx-auto my-auto text-center mt-4">
-					<p class="h2">End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getEndDate()}" /></p>
+			</div>
+						
+			<div class="row">
+				
+				<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+				
+				<div class="col-12 mx-auto text-center pb-3">
+					<h3>Season Info</h3>
 				</div>
+				
+				<div class="col-12 col-sm-6 mx-auto text-center verticle-line">
+					<h4>Start Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" /></h4>
+					<h4>End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.endDate}" /></h4>
+					<h4>Season Game: ${season.game.gameName}</h4>
+				</div>
+				
+				<div class="col-12 col-sm-6 mx-auto text-center">
+					<h4>Total Rounds Played: ${season.rounds.size()}</h4>
+					<h4>Total Players: ${SeasonDAO.getAllUsersInSeason(season.seasonId).size()}</h4>
+					<h4>Season Creator: ${season.creator.firstName} ${season.creator.lastName}</h4>
+				</div>
+				
+				<hr style="width: 100%; ; height: 1px; background-color: #EEEEEE;">
+				
 			</div>
 			
 			<div class="row">
-				<div class="col-12 col-lg-6 mx-auto mt-4">
-					<%@ include file="../../views/season/SeasonStandingsSnippet.jsp" %>
+				
+				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
+					<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
 				</div>
-
+			
+			
 				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
 					<h3 class="mb-3">Add a Round</h3>
 			
@@ -66,12 +100,31 @@
 						
 						<div class="row">
 							<div class="col-md-6 pt-3 ml-auto">
-								<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
+								
+								<c:choose>
+									<c:when test="${seasonStatus}">
+										<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="btn btn-primary btn-block mb-2 disabled" disabled>Add Player</button>
+									</c:otherwise>
+								</c:choose>
+								
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 py-4 ml-auto">
-								<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
+							
+								<c:choose>
+									<c:when test="${seasonStatus}">
+										<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
+									</c:when>
+									<c:otherwise>
+										<button id="round-create-btn" type="button" class="btn btn-secondary btn-block mb-2 disabled" disabled>Create Round</button>
+										<p class="text-muted text-small pl-2">Rounds can not be added for seasons which have ended.</p>
+									</c:otherwise>
+								</c:choose>
+								
 							</div>
 						</div>
 					</form>

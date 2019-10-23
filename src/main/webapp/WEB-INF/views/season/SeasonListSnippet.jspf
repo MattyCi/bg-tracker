@@ -8,10 +8,18 @@
     </tr>
   </thead>
   <tbody>
-  	<c:forEach var = "season" items="${allSeasonsList}" >
+  
+  	<jsp:useBean id="currentDate" class="java.util.Date"/>
+  	
+  	<c:forEach var = "season" items="${seasonsList}" >
+	    
 	    <tr>
 	    	<td>
-	    		<a href="/viewSeason?seasonId=${season.getSeasonId()}">${season.getName()}</a></td>
+	    		<a class="pr-2" href="/viewSeason?seasonId=${season.getSeasonId()}">${season.getName()}</a>
+	    		<c:if test="${season.endDate lt currentDate}"> 
+					<span class="badge badge-danger">Season Ended</span>
+				</c:if>
+    		</td>
 	    	<td>
 				<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getStartDate()}" />
 			</td>
@@ -19,6 +27,7 @@
 	      		<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getEndDate()}" />
       		</td>
 	    </tr>
+	    
     </c:forEach>
   </tbody>
 </table>

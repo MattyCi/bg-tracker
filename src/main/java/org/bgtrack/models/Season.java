@@ -5,6 +5,7 @@ import java.math.BigInteger;
 
 import javax.persistence.*;
 
+import org.bgtrack.models.user.Reguser;
 import org.hibernate.annotations.OrderBy;
 
 import java.sql.Timestamp;
@@ -53,6 +54,11 @@ public class Season implements Serializable {
 	@OrderBy(clause = "PLACE asc, AVERAGED_POINTS desc")
 	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private List<SeasonStanding> seasonStandings;
+	
+	//bi-directional many-to-one association to Reguser
+	@ManyToOne
+	@JoinColumn(name="CREATOR")
+	private Reguser creator;
 
 	public Season() {
 	}
@@ -147,6 +153,14 @@ public class Season implements Serializable {
 
 	public void setScoringType(String scoringType) {
 		this.scoringType = scoringType;
+	}
+	
+	public Reguser getCreator() {
+		return this.creator;
+	}
+
+	public void setCreator(Reguser creator) {
+		this.creator = creator;
 	}
 
 }
