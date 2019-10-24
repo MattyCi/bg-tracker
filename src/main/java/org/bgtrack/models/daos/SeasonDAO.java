@@ -123,5 +123,15 @@ public class SeasonDAO {
 		
 		return sumOfGamesPlayedForAllPlayers;
 	}
+	
+	public static void markSeasonAsInactive(int seasonId) {
+
+		Season seasonToDeactivate = SeasonDAO.getSeasonById(seasonId, false);
+		
+		seasonToDeactivate.setStatus("I");
+		
+		HibernateUtil.updateObject(seasonToDeactivate);
+		
+	}
 
 }

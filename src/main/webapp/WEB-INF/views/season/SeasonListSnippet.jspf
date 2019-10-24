@@ -13,10 +13,14 @@
   	
   	<c:forEach var = "season" items="${seasonsList}" >
 	    
+	    <c:if test="${season.endDate lt currentDate}">
+	    	${SeasonDAO.markSeasonAsInactive(season.seasonId)}
+	    </c:if>
+	    
 	    <tr>
 	    	<td>
 	    		<a class="pr-2" href="/viewSeason?seasonId=${season.getSeasonId()}">${season.getName()}</a>
-	    		<c:if test="${season.endDate lt currentDate}"> 
+	    		<c:if test="${season.status == 'I'}"> 
 					<span class="badge badge-danger">Season Ended</span>
 				</c:if>
     		</td>

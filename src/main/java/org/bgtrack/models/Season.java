@@ -59,6 +59,9 @@ public class Season implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="CREATOR")
 	private Reguser creator;
+	
+	@Column(name="STATUS", length=1)
+	private String status;
 
 	public Season() {
 	}
@@ -161,6 +164,14 @@ public class Season implements Serializable {
 
 	public void setCreator(Reguser creator) {
 		this.creator = creator;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

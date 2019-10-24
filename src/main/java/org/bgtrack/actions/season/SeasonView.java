@@ -46,7 +46,8 @@ public class SeasonView extends ShiroBaseAction {
 		
 		buildVictors(this.getSeason().getRounds());
 		
-		determineSeasonStatus();
+		if ("A".equals(season.getStatus()))
+			determineSeasonStatus();
 		
 		if (errorsOccured) {
 			return BGTConstants.error;
@@ -86,15 +87,10 @@ public class SeasonView extends ShiroBaseAction {
 		
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		
-		System.out.println("CURRENT TIME: "+currentTime);
-		System.out.println("END TIME: "+this.getSeason().getEndDate());
-		
 		if(currentTime.after(this.getSeason().getEndDate())) {
 			
-			this.setSeasonStatus(false);
+			SeasonDAO.markSeasonAsInactive(Integer.parseInt(seasonId));
 			
-		} else {
-			this.setSeasonStatus(true);
 		}
 		
 	}
