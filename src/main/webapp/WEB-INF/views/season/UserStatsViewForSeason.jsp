@@ -17,7 +17,7 @@
 </head>
 <body>
 	
-	<jsp:include page="../../snippets/Nav.jspf" />
+	<%@ include file="../../snippets/Nav.jspf" %>
 	
 	<div class="container">
 		<%@ include file="../../snippets/Header.jspf" %>
