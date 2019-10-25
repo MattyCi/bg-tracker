@@ -32,4 +32,5 @@ public final class BGTConstants {
 	public static final String authorizationError = "User not authorized to run this command.";
 	public static final String dateError = "There was an error with the format of the date provided.";
 	public static final String seasonIdError = "The season ID was incorrect.";
+	public static final String seasonInactiveError = "This season has ended, so rounds cannot be created for it.";
 }

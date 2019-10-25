@@ -66,6 +66,12 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 				addActionError(BGTConstants.checkFields);
 				return BGTConstants.error;
 			}
+			
+			if ("I".equals(this.season.getStatus())) {
+				addActionError(BGTConstants.seasonInactiveError);
+				return BGTConstants.error;
+			}
+			
 		}
 
 		this.roundResultList = new ArrayList<RoundResult>(); 
