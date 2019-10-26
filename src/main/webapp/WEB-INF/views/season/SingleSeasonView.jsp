@@ -30,7 +30,7 @@
 					<p class="h1">${season.getName()}</p>
 					<p class="h3">
 						<c:choose>
-							<c:when test="${seasonStatus}">
+							<c:when test="${season.status == 'A'}">
 								<span class="badge badge-success">Season Active</span>
 							</c:when>
 							<c:otherwise>
@@ -102,7 +102,7 @@
 							<div class="col-md-6 pt-3 ml-auto">
 								
 								<c:choose>
-									<c:when test="${seasonStatus}">
+									<c:when test="${season.status == 'A'}">
 										<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
 									</c:when>
 									<c:otherwise>
@@ -116,7 +116,7 @@
 							<div class="col-md-6 py-4 ml-auto">
 							
 								<c:choose>
-									<c:when test="${seasonStatus}">
+									<c:when test="${season.status == 'A'}">
 										<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
 									</c:when>
 									<c:otherwise>
