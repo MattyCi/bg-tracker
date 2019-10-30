@@ -30,7 +30,13 @@ public final class BGTConstants {
 	public static String checkFields = "Please check the data submitted and try again.";
 	public static final String authenticationError = "User not authenticated, please log in once more.";
 	public static final String authorizationError = "User not authorized to run this command.";
+	public static final String logInPromp = "Please log in to perform this action.";
 	public static final String dateError = "There was an error with the format of the date provided.";
 	public static final String seasonIdError = "The season ID was incorrect.";
 	public static final String seasonInactiveError = "This season has ended, so rounds cannot be created for it.";
+	
+	// search
+	public static final String playerSearchParamMissing = "To search for a player, you must either specify a first or "
+			+ "a last name.";
+	
 }

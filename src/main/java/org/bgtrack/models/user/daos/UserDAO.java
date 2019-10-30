@@ -1,9 +1,11 @@
 package org.bgtrack.models.user.daos;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import java.util.List;
 
+import org.bgtrack.models.Round;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
 
@@ -45,6 +47,24 @@ public class UserDAO {
 		session.getTransaction().commit();
 
 		return listOfUsers;
+	}
+	
+	/**
+	 * TODO: User a contains function instead and set up an index on these columns for much better performance...
+	 */
+	public static List<Reguser> getUserByFirstAndLastName(String firstName, String lastName) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		String query = "from Reguser where firstName like :firstName and lastName like :lastName";
+		
+		List<Reguser> matchedUsers = (List<Reguser>) session.createQuery(query)
+				.setParameter("firstName", "%"+firstName+"%").setParameter("lastName", "%"+lastName+"%").list();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return matchedUsers;
 	}
 	
 }
