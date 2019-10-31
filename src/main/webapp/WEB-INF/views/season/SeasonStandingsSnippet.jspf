@@ -49,7 +49,7 @@
 				<th scope="row">
 					<c:choose>
 						<c:when test="${isVictor eq true}">
-							<i class="fas fa-crown"></i> VICTOR <i class="fas fa-crown"></i>
+							<i class="fas fa-crown d-none d-sm-inline"></i> VICTOR <i class="fas fa-crown d-none d-sm-inline"></i>
 						</c:when>
 						<c:otherwise>
 							${finalPlayerPlace}
