@@ -32,11 +32,13 @@ var SeasonController = {
 	
 	addPlayerInputToCreateRoundForm : function() {
 		
-		if (this.addedPlayerCount > 12) {
+		console.log(this.addedPlayerCount);
+		
+		if (this.addedPlayerCount >= 11) {
 			alert("Sorry, no more than 12 players to a round are allowed.");
 			return;
 		}
-		
+
 		var inputContainer = document.getElementById("player-add-container-"+(this.addedPlayerCount));
 		var clonedContainer = inputContainer.cloneNode(true);
 		
@@ -44,16 +46,71 @@ var SeasonController = {
 		
 		clonedContainer.id = 'player-add-container-'+this.addedPlayerCount;
 		
-		clonedContainer.children[0].children[0].name = 'roundPlayer'+this.addedPlayerCount;
-			
-		clonedContainer.children[1].children[0].name = 'playerPlace'+this.addedPlayerCount;
-		
-		// make the place one more than the prior value in the placeholder text
-		clonedContainer.children[1].children[0].value = inputContainer.children[1].children[0].valueAsNumber+1;
-		
 		inputContainer.parentNode.insertBefore(clonedContainer, inputContainer.nextSibling);
 		
-		var removeButtonElement = clonedContainer.children[2].children[0];
+		this.incrementAllChildrenIds(clonedContainer);
+		
+		this.updateNameAttributes();
+		
+		this.incremenetClonedPlayerPlaceInput();
+		
+		this.updatePlayerRemoveButtons();
+		
+	},
+	
+	incrementAllChildrenIds : function(elementToIncrement) {
+
+		var childrenElements = elementToIncrement.children;
+		
+		for (var i = 0; i < childrenElements.length; i++) {
+			
+			this.incrementChildId(childrenElements[i]);
+			
+			if (childrenElements[i].hasChildNodes()) {
+				this.incrementAllChildrenIds(childrenElements[i]);
+			}
+			
+		}
+
+	},
+	
+	incrementChildId : function(elementToIncrement) {
+
+		var currentElementId = elementToIncrement.id;
+		
+		if (currentElementId.includes("-"+(this.addedPlayerCount-1))) {
+			
+			var newElementId = currentElementId.replace("-"+(this.addedPlayerCount-1), "-"+this.addedPlayerCount);
+
+			console.log("replacing currentElementId of: "+currentElementId+" with newElementId: "+newElementId);
+			
+			elementToIncrement.id = newElementId;
+			
+		}
+
+	},
+	
+	updateNameAttributes : function() {
+
+		document.getElementById("recent-players-select-"+(this.addedPlayerCount-1)).name = 'roundPlayer'+this.addedPlayerCount;
+
+		document.getElementById("player-place-select-"+this.addedPlayerCount).name = 'playerPlace'+this.addedPlayerCount;
+		
+	},
+	
+	incremenetClonedPlayerPlaceInput : function() {
+		
+		console.log("this.addedPlayerCount: "+this.addedPlayerCount)
+		
+		var previouslySelectedPlace = parseInt(document.getElementById("player-place-select-"+(this.addedPlayerCount-1)).value, 10);
+		
+		document.getElementById("player-place-select-"+this.addedPlayerCount).value = previouslySelectedPlace + 1;
+
+	},
+	
+	updatePlayerRemoveButtons : function() {
+		
+		var removeButtonElement = document.getElementById("remove-player-button-"+this.addedPlayerCount);
 		
 		this.showRemovePlayerButton(removeButtonElement);
 		
@@ -64,14 +121,13 @@ var SeasonController = {
 	},
 	
 	showRemovePlayerButton : function(removeButtonElement) {
-		
-		console.log(this.addedPlayerCount);
-		
+				
 		if (this.addedPlayerCount != 0) {
-			console.log(removeButtonElement.classList);
+			
 			removeButtonElement.classList.remove("d-none");
-			console.log(removeButtonElement.classList);
+			
 			removeButtonElement.id = "remove-player-button-"+this.addedPlayerCount;
+			
 		}
 
 	},
@@ -89,7 +145,7 @@ var SeasonController = {
 		var lastAddedPlayerAddContainer = document.getElementById("player-add-container-"+(SeasonController.addedPlayerCount));
 		lastAddedPlayerAddContainer.remove();
 		
-		var previousRemoveButtonElement = document.getElementById("player-add-container-"+(SeasonController.addedPlayerCount-1)).children[2].children[0];
+		var previousRemoveButtonElement = document.getElementById("player-add-container-"+(SeasonController.addedPlayerCount-1)).children[4].children[0];
 		
 		SeasonController.addedPlayerCount--;
 		
@@ -103,9 +159,10 @@ var SeasonController = {
 		
 		var roundResultCount = 0;
 		for (var i = 0, element; element = form.elements[i++];) {
+			
 			if (element.getAttribute("data-round-info") === 'true') {
-				console.log(element.type);
-				if (element.type === "select-one") {
+
+				if (element.id.includes("recent-players-select")) {
 					roundResultsNames[roundResultCount] = element.selectedOptions[0].innerHTML;
 					
 					if (!this.isValidPlayer(roundResultsNames[roundResultCount])) {
@@ -124,6 +181,7 @@ var SeasonController = {
 					roundResultCount++;
 				}
 		    }
+			
 		}
 		
 		this.buildRoundCreateConfirmPopup(roundResultsNames, roundResultsPlaces);

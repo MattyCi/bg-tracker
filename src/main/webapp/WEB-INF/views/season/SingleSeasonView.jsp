@@ -67,11 +67,12 @@
 			
 			<div class="row">
 				
-				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
-					<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
-				</div>
-			
-			
+				<c:if test="${!empty season.getRounds()}">
+					<div class="col-12 col-lg-6 mx-auto text-center mt-4">
+						<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
+					</div>
+				</c:if>
+
 				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
 					<h3 class="mb-3">Add a Round</h3>
 			
@@ -79,22 +80,39 @@
 						<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
 						<div id="player-add-container-0" class="form-row justify-content-center">
 						    
-						    <div class="col-sm-7 col-lg-8 float-left">
-							    <select name="roundPlayer0" data-round-info="true" class="form-control" id="round-player-select">
-									<option value="" selected disabled hidden>Choose Player</option>
+						    <div class="col-xs-7 col-lg-8 float-left">
+							    <select id="recent-players-select-0" name="roundPlayer0" data-round-info="true" class="form-control">
+									<option value="" selected disabled hidden>Choose from Recent Players</option>
 									<c:forEach items="${UserDAO.getAllUsers()}" var="user">
 										<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
 									</c:forEach>
 								</select> 
 							</div>
-							<div class="col-sm-4 col-lg-3 mt-2 mt-sm-0 float-left">
-								<input name="playerPlace0" data-round-info="true" type="number" class="form-control" id="round-player-place-input" placeholder="Place" value="1">
+
+							<div class="col-8 col-lg-8 my-3 float-left">
+								<form class="form-inline my-2 my-lg-0">
+									<input class="form-control" type="text" placeholder="Search for Player">
+								</form>
+							</div>
+							<div class="col-4 col-lg-2 my-3 float-left">
+								<button class="btn btn-block btn-secondary" type="submit">
+									<i class="fas fa-search"></i>
+								</button>
+							</div>
+							
+							<div class="col-xs-4 col-lg-2 mt-2 mt-sm-0 text-left">
+								<label for="round-place-select" class="col-sm-2 col-form-label float-left">Choose Player's Place:</label>
+								<select id="player-place-select-0" name="playerPlace0" data-round-info="true" class="form-control">
+									<c:forEach begin="1" end="12" varStatus="loop">
+										<option value="${loop.index}">${loop.index}</option>
+									</c:forEach>
+								</select> 
 							</div>
 							<div class="col-sm-1 col-lg-1">
 								<i id="remove-player-button-0" class="text-danger fas fa-minus-circle fa-lg i-middle d-none" style="cursor: pointer;"></i>
 							</div>
-							
-							<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+
+							<hr class="my-5" style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
 							
 						</div>
 						
