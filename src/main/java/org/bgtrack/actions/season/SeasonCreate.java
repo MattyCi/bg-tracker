@@ -70,6 +70,9 @@ public class SeasonCreate extends ShiroBaseAction {
 		season.setStartDate(seasonStartTimestamp);
 		season.setEndDate(seasonEndTimestamp);
 		season.setScoringType(seasonScoringType);
+		
+		season.setStatus("A");
+		season.setCreator(this.getRegUser());
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = null;
