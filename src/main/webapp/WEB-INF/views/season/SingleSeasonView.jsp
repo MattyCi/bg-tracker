@@ -5,6 +5,8 @@
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 <jsp:useBean id="SeasonDAO" class="org.bgtrack.models.daos.SeasonDAO" scope="session"/>
 
+<c:set var="usersInSeason" value="${SeasonDAO.getAllUsersInSeason(season.seasonId)}" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +59,7 @@
 				
 				<div class="col-12 col-sm-6 mx-auto text-center">
 					<h4>Total Rounds Played: ${season.rounds.size()}</h4>
-					<h4>Total Players: ${SeasonDAO.getAllUsersInSeason(season.seasonId).size()}</h4>
+					<h4>Total Players: ${usersInSeason.size()}</h4>
 					<h4>Season Creator: ${season.creator.firstName} ${season.creator.lastName}</h4>
 				</div>
 				
@@ -80,39 +82,37 @@
 						<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
 						<div id="player-add-container-0" class="form-row justify-content-center">
 						    
-						    <div class="col-xs-7 col-lg-8 float-left">
+						    <div class="col-xs-7 col-lg-12 float-left">
 							    <select id="recent-players-select-0" name="roundPlayer0" data-round-info="true" class="form-control">
 									<option value="" selected disabled hidden>Choose from Recent Players</option>
-									<c:forEach items="${UserDAO.getAllUsers()}" var="user">
+									<c:forEach items="${usersInSeason}" var="user">
 										<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
 									</c:forEach>
 								</select> 
 							</div>
 
 							<div class="col-8 col-lg-8 my-3 float-left">
-								<form class="form-inline my-2 my-lg-0">
-									<input class="form-control" type="text" placeholder="Search for Player">
-								</form>
+								<input id="player-search-input-0" class="form-control" type="text" placeholder="Search for Player">
 							</div>
-							<div class="col-4 col-lg-2 my-3 float-left">
-								<button class="btn btn-block btn-secondary" type="submit">
+							<div class="col-4 col-lg-4 my-3 float-left">
+								<button id="player-search-btn-0" class="btn btn-block btn-secondary" type="button">
 									<i class="fas fa-search"></i>
 								</button>
 							</div>
 							
-							<div class="col-xs-4 col-lg-2 mt-2 mt-sm-0 text-left">
-								<label for="round-place-select" class="col-sm-2 col-form-label float-left">Choose Player's Place:</label>
+							<div class="col-xs-4 col-lg-12 mt-2 mt-sm-0 text-left">
+								<label for="round-place-select" class="float-left">Choose Player's Place:</label>
 								<select id="player-place-select-0" name="playerPlace0" data-round-info="true" class="form-control">
 									<c:forEach begin="1" end="12" varStatus="loop">
 										<option value="${loop.index}">${loop.index}</option>
 									</c:forEach>
 								</select> 
 							</div>
-							<div class="col-sm-1 col-lg-1">
-								<i id="remove-player-button-0" class="text-danger fas fa-minus-circle fa-lg i-middle d-none" style="cursor: pointer;"></i>
+							<div class="col pt-4">
+								<i id="remove-player-button-0" class="text-danger fas fa-minus-circle fa-lg d-none" style="cursor: pointer;"></i>
 							</div>
 
-							<hr class="my-5" style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+							<hr class="my-4" style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
 							
 						</div>
 						
@@ -147,8 +147,68 @@
 						</div>
 					</form>
 				</div>
+				
 			</div>
 			
+			<div class="row">
+				<div class="col-12 mx-auto text-center mt-4">
+					<h3>Round Results</h3>
+					
+					<c:if test="${empty season.getRounds()}">
+						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
+							<p class="lead py-2">
+								This season does not have any rounds created yet. Play a game and add the round results above!
+							</p>
+						</div>
+					</c:if>
+				</div>
+			</div>
+			
+			<div class="row mb-5">
+				<c:set var="snippetListOfRounds" value="${season.rounds}" />
+				<c:set var="snippetListofVictors" value="${listofVictors}" />
+				<c:set var="snippetSelectedUser" value="${regUser}" />
+				<c:set var="pageName" value="SeasonView" />
+				<%@ include file="./RoundResultsSnippet.jspf" %>
+			</div>
+
+			<div id="player-search-results-popup" class="popup d-none">
+
+				<div class="popup-content">
+					
+					<button id="player-search-results-popup-close-btn" type="button" class="close">&times;</button>
+					
+					<p class="text-center">Player Search Results </br> <small id="player-search-results-popup-status-text" class="text-muted">Loading player search results...</small></p>
+
+					<div id="player-search-results-popup-spinner" class="d-flex justify-content-center">
+						<div class="spinner-border text-center" role="status">
+							<span class="sr-only">Loading player search results...</span>
+						</div>
+					</div>
+					
+					<div id="player-search-results-list" class="d-none">
+
+						<table id="player-search-results-list-table" class="table table-striped table-hover">
+							<thead>
+								<tr class="table-primary">
+									<th scope="col">First Name</th>
+									<th scope="col">Last Name</th>
+								</tr>
+							</thead>
+							<tbody id="player-search-results-list-table-body">
+							</tbody>
+						</table>
+
+					</div>
+					
+					<div id="player-search-error" class="row d-none">
+						<div id="player-search-error-text" class="col-10 alert alert-danger mx-auto"></div>
+					</div>
+
+				</div>
+
+			</div>
+
 			<div id="round-create-confirm-popup" class="popup d-none">
 				<div class="popup-content">
     				<p class="text-center">Round Create Confirmation </br> <small class="text-muted">Please verify the below results are correct.</small></p>
@@ -173,28 +233,6 @@
 					</div>
 					
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-12 mx-auto text-center mt-4">
-					<h3>Round Results</h3>
-					
-					<c:if test="${empty season.getRounds()}">
-						<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">
-							<p class="lead py-2">
-								This season does not have any rounds created yet. Play a game and add the round results above!
-							</p>
-						</div>
-					</c:if>
-				</div>
-			</div>
-			
-			<div class="row mb-5">
-				<c:set var="snippetListOfRounds" value="${season.rounds}" />
-				<c:set var="snippetListofVictors" value="${listofVictors}" />
-				<c:set var="snippetSelectedUser" value="${regUser}" />
-				<c:set var="pageName" value="SeasonView" />
-				<%@ include file="./RoundResultsSnippet.jspf" %>
 			</div>
 
 		</shiro:authenticated>

@@ -31,9 +31,7 @@ var SeasonController = {
 	},
 	
 	addPlayerInputToCreateRoundForm : function() {
-		
-		console.log(this.addedPlayerCount);
-		
+				
 		if (this.addedPlayerCount >= 11) {
 			alert("Sorry, no more than 12 players to a round are allowed.");
 			return;
@@ -50,12 +48,26 @@ var SeasonController = {
 		
 		this.incrementAllChildrenIds(clonedContainer);
 		
+		this.clearClonedInputs();
+		
 		this.updateNameAttributes();
 		
 		this.incremenetClonedPlayerPlaceInput();
 		
 		this.updatePlayerRemoveButtons();
 		
+		this.addPlayerSearchOnClickFunctions();
+		
+	},
+	
+	clearClonedInputs : function() {
+
+		document.getElementById('player-search-input-'+this.addedPlayerCount).value = '';
+		
+		document.getElementById('player-search-input-'+this.addedPlayerCount).classList.remove('is-valid');
+		
+		document.getElementById('player-search-input-'+this.addedPlayerCount).classList.remove('is-invalid');
+
 	},
 	
 	incrementAllChildrenIds : function(elementToIncrement) {
@@ -81,8 +93,6 @@ var SeasonController = {
 		if (currentElementId.includes("-"+(this.addedPlayerCount-1))) {
 			
 			var newElementId = currentElementId.replace("-"+(this.addedPlayerCount-1), "-"+this.addedPlayerCount);
-
-			console.log("replacing currentElementId of: "+currentElementId+" with newElementId: "+newElementId);
 			
 			elementToIncrement.id = newElementId;
 			
@@ -92,16 +102,14 @@ var SeasonController = {
 	
 	updateNameAttributes : function() {
 
-		document.getElementById("recent-players-select-"+(this.addedPlayerCount-1)).name = 'roundPlayer'+this.addedPlayerCount;
+		document.getElementById("recent-players-select-"+(this.addedPlayerCount)).name = 'roundPlayer'+this.addedPlayerCount;
 
 		document.getElementById("player-place-select-"+this.addedPlayerCount).name = 'playerPlace'+this.addedPlayerCount;
 		
 	},
 	
 	incremenetClonedPlayerPlaceInput : function() {
-		
-		console.log("this.addedPlayerCount: "+this.addedPlayerCount)
-		
+				
 		var previouslySelectedPlace = parseInt(document.getElementById("player-place-select-"+(this.addedPlayerCount-1)).value, 10);
 		
 		document.getElementById("player-place-select-"+this.addedPlayerCount).value = previouslySelectedPlace + 1;
@@ -150,6 +158,16 @@ var SeasonController = {
 		SeasonController.addedPlayerCount--;
 		
 		SeasonController.showRemovePlayerButton(previousRemoveButtonElement);
+
+	},
+	
+	addPlayerSearchOnClickFunctions : function() {
+
+		var currentlyAddedPlayerCount = SeasonController.addedPlayerCount;
+		
+	    document.getElementById('player-search-btn-'+currentlyAddedPlayerCount).onclick = function(){
+	    	PlayerSearchUtil.playerSearch(currentlyAddedPlayerCount);
+	    };
 
 	},
 	
@@ -234,6 +252,10 @@ var SeasonController = {
 };
 
 window.onload = function(){
+	
+    var roundCreateConfirmPopup = document.getElementById("round-create-confirm-popup");
+    var playerSearchResultsPopup = document.getElementById("player-search-results-popup");
+	
     document.getElementById('round-create-btn').onclick = function(){
     	SeasonController.confirmAddRound(document.getElementById('round-create-form'));
     };
@@ -246,8 +268,7 @@ window.onload = function(){
     	roundCreateConfirmPopup.classList.add("d-none");
     	SeasonController.clearRoundConfirmTable();
     };
-
-    var roundCreateConfirmPopup = document.getElementById("round-create-confirm-popup");
+    
 	window.onclick = function(event) {
     	if (event.target == roundCreateConfirmPopup) {
     		roundCreateConfirmPopup.classList.add("d-none");
@@ -260,5 +281,13 @@ window.onload = function(){
             return false;
         }
     });
+	
+    document.getElementById('player-search-btn-0').onclick = function(){
+    	PlayerSearchUtil.playerSearch(0);
+    };
+	
+    document.getElementById('player-search-results-popup-close-btn').onclick = function(){
+    	playerSearchResultsPopup.classList.add("d-none");
+    };
     
 }

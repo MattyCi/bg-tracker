@@ -53,8 +53,13 @@ public class PlayerSearch extends JsonAction {
 		
 		List<Reguser> matchedUsers = UserDAO.getUserByFirstAndLastName(this.firstName, this.lastName);
 		
+		if (matchedUsers.isEmpty()) {
+			// its possible the user put the last name only in the input field
+			matchedUsers = UserDAO.getUserByLastName(this.firstName);
+		}
+		
 		this.personSearchResponses = createListOfPersonSearchResponses(matchedUsers);
-				
+		
 		return SUCCESS;
 		
 	}

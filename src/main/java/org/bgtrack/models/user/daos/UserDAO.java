@@ -50,7 +50,7 @@ public class UserDAO {
 	}
 	
 	/**
-	 * TODO: User a contains function instead and set up an index on these columns for much better performance...
+	 * TODO: Use a contains function instead and set up an index on these columns for much better performance...
 	 */
 	public static List<Reguser> getUserByFirstAndLastName(String firstName, String lastName) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -60,6 +60,21 @@ public class UserDAO {
 		
 		List<Reguser> matchedUsers = (List<Reguser>) session.createQuery(query)
 				.setParameter("firstName", "%"+firstName+"%").setParameter("lastName", "%"+lastName+"%").list();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return matchedUsers;
+	}
+	
+	public static List<Reguser> getUserByLastName(String lastName) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		String query = "from Reguser where lastName like :lastName";
+		
+		List<Reguser> matchedUsers = (List<Reguser>) session.createQuery(query)
+				.setParameter("lastName", "%"+lastName+"%").list();
 		
 		session.getTransaction().commit();
 		session.close();
