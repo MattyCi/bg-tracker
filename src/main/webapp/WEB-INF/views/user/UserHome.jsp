@@ -31,7 +31,7 @@
 					<option value="${game.getGameId()}">${game.getGameName()}</option>
 				</c:forEach>
 			</select> 
-			<input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date">
+			<input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date" autocomplete="off">
 			<select name="seasonScoringType" class="form-control" id="seasonScoringTypeSelect">
 				<option value="A">Averaged Scoring</option>
 				<option value="L">Layered Scoring</option>
