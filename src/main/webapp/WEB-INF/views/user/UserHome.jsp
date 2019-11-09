@@ -25,7 +25,7 @@
 	<div class="col-12 col-md-6 mx-auto my-2">
 		<h3 class="text-center">Start a new Season</h3>
 		<form id="seasonCreateForm" action="/createSeason" method="POST">
-			<input name="seasonName" type="text" class="form-control my-2" id="register-first-name" placeholder="Season Name"> 
+			<input name="seasonName" type="text" class="form-control my-2" id="register-first-name" placeholder="Season Name" autocomplete="off"> 
 			<select name="seasonGameId" class="form-control" id="seasonGameSelect">
 				<c:forEach items="${GameDAO.getAllGames()}" var="game">
 					<option value="${game.getGameId()}">${game.getGameName()}</option>
