@@ -3,6 +3,7 @@ package org.bgtrack.models;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.bgtrack.models.user.Reguser;
 import org.hibernate.annotations.OrderBy;
 
 import java.sql.Timestamp;
@@ -37,6 +38,11 @@ public class Round implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="SEASON_ID")
 	private Season season;
+	
+	//bi-directional many-to-one association to Reguser
+	@ManyToOne
+	@JoinColumn(name="CREATOR")
+	private Reguser creator;
 
 	public Round() {
 	}
@@ -85,6 +91,14 @@ public class Round implements Serializable {
 
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+	
+	public Reguser getCreator() {
+		return this.creator;
+	}
+
+	public void setCreator(Reguser creator) {
+		this.creator = creator;
 	}
 
 }

@@ -69,6 +69,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<small id="round-creator-name-${loop.index}" class="form-text text-muted">Round created by: ${round.creator.firstName} ${round.creator.lastName}</small>
 	</div>
 
 </c:forEach>

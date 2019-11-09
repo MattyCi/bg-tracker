@@ -80,6 +80,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		Timestamp roundStartTimestamp = new Timestamp(System.currentTimeMillis());
 		round.setRoundDate(roundStartTimestamp);
 		round.setSeason(this.season);
+		round.setCreator(this.regUser);
 		
 		// 12 max players
 		for (int i = 0; i < 13; i++ ) {
