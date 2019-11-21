@@ -1,59 +1,50 @@
 package org.bgtrack.actions.season;
 
-import java.io.Serializable;
-
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.daos.RoundDAO;
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
-import org.hibernate.Session;
 
 public class RoundDelete extends ShiroBaseAction {
 	private static final long serialVersionUID = 8752947492063852728L;
 	
+	private static final String roundDeletePermissionsErrorText = "Sorry, only a season's creator or admin can delete a round!";
+	
 	private String roundId;
 	private String seasonId;
+	
+	Round roundToDelete;
+	Season seasonContainingRound;
 
 	@Override
 	public void validate() {
 		
+		super.validate();
+		
 		if (roundId == null || roundId.isEmpty()) {
-			this.addActionError(BGTConstants.genericError);
-			this.isValidationFailed = true;
+			this.addActionError(BGTConstants.checkFields);
+		}
+		
+		roundToDelete = RoundDAO.getRoundById(roundId);
+		
+		seasonContainingRound = roundToDelete.getSeason();
+		
+		this.setSeasonId(seasonContainingRound.getSeasonId().toString());
+		
+		if (!this.isPermitted("season:deleteround:"+this.seasonId)) {
+			this.addActionError(roundDeletePermissionsErrorText);
 		}
 		
 	}
 	
 	@Override
 	public String execute() throws Exception {
-		super.execute();
-
-		if (!this.shiroUser.isAuthenticated()) {
-			addActionError(BGTConstants.authenticationError);
-			return BGTConstants.error;
-		}
-		
-		if (!this.shiroUser.getPrincipal().toString().equals("matt@test.com")) {
-			addActionError(BGTConstants.authorizationError);
-			return BGTConstants.error;
-		}
-		
-		if (this.seasonId == null || this.seasonId.isEmpty()) {
-			addActionError(BGTConstants.checkFields);
-			return BGTConstants.error;
-		}
-		
-		Round roundToDelete = RoundDAO.getRoundById(roundId);
-		
-		Season seasonContainingRound = roundToDelete.getSeason();
-				
+	
 		HibernateUtil.deleteEntity(roundToDelete);
 		
 		recalculateSeasonScoring(seasonContainingRound);
-		
-		this.setSeasonId(seasonContainingRound.getSeasonId().toString());
 		
 		return BGTConstants.success;
 	}

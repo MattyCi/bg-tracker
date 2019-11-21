@@ -24,14 +24,12 @@ public class CalculateUserSeasonStatsAction extends ShiroBaseAction {
 			this.selectedUser = UserDAO.getUserByID(selectedUserId);
 		} else {
 			addActionError(BGTConstants.genericError);
-			this.setValidationFailed(true);
 		}
 		
 		this.selectedSeason = SeasonDAO.getSeasonById(selectedSeasonId, true);
 		
 		if (this.selectedSeason == null) {
 			addActionError(BGTConstants.genericError);
-			this.setValidationFailed(true);
 		}
 		
 	}

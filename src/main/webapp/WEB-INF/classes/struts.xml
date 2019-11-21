@@ -57,6 +57,7 @@
     		<param name="seasonId">${seasonId}</param>
     	</result>
 		<result name="error">/index.jsp</result>
+		<result name="input">/index.jsp</result>
    	</action>
 
    	<!-- <action name="viewSeason" >
@@ -75,6 +76,7 @@
 	<action name="viewPlayerSeasonStats" class="org.bgtrack.actions.season.CalculateUserSeasonStatsAction">
     	<result name="success">/WEB-INF/views/season/UserStatsViewForSeason.jsp</result>
 		<result name="error">/index.jsp</result>
+		<result name="input">/index.jsp</result>
    	</action>
    	
    	<action name="searchForPlayer" class="org.bgtrack.actions.season.ajax.PlayerSearch">
@@ -86,6 +88,12 @@
 	    </result>
 	    
    	    <result name="error" type="json">
+	        <param name="noCache">true</param>
+	        <param name="excludeNullProperties">true</param>
+	        <param name="root">jsonErrorObject</param>
+	    </result>
+	    
+     	<result name="input" type="json">
 	        <param name="noCache">true</param>
 	        <param name="excludeNullProperties">true</param>
 	        <param name="root">jsonErrorObject</param>

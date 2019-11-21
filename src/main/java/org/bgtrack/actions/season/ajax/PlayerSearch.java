@@ -21,9 +21,6 @@ public class PlayerSearch extends JsonAction {
 		
 		super.validate();
 		
-		if (this.isValidationFailed)
-			return;
-		
 		if (this.firstName == null && this.lastName == null) {
 			createErrorResponse();
 			return;
@@ -40,16 +37,12 @@ public class PlayerSearch extends JsonAction {
 	}
 
 	private void createErrorResponse() {
-		this.setValidationFailed(true);
 		this.setJsonErrorObject(new JsonError(1, BGTConstants.playerSearchParamMissing));
+		this.addActionError(BGTConstants.playerSearchParamMissing);
 	}
 	
 	@Override
 	public String execute() throws Exception {
-		
-		if (this.isValidationFailed) {
-			return ERROR;
-		}
 		
 		List<Reguser> matchedUsers = UserDAO.getUserByFirstAndLastName(this.firstName, this.lastName);
 		

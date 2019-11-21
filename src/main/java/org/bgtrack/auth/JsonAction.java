@@ -13,8 +13,7 @@ public class JsonAction extends ShiroBaseAction {
 		if (isAuthenticationRequired() && !isAuthenticated()) {
 			
 			this.setJsonErrorObject(new JsonError(2, BGTConstants.logInPromp));
-			
-			setValidationFailed(true);
+			this.addActionError(BGTConstants.logInPromp);
 			
 		}
 		
