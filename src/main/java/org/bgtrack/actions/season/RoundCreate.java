@@ -2,33 +2,20 @@ package org.bgtrack.actions.season;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import net.bytebuddy.asm.Advice.This;
 
 import org.bgtrack.utils.BGTConstants;
 
 import org.bgtrack.utils.HibernateUtil;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.struts2.dispatcher.HttpParameters;
 import org.apache.struts2.dispatcher.Parameter;
 import org.apache.struts2.interceptor.HttpParametersAware;
-import org.apache.struts2.interceptor.ParameterAware;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.Season;
-import org.bgtrack.models.daos.GameDAO;
 import org.bgtrack.models.daos.RoundDAO;
 import org.bgtrack.models.daos.SeasonDAO;
 import org.bgtrack.models.user.Reguser;
@@ -45,34 +32,52 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	Round round;
 	List<RoundResult> roundResultList;
 
-	public String execute() {
+	private static final String roundCreatePermissionsErrorText = "Sorry, only current players of a season can create rounds!";
+	
+	@Override
+	public void validate() {
 		
-		if (!this.shiroUser.isAuthenticated()) {
-			addActionError(BGTConstants.authenticationError);
-			return BGTConstants.error;
-		}
-		
-		if (!this.shiroUser.getPrincipal().toString().equals("matt@test.com")) {
-			addActionError(BGTConstants.authorizationError);
-			return BGTConstants.error;
-		}
+		super.validate();
 		
 		if (null == seasonId || seasonId.length() == 0) {
-			addActionError(BGTConstants.checkFields);
-			return BGTConstants.error;
-		} else {
-			this.season = SeasonDAO.getSeasonById(Integer.parseInt(seasonId), true);
-			if (season == null) {
-				addActionError(BGTConstants.checkFields);
-				return BGTConstants.error;
-			}
 			
-			if ("I".equals(this.season.getStatus())) {
-				addActionError(BGTConstants.seasonInactiveError);
-				return BGTConstants.error;
-			}
+			addActionError(BGTConstants.checkFields);
+			
+			return;
 			
 		}
+		
+		this.season = SeasonDAO.getSeasonById(Integer.parseInt(seasonId), true);
+		
+		if (season == null) {
+			
+			addActionError(BGTConstants.checkFields);
+			
+			return;
+			
+		}
+		
+		if ("I".equals(this.season.getStatus())) {
+			
+			addActionError(BGTConstants.seasonInactiveError);
+			
+			return;
+			
+		}
+		
+		String createRoundPermission = "season:createround:"+this.seasonId;
+		
+		if (!this.isPermitted(createRoundPermission)) {
+			addActionError(roundCreatePermissionsErrorText);
+			
+			throw new AuthorizationException("User: " + this.getShiroUser().getPrincipal() + " does not have the required "
+					+ "permissions: "+ createRoundPermission + " for action: " + this.getClass() );
+			
+		}
+		
+	}
+	
+	public String execute() {
 
 		this.roundResultList = new ArrayList<RoundResult>(); 
 		
