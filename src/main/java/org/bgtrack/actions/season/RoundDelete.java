@@ -40,6 +40,11 @@ public class RoundDelete extends ShiroBaseAction {
 			return BGTConstants.error;
 		}
 		
+		if (this.seasonId == null || this.seasonId.isEmpty()) {
+			addActionError(BGTConstants.checkFields);
+			return BGTConstants.error;
+		}
+		
 		Round roundToDelete = RoundDAO.getRoundById(roundId);
 		
 		Season seasonContainingRound = roundToDelete.getSeason();
