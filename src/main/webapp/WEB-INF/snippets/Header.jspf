@@ -6,11 +6,13 @@
 
 <s:if test="hasActionErrors()">
 	<div class="row">
-		<div class="alert alert-dismissible alert-danger col-12 col-md-8 mx-auto mt-4">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<s:iterator var="error" value="%{actionErrors}">
-				<s:property value="%{error}" />
-			</s:iterator>
+		<div class="col-12 col-md-8 mx-auto mt-4">
+			<div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<s:iterator var="error" value="%{actionErrors}">
+					<s:property value="%{error}" />
+				</s:iterator>
+			</div>
 		</div>
 	</div>
 </s:if>

@@ -50,8 +50,8 @@
 			
 				<c:choose>
 					<c:when test="${empty seasonsList}">
-						<div class="col-12 col-md-6 mx-auto">
-							<div class="alert alert-dismissible alert-danger">
+						<div class="col-12 col-md-6 mx-auto pt-2">
+							<div class="alert alert-danger">
 							  	<p><strong>Uh oh!</strong> ${noSeasonsText}</p>
 							</div>
 						</div>

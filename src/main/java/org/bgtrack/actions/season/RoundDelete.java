@@ -40,7 +40,7 @@ public class RoundDelete extends ShiroBaseAction {
 		
 		this.setSeasonId(seasonContainingRound.getSeasonId().toString());
 		
-		if (!this.isPermitted("season:deleteround:"+this.seasonId)) {
+		if (!this.isExecutingUserPermitted("season:deleteround:"+this.seasonId)) {
 			this.addActionError(roundDeletePermissionsErrorText);
 		}
 		

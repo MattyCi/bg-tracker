@@ -75,7 +75,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		createRoundPermissionValue = "season:createround:"+this.seasonId;
 		
-		if (!this.isPermitted(createRoundPermissionValue)) {
+		if (!this.isExecutingUserPermitted(createRoundPermissionValue)) {
 			
 			addActionError(roundCreatePermissionsErrorText);
 			

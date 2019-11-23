@@ -25,8 +25,11 @@
 		<exception-mapping exception="org.apache.shiro.authz.AuthorizationException" result="error" />
 	</global-exception-mappings>
 	
-	<action name="userLogIn"
-		class="org.bgtrack.auth.ShiroLogInAction">
+  	<action name="homeView" >
+		<result>/index.jsp</result>
+	</action>
+	
+	<action name="userLogIn" class="org.bgtrack.auth.ShiroLogInAction">
 		<result name="success">/index.jsp</result>
 		<result name="error">/index.jsp</result>
 	</action>
@@ -50,6 +53,14 @@
     		<param name="seasonId">${createdSeasonId}</param>
     	</result>
 		<result name="error">/index.jsp</result>
+   	</action>
+   	
+	 <action name="deleteSeason" class="org.bgtrack.actions.season.SeasonDelete">
+  	    <result name="success" type="redirectAction">
+    		<param name="actionName">homeView</param>
+    		<param name="isSeasonDeleted">${isSeasonDeleted}</param>
+    	</result>
+    	<result name="error, input">/index.jsp</result>
    	</action>
    	
   	<action name="createRound" class="org.bgtrack.actions.season.RoundCreate">

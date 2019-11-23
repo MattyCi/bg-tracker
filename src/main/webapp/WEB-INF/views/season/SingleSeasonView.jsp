@@ -28,8 +28,33 @@
 		<shiro:authenticated>
 
 			<div class="row mt-4">
+			
 				<div class="col-12 mx-auto text-center">
 					<p class="h1">${season.getName()}</p>
+				</div>
+
+			</div>
+				
+				<div class="d-flex justify-content-center">
+				
+				<div class="p-2">
+					<div class="btn-group">
+						<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Season Options</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="deleteSeason?seasonId=${season.seasonId}">Delete Season</a> 
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="row">
+				
+				<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+				
+				<div class="col-12 mx-auto text-center pb-3">
+					<h3>Season Info</h3>
 					<p class="h3">
 						<c:choose>
 							<c:when test="${season.status == 'A'}">
@@ -40,15 +65,6 @@
 							</c:otherwise>
 						</c:choose>
 					</p>
-				</div>
-			</div>
-						
-			<div class="row">
-				
-				<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
-				
-				<div class="col-12 mx-auto text-center pb-3">
-					<h3>Season Info</h3>
 				</div>
 				
 				<div class="col-12 col-sm-6 mx-auto text-center verticle-line">

@@ -47,5 +47,22 @@ public class AuthorizationDAO {
 		}
 		
 	}
+
+	public static List<Permission> getAllPermissionsForSeason(String seasonId) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String permissionValue = "season:%:"+seasonId;
+		
+		String query = "from Permission where PERM_VALUE like :permissionValue";
+		
+		List<Permission> permissions = (List<Permission>) session.createQuery(query).setParameter("permissionValue", permissionValue).list();
+		
+		session.getTransaction().commit();
+		
+		session.close();
+		
+		return permissions;
+	}
 	
 }
