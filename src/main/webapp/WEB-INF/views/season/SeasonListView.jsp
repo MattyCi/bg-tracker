@@ -29,14 +29,14 @@
 					<c:set var="seasonListLinkText" value="View All Seasons" />
 					<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
 					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
-					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet. Try to join one by clicking \"All Seasons\"." />
+					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet. Start your own by completing the form below." />
 				</c:when>
 				<c:otherwise>
 					<c:set var="seasonListHeaderText" value="All Seasons" />
 					<c:set var="seasonListLinkText" value="View Your Seasons Only" />
 					<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
 					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasons()}" />
-					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet. Try to join one by clicking \"All Seasons\"." />
+					<c:set var="noSeasonsText" value="No seasons have been created yet, start your own by completing the form below." />
 				</c:otherwise>
 			</c:choose>
 			
@@ -61,7 +61,8 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-					</shiro:authenticated>
+					
+			</shiro:authenticated>
 		
 	</div>
 </body>
