@@ -2,8 +2,13 @@ package org.bgtrack.actions.season;
 
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
+import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.Season;
+import org.bgtrack.models.SeasonStanding;
+import org.bgtrack.models.daos.AuthorizationDAO;
 import org.bgtrack.models.daos.RoundDAO;
+import org.bgtrack.models.user.Reguser;
+import org.bgtrack.models.user.authorization.Permission;
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
 
@@ -14,6 +19,8 @@ public class RoundDelete extends ShiroBaseAction {
 	
 	private String roundId;
 	private String seasonId;
+	
+	private SeasonStandingHelper seasonStandingHelper;
 	
 	Round roundToDelete;
 	Season seasonContainingRound;
@@ -46,13 +53,47 @@ public class RoundDelete extends ShiroBaseAction {
 		
 		recalculateSeasonScoring(seasonContainingRound);
 		
+		reassignPermissions();
+		
 		return BGTConstants.success;
 	}
 	
 	private void recalculateSeasonScoring(Season seasonContainingRound) {
-		SeasonStandingHelper seasonStandingHelper = SeasonStandingHelperFactory.getSeasonStandingHelper(seasonContainingRound.getScoringType());
+		seasonStandingHelper = SeasonStandingHelperFactory.getSeasonStandingHelper(seasonContainingRound.getScoringType());
 		seasonStandingHelper.setSeason(seasonContainingRound);
 		seasonStandingHelper.buildStandings();
+	}
+
+	private void reassignPermissions() {
+		
+		for (RoundResult deletedRoundResult : roundToDelete.getRoundResults()) {
+			
+			if (userNoLongerInSeason(deletedRoundResult.getReguser())) {
+				deleteSeasonPermission(deletedRoundResult.getReguser());
+			}
+			
+		}
+		
+	}
+	
+	private boolean userNoLongerInSeason(Reguser userFromDeletedRound) {
+		
+		for (SeasonStanding newSeasonStanding : seasonStandingHelper.getNewSeasonStandings()) {
+			
+			if (newSeasonStanding.getReguser().getUserId().equals(userFromDeletedRound.getUserId())) {
+				return false;
+			}
+			
+		}
+
+		return true;
+	}
+	
+	private void deleteSeasonPermission(Reguser reguser) {
+		
+		Permission permissionToRevoke = AuthorizationDAO.getPermissionByValue("season:createround:"+roundToDelete.getSeason().getSeasonId());
+		AuthorizationDAO.deletePermissionForUser(reguser, permissionToRevoke);
+		
 	}
 	
 	public String getRoundId() {

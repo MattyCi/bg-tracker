@@ -212,11 +212,11 @@ public abstract class SeasonStandingHelper {
 		this.season = season;
 	}
 
-	public List<SeasonStanding> getSeasonStandings() {
+	public List<SeasonStanding> getNewSeasonStandings() {
 		return newSeasonStandings;
 	}
 
-	public void setSeasonStandings(List<SeasonStanding> seasonStandings) {
+	public void setNewSeasonStandings(List<SeasonStanding> seasonStandings) {
 		this.newSeasonStandings = seasonStandings;
 	}
 

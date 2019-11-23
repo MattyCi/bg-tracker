@@ -13,6 +13,8 @@ import org.bgtrack.utils.HibernateUtil;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.daos.GameDAO;
+import org.bgtrack.models.user.authorization.Permission;
+import org.bgtrack.models.user.authorization.UserPermission;
 
 public class SeasonCreate extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
@@ -92,6 +94,31 @@ public class SeasonCreate extends ShiroBaseAction {
 		
 		this.setCreatedSeasonId(season.getSeasonId().toString());
 		
+		assignUserPermissionsForSeason(season);
+		
+	}
+
+	private void assignUserPermissionsForSeason(Season season) {
+
+		Permission permission = createPermission(season);
+		
+		associateUserToPermission(season, permission);
+		
+	}
+
+	private Permission createPermission(Season season) {
+		Permission permission;
+		permission = new Permission();
+		permission.setPermValue("season:*:"+season.getSeasonId());
+		HibernateUtil.persistObject(permission);
+		return permission;
+	}
+	
+	private void associateUserToPermission(Season season, Permission permission) {
+		UserPermission userPermission = new UserPermission();
+		userPermission.setPermission(permission);
+		userPermission.setUser(season.getCreator());
+		HibernateUtil.persistObject(userPermission);
 	}
 
 	public String getSeasonName() {

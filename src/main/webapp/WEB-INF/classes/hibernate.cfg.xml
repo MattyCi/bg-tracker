@@ -21,6 +21,12 @@
 		
 		<mapping class="org.bgtrack.models.user.Reguser"></mapping>
 		
+		<mapping class="org.bgtrack.models.user.authorization.Permission"></mapping>
+		<mapping class="org.bgtrack.models.user.authorization.Role"></mapping>
+		<mapping class="org.bgtrack.models.user.authorization.RolesPermission"></mapping>
+		<mapping class="org.bgtrack.models.user.authorization.UserPermission"></mapping>
+		<mapping class="org.bgtrack.models.user.authorization.UserRole"></mapping>
+		
 		<mapping class="org.bgtrack.models.Game"></mapping>
 		<mapping class="org.bgtrack.models.Round"></mapping>
 		<mapping class="org.bgtrack.models.RoundResult"></mapping>

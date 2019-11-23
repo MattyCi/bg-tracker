@@ -9,6 +9,9 @@ import org.bgtrack.utils.BGTConstants;
 
 import org.bgtrack.utils.HibernateUtil;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.dispatcher.HttpParameters;
 import org.apache.struts2.dispatcher.Parameter;
 import org.apache.struts2.interceptor.HttpParametersAware;
@@ -16,9 +19,12 @@ import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.Season;
+import org.bgtrack.models.daos.AuthorizationDAO;
 import org.bgtrack.models.daos.RoundDAO;
 import org.bgtrack.models.daos.SeasonDAO;
 import org.bgtrack.models.user.Reguser;
+import org.bgtrack.models.user.authorization.Permission;
+import org.bgtrack.models.user.authorization.UserPermission;
 import org.bgtrack.models.user.daos.UserDAO;
 
 public class RoundCreate extends ShiroBaseAction implements HttpParametersAware {
@@ -31,6 +37,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	Season season;
 	Round round;
 	List<RoundResult> roundResultList;
+	
+	private String createRoundPermissionValue;
 
 	private static final String roundCreatePermissionsErrorText = "Sorry, only current players of a season can create rounds!";
 	
@@ -65,13 +73,14 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 		}
 		
-		String createRoundPermission = "season:createround:"+this.seasonId;
+		createRoundPermissionValue = "season:createround:"+this.seasonId;
 		
-		if (!this.isPermitted(createRoundPermission)) {
+		if (!this.isPermitted(createRoundPermissionValue)) {
+			
 			addActionError(roundCreatePermissionsErrorText);
 			
 			throw new AuthorizationException("User: " + this.getShiroUser().getPrincipal() + " does not have the required "
-					+ "permissions: "+ createRoundPermission + " for action: " + this.getClass() );
+					+ "permissions: "+ createRoundPermissionValue + " for action: " + this.getClass() );
 			
 		}
 		
@@ -102,6 +111,10 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 			if (null != roundUser) {
 				buildRoundResultList(roundUser, userPlace, round);
+			}
+			
+			if (!playerHasRoundCreatePermission(roundUser)) {
+				grantPlayerRoundCreatePermission(roundUser);
 			}
 
 		}
@@ -220,6 +233,54 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		return occurances;
 	}
 	
+	private boolean playerHasRoundCreatePermission(Reguser roundUser) {
+		
+		String principal = roundUser.getEmail();
+		String realmName = "jdbcRealm";
+		PrincipalCollection principals = new SimplePrincipalCollection(principal, realmName);
+		Subject roundPlayerSubject = new Subject.Builder().principals(principals).buildSubject();
+		
+		if (roundPlayerSubject.isPermitted(createRoundPermissionValue)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private void grantPlayerRoundCreatePermission(Reguser roundUser) {
+
+		Permission permission = AuthorizationDAO.getPermissionByValue(createRoundPermissionValue);
+		
+		if (permission == null) {
+			
+			permission = createNewPermission(roundUser);
+			
+		}
+		
+		associateUserWithPermission(roundUser, permission);
+		
+	}
+
+	private Permission createNewPermission(Reguser roundUser) {
+		
+		Permission permission;
+		permission = new Permission();
+		permission.setPermValue(createRoundPermissionValue);
+		HibernateUtil.persistObject(permission);
+		
+		return permission;
+
+	}
+	
+	private void associateUserWithPermission(Reguser roundUser, Permission permission) {
+		
+		UserPermission userPermission = new UserPermission();
+		userPermission.setPermission(permission);
+		userPermission.setUser(roundUser);
+		HibernateUtil.persistObject(userPermission);
+		
+	}
+
 	private void recalculateSeasonScoring() {
 		SeasonStandingHelper seasonStandingHelper = SeasonStandingHelperFactory.getSeasonStandingHelper(this.season.getScoringType());
 		seasonStandingHelper.setSeason(this.season);
