@@ -3,16 +3,18 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="row pt-2">
-
-	<c:if test="${param.isSeasonDeleted eq true}">
-		<div class="col-12 col-md-6 mx-auto">
+<c:if test="${param.isSeasonDeleted eq true}">
+	<div class="row pt-2">
+		<div class="col-md-6 mx-auto">
 			<div class="alert alert-dismissible alert-success">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong>Done!</strong> Season successfully deleted.
 			</div>
 		</div>
-	</c:if>
+	</div>
+</c:if>
+
+<div class="row pt-2">
 
 	<div class="col-12 col-md-6 mx-auto">
 		<a href="/viewSeasonList?view=usersSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start active full-height">
