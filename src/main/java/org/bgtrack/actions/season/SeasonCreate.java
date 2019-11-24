@@ -26,6 +26,8 @@ public class SeasonCreate extends ShiroBaseAction {
 
 	private String createdSeasonId;
 	
+	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please choose a valid date and try again.";
+	
 	public String execute() {
 		
 		if (!this.shiroUser.isAuthenticated()) {
@@ -61,9 +63,17 @@ public class SeasonCreate extends ShiroBaseAction {
 		    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy");
 		    Date parsedDate = dateFormat.parse(seasonEndDate);
 		    seasonEndTimestamp = new java.sql.Timestamp(parsedDate.getTime());
+		    
+		    if (seasonEndTimestamp.before(seasonStartTimestamp)) {
+		    	addActionError(INVALID_END_DATE_ERROR_TEXT);
+		    	errorsOccured = true;
+		    	return;
+		    }
+		    
 		} catch(Exception e) {
 			addActionError(BGTConstants.dateError);
 			errorsOccured = true;
+			return;
 		}
 		
 		Season season = new Season();

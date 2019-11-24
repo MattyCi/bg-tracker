@@ -54,5 +54,8 @@
 
 <script src="pikaday.js"></script>
 <script>
-    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+    var picker = new Pikaday({
+    	field: document.getElementById('datepicker'),
+    	minDate: new Date()
+    });
 </script>
