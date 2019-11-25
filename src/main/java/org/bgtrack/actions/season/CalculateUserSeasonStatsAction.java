@@ -16,6 +16,8 @@ public class CalculateUserSeasonStatsAction extends ShiroBaseAction {
 	private int selectedSeasonId;
 	
 	UserSeasonStats userSeasonStats;
+	
+	private static final String PLAYER_HAS_NO_ROUNDS_PLAYED_ERROR_TEXT = "The selected player hasn't played any rounds in this season yet.";
 
 	@Override
 	public void validate() {
@@ -39,6 +41,11 @@ public class CalculateUserSeasonStatsAction extends ShiroBaseAction {
 		super.execute();
 		
 		userSeasonStats = new UserSeasonStats(this.selectedSeason, this.selectedUser);
+		
+		if (userSeasonStats.getSeasonStandingList().isEmpty()) {
+			addActionError(PLAYER_HAS_NO_ROUNDS_PLAYED_ERROR_TEXT);
+			return BGTConstants.error;
+		}
 		
 		this.setUserSeasonStats(userSeasonStats);
 		
