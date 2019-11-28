@@ -23,7 +23,7 @@ public class SeasonDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 			
-		String query = "from Season order by NAME ASC";
+		String query = "from Season order by START_DATE DESC";
 		@SuppressWarnings("unchecked")
 		List<Season> listOfSeasons = (List<Season>) session.createQuery(query).list();
 		session.getTransaction().commit();
