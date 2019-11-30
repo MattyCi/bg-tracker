@@ -219,8 +219,8 @@ var PlayerSearchUtil = {
 			playerFirstNameCell = newRow.insertCell(0),
 			playerLastNameCell = newRow.insertCell(1);
 
-		playerFirstNameCell.innerHTML = playerSearchResults.firstName;
-		playerLastNameCell.innerHTML = playerSearchResults.lastName;
+		playerFirstNameCell.textContent = playerSearchResults.firstName;
+		playerLastNameCell.textContent = playerSearchResults.lastName;
 
 		newRow.classList.add('py-2', 'clickable');
 

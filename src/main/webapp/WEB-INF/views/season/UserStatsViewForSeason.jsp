@@ -2,6 +2,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 
 <!DOCTYPE html>
@@ -26,7 +27,9 @@
 
 			<div class="row">
 				<div class="col-12 mx-auto text-center mt-4">
-					<p class="h1">${UserSeasonStats.season.getName()}</p>
+					<p class="h1">
+						<e:forHtml value="${UserSeasonStats.season.name}" />
+					</p>
 				</div>
 				<div class="col-12 col-lg-7 mx-auto mt-4">
 					<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>

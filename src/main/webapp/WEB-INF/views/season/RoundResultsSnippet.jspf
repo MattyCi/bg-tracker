@@ -21,7 +21,9 @@
 				<h4>Victor:</h4>
 			</div>
 			<div class="col-7">
-				<h5>${snippetListofVictors.get(loop.index)}</h5>
+				<h5>
+					<e:forHtml value="${snippetListofVictors.get(loop.index)}" />
+				</h5>
 			</div>
 		</div>
 		<c:if test="${pageName == 'SeasonView'}">
@@ -58,9 +60,12 @@
 					<tr class="${highlightCurrentPlayerRow}">
 						<td>${roundResult.getPlace()}</td>
 						<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
-						<td><a class="${userStatLinkClass}"
-							href="/viewPlayerSeasonStats?selectedSeasonId=${round.season.getSeasonId()}&selectedUserId=${roundResult.getReguser().getUserId()}">
-								${roundResult.getReguser().getFirstName()} ${roundResult.getReguser().getLastName()} </a></td>
+						<td>
+							<a class="${userStatLinkClass}"
+								href="/viewPlayerSeasonStats?selectedSeasonId=${round.season.getSeasonId()}&selectedUserId=${roundResult.getReguser().getUserId()}">
+								<e:forHtml value="${roundResult.reguser.firstName}" /> <e:forHtml value="${roundResult.reguser.lastName}" />
+							</a>
+						</td>
 					</tr>
 
 					<c:remove var="userStatLinkClass" />
@@ -69,7 +74,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<small id="round-creator-name-${loop.index}" class="form-text text-muted">Round created by: ${round.creator.firstName} ${round.creator.lastName}</small>
+		<small id="round-creator-name-${loop.index}" class="form-text text-muted">
+			Round created by: <e:forHtml value="${round.creator.firstName}" /> <e:forHtml value="${round.creator.lastName}" />
+		</small>
 	</div>
 
 </c:forEach>

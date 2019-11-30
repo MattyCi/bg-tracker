@@ -2,6 +2,8 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
+
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 <jsp:useBean id="SeasonDAO" class="org.bgtrack.models.daos.SeasonDAO" scope="session"/>
 
@@ -41,7 +43,9 @@
 			<div class="row mt-4">
 			
 				<div class="col-12 mx-auto text-center">
-					<p class="h1">${season.getName()}</p>
+					<p class="h1">
+						<e:forHtml value="${season.name}" />
+					</p>
 				</div>
 
 			</div>
@@ -142,7 +146,9 @@
 				<div class="col-12 col-sm-6 mx-auto text-center">
 					<h4>Total Rounds Played: ${season.rounds.size()}</h4>
 					<h4>Total Players: ${usersInSeason.size()}</h4>
-					<h4>Season Creator: ${season.creator.firstName} ${season.creator.lastName}</h4>
+					<h4>
+						Season Creator: <e:forHtml value="${season.creator.firstName}" /> <e:forHtml value="${season.creator.lastName}" />
+					</h4>
 				</div>
 				
 				<hr style="width: 100%; ; height: 1px; background-color: #EEEEEE;">
@@ -168,7 +174,9 @@
 							    <select id="recent-players-select-0" name="roundPlayer0" data-round-info="true" class="form-control">
 									<option value="" selected disabled hidden>Choose from Recent Players</option>
 									<c:forEach items="${usersInSeason}" var="user">
-										<option value="${user.getUserId()}">${user.getFirstName()} ${user.getLastName()}</option>
+										<option value="${user.getUserId()}">
+											<e:forHtml value="${user.firstName}" /> <e:forHtml value="${user.lastName}" />
+										</option>
 									</c:forEach>
 								</select> 
 							</div>
