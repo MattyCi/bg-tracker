@@ -35,11 +35,6 @@ public class SeasonCreate extends ShiroBaseAction {
 			return BGTConstants.error;
 		}
 		
-		if (!this.shiroUser.getPrincipal().toString().equals("matt@test.com")) {
-			addActionError(BGTConstants.authorizationError);
-			return BGTConstants.error;
-		}
-		
 		if (seasonName.isEmpty() || seasonGameId.isEmpty() || seasonEndDate.isEmpty() || seasonName.length() == 0 || 
 				seasonGameId.length() == 0 || seasonEndDate.length() == 0) {
 			addActionError(BGTConstants.checkFields);
