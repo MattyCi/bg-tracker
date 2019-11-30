@@ -26,6 +26,11 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 	
 	private boolean errorsOccured = false;
 	
+	@Override
+	public boolean isAuthenticationRequired() {
+		return false;
+	}
+	
 	public String execute() {
 		
 		// ensure the user is not already logged in
