@@ -55,6 +55,15 @@
 		<result name="error">/index.jsp</result>
    	</action>
    	
+ 	<action name="editSeason" class="org.bgtrack.actions.season.SeasonEdit">
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">viewSeason</param>
+    		<param name="seasonId">${seasonId}</param>
+    		<param name="seasonEdited">${seasonEdited}</param>
+    	</result>
+		<result name="error">/index.jsp</result>
+   	</action>
+   	
 	 <action name="deleteSeason" class="org.bgtrack.actions.season.SeasonDelete">
   	    <result name="success" type="redirectAction">
     		<param name="actionName">homeView</param>
