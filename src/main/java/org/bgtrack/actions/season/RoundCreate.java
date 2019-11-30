@@ -42,6 +42,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 	private static final String roundCreatePermissionsErrorText = "Sorry, only current players of a season can create rounds!";
 	private static final String MORE_PLAYERS_REQUIRED_ERROR_TEXT = "More than one player is required to create a round.";
+	private static final String TWO_OF_SAME_PLAYER_ERROR_TEXT = "The same player was added to the round twice. Please try again.";
 	
 	@Override
 	public void validate() {
@@ -107,7 +108,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		round.setRoundDate(roundStartTimestamp);
 		round.setSeason(this.season);
 		round.setCreator(this.regUser);
-		
+				
 		// 12 max players
 		for (int i = 0; i < 13; i++ ) {
 			Parameter userId;
@@ -121,15 +122,18 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 			Reguser roundUser = UserDAO.getUserByID(userId.toString());
 			
+			if (!this.roundResultList.isEmpty() && isUserAlreadyAdded(roundUser.getUserId())) {
+				addActionError(TWO_OF_SAME_PLAYER_ERROR_TEXT);
+				return ERROR;
+			}
+			
 			if (null != roundUser) {
 				buildRoundResultList(roundUser, userPlace, round);
 			}
-			
-			if (!playerHasRoundCreatePermission(roundUser)) {
-				grantPlayerRoundCreatePermission(roundUser);
-			}
 
 		}
+		
+		buildSeasonPermissionsForNewPlayers();
 		
 		round.setRoundResults(this.roundResultList);
 				
@@ -142,6 +146,19 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 
 		return BGTConstants.success;
+	}
+
+	private Boolean isUserAlreadyAdded(String userId) {
+
+		for (RoundResult roundResult : roundResultList) {
+			
+			if (roundResult.getReguser().getUserId().equals(userId))
+				return true;
+			
+		}
+		
+		return false;
+		
 	}
 
 	private void buildRoundResultList(Reguser roundUser, BigInteger userPlace, Round round) {
@@ -243,6 +260,18 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 		
 		return occurances;
+	}
+	
+	private void buildSeasonPermissionsForNewPlayers() {
+
+		for (RoundResult roundResult : roundResultList) {
+			
+			if (!playerHasRoundCreatePermission(roundResult.getReguser())) {
+				grantPlayerRoundCreatePermission(roundResult.getReguser());
+			}
+			
+		}
+
 	}
 	
 	private boolean playerHasRoundCreatePermission(Reguser roundUser) {
