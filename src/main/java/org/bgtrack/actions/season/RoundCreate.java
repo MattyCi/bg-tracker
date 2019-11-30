@@ -41,6 +41,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	private String createRoundPermissionValue;
 
 	private static final String roundCreatePermissionsErrorText = "Sorry, only current players of a season can create rounds!";
+	private static final String MORE_PLAYERS_REQUIRED_ERROR_TEXT = "More than one player is required to create a round.";
 	
 	@Override
 	public void validate() {
@@ -84,8 +85,19 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 		}
 		
+		if(!multiplePlayersPlayed()) {
+			addActionError(MORE_PLAYERS_REQUIRED_ERROR_TEXT);
+		}
+		
 	}
 	
+	private boolean multiplePlayersPlayed() {
+		if(!this.getParameters().contains("roundPlayer1"))
+			return false;
+		
+		return true;
+	}
+
 	public String execute() {
 
 		this.roundResultList = new ArrayList<RoundResult>(); 
