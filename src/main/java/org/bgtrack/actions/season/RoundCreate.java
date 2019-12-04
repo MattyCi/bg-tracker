@@ -110,7 +110,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		round.setCreator(this.regUser);
 				
 		// 12 max players
-		for (int i = 0; i < 13; i++ ) {
+		for (int i = 0; i < 11; i++ ) {
 			Parameter userId;
 			if (this.getParameters().contains("roundPlayer"+i)) {
 				userId = this.getParameters().get("roundPlayer"+i);
