@@ -2,12 +2,13 @@ package org.bgtrack.actions.season;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bgtrack.utils.BGTConstants;
 
 import org.bgtrack.utils.HibernateUtil;
+import org.bgtrack.utils.RoundResultArrayList;
+import org.bgtrack.utils.RoundResultArrayListImpl;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
@@ -36,13 +37,14 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	private HttpParameters parameters;
 	Season season;
 	Round round;
-	List<RoundResult> roundResultList;
+	RoundResultArrayList roundResultList;
 	
 	private String createRoundPermissionValue;
 
 	private static final String roundCreatePermissionsErrorText = "Sorry, only current players of a season can create rounds!";
 	private static final String MORE_PLAYERS_REQUIRED_ERROR_TEXT = "More than one player is required to create a round.";
 	private static final String TWO_OF_SAME_PLAYER_ERROR_TEXT = "The same player was added to the round twice. Please try again.";
+	private static final String PLACES_INVALID_ERROR_TEXT = "The places submitted were not in a valid order.";
 	
 	@Override
 	public void validate() {
@@ -101,7 +103,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 	public String execute() {
 
-		this.roundResultList = new ArrayList<RoundResult>(); 
+		this.roundResultList = new RoundResultArrayListImpl();
 		
 		Round round = new Round();
 		Timestamp roundStartTimestamp = new Timestamp(System.currentTimeMillis());
@@ -131,6 +133,11 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 				buildRoundResultList(roundUser, userPlace, round);
 			}
 
+		}
+		
+		if( !arePlacesValid(this.roundResultList) ) {
+			addActionError(PLACES_INVALID_ERROR_TEXT);
+			return ERROR;
 		}
 		
 		buildSeasonPermissionsForNewPlayers();
@@ -262,6 +269,51 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		return occurances;
 	}
 	
+	private boolean arePlacesValid(List<RoundResult> roundResultList) {
+
+		if (roundResultList.size() < 2)
+			return false;
+		
+		BigInteger lastPlaceValue = determineLastPlaceValue();
+		
+		// from here we need to check the round result list for the existence of each place
+		// that is lower than itself but not less than one.
+		if( isSequenceFromLastPlaceValid(lastPlaceValue.intValue()) )
+			return true;
+		
+		return false;
+	}
+
+	private BigInteger determineLastPlaceValue() {
+		
+		BigInteger lastPlaceValue = BigInteger.ONE;
+		
+		for (RoundResult roundResult : roundResultList) {
+			
+			BigInteger currentPlace = roundResult.getPlace();
+			
+			if (currentPlace.compareTo(lastPlaceValue) == 1)
+				lastPlaceValue = currentPlace;
+			
+		}
+		
+		return lastPlaceValue;
+		
+	}
+	
+	private boolean isSequenceFromLastPlaceValid(int lastPlaceValue) {
+
+		for (int i = lastPlaceValue; i > 0; i--) {
+			
+			if (!roundResultList.doesRoundResultListContainPlace(i)) {
+				return false;
+			}
+			
+		}
+		
+		return true;
+	}
+
 	private void buildSeasonPermissionsForNewPlayers() {
 
 		for (RoundResult roundResult : roundResultList) {
@@ -368,11 +420,11 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		this.season = season;
 	}
 
-	public List<RoundResult> getRoundResultList() {
+	public RoundResultArrayList getRoundResultList() {
 		return roundResultList;
 	}
 
-	public void setRoundResultList(List<RoundResult> roundResultList) {
+	public void setRoundResultList(RoundResultArrayList roundResultList) {
 		this.roundResultList = roundResultList;
 	}
 
