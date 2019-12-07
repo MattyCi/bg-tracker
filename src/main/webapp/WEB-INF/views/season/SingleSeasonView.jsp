@@ -16,6 +16,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="../../snippets/CommonIncludes.jspf" />
+	<script src="./resources/js/RoundController.js"></script>
 	<shiro:notAuthenticated>
 		<meta http-equiv="Refresh" content="0; url=/">
 	</shiro:notAuthenticated>

@@ -29,10 +29,24 @@
 		<c:if test="${pageName == 'SeasonView'}">
 			<div class="row mt-2">
 				<div class="col-6 pt-4 float-right">
-					<form action="/deleteRound">
-						<input type="hidden" name="roundId" value="${round.roundId}">
-						<button type="submit" class="btn btn-danger">Delete Round</button>
-					</form>
+					
+					<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger" 
+						data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal">
+						Delete Round
+					</button>
+					
+					<script>
+					
+						$("#delete-round-modal-${loop.index}").click(function() {
+							
+							var roundId = $(this).attr("data-round-id");
+							
+							RoundController.confirmDeleteRound(roundId);
+							
+						});
+						
+					</script>
+					
 				</div>
 			</div>
 		</c:if>
@@ -80,3 +94,24 @@
 	</div>
 
 </c:forEach>
+
+<div class="modal" id="delete-round-modal" tabindex="-1" role="dialog" aria-labelledby="delete-round-modal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="round-delete-confirm">Round Delete Confirm</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">Are you sure you wish to delete this round? This action cannot be undone.</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<form id="round-delete-form" action="/deleteRound" method="POST">
+					<input id="round-delete-id" type="hidden" name="roundId">
+					<button type="submit" class="btn btn-danger">Delete Round</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
