@@ -172,13 +172,29 @@
 						    
 						    <div class="col-xs-7 col-lg-12 float-left">
 							    <select id="recent-players-select-0" name="roundPlayer0" data-round-info="true" class="form-control">
-									<option value="" selected disabled hidden>Choose from Recent Players</option>
-									<c:forEach items="${usersInSeason}" var="user">
-										<option value="${user.getUserId()}">
-											<e:forHtml value="${user.firstName}" /> <e:forHtml value="${user.lastName}" />
-										</option>
-									</c:forEach>
-								</select> 
+									
+									<c:choose>
+										<c:when test="${empty usersInSeason}">
+											
+											<option value="" selected disabled hidden>Search to Add More Players Below</option>
+											<option value="${season.creator.userId}">
+												<e:forHtml value="${season.creator.firstName}" /> <e:forHtml value="${season.creator.lastName}" />
+											</option>
+										
+										</c:when>
+										<c:otherwise>
+											
+											<option value="" selected disabled hidden>Choose from Recent Players</option>
+											<c:forEach items="${usersInSeason}" var="user">
+												<option value="${user.getUserId()}">
+													<e:forHtml value="${user.firstName}" /> <e:forHtml value="${user.lastName}" />
+												</option>
+											</c:forEach>
+											
+										</c:otherwise>
+									</c:choose>
+									
+								</select>
 							</div>
 
 							<div class="col-8 col-lg-8 my-3 float-left">
