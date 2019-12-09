@@ -30,16 +30,7 @@
 		
 		<shiro:authenticated>
 
-			<c:if test="${param.seasonEdited eq true}">
-				<div class="row pt-2">
-					<div class="col-md-6 mx-auto">
-						<div class="alert alert-dismissible alert-success">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<strong>Done!</strong> Season successfully updated.
-						</div>
-					</div>
-				</div>
-			</c:if>
+			<%@ include file="../../snippets/PopupMessage.jspf" %>
 
 			<div class="row mt-4">
 			

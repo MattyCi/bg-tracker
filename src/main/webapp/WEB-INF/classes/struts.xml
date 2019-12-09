@@ -59,7 +59,7 @@
     	<result name="success" type="redirectAction">
     		<param name="actionName">viewSeason</param>
     		<param name="seasonId">${seasonId}</param>
-    		<param name="seasonEdited">${seasonEdited}</param>
+    		<param name="popupMessage">${popupMessage}</param>
     	</result>
 		<result name="error">/index.jsp</result>
    	</action>
@@ -67,7 +67,7 @@
 	 <action name="deleteSeason" class="org.bgtrack.actions.season.SeasonDelete">
   	    <result name="success" type="redirectAction">
     		<param name="actionName">homeView</param>
-    		<param name="isSeasonDeleted">${isSeasonDeleted}</param>
+    		<param name="popupMessage">${popupMessage}</param>
     	</result>
     	<result name="error, input">/index.jsp</result>
    	</action>
@@ -85,6 +85,7 @@
     	<result name="success" type="redirectAction">
     		<param name="actionName">viewSeason</param>
     		<param name="seasonId">${seasonId}</param>
+    		<param name="popupMessage">${popupMessage}</param>
     	</result>
 		<result name="error">/index.jsp</result>
 		<result name="input">/index.jsp</result>

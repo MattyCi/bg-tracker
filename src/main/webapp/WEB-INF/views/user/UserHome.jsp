@@ -2,17 +2,9 @@
 <jsp:useBean id="SeasonDAO" class="org.bgtrack.models.daos.SeasonDAO" scope="session"/>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 
-<c:if test="${param.isSeasonDeleted eq true}">
-	<div class="row pt-2">
-		<div class="col-md-6 mx-auto">
-			<div class="alert alert-dismissible alert-success">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<strong>Done!</strong> Season successfully deleted.
-			</div>
-		</div>
-	</div>
-</c:if>
+<%@ include file="../../snippets/PopupMessage.jspf" %>
 
 <div class="row pt-2">
 

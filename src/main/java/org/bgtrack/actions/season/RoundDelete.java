@@ -16,6 +16,7 @@ public class RoundDelete extends ShiroBaseAction {
 	private static final long serialVersionUID = 8752947492063852728L;
 	
 	private static final String roundDeletePermissionsErrorText = "Sorry, only a season's creator or admin can delete a round!";
+	private static final String ROUND_DELETE_CONFIRMATION_TEXT = "Done! Round deleted successfully!";
 	
 	private String roundId;
 	private String seasonId;
@@ -54,6 +55,8 @@ public class RoundDelete extends ShiroBaseAction {
 		recalculateSeasonScoring(seasonContainingRound);
 		
 		reassignPermissions();
+		
+		this.setPopupMessage(ROUND_DELETE_CONFIRMATION_TEXT);
 		
 		return BGTConstants.success;
 	}

@@ -20,9 +20,8 @@ public class SeasonDelete extends ShiroBaseAction {
 	
 	private String deleteSeasonPermissionValue;
 	
-	private boolean isSeasonDeleted = false;
-
 	private static final String seasonDeletePermissionsErrorText = "Sorry, only the season creator may delete the season!";
+	private static final String SEASON_DELETE_CONFIRMATION_TEXT = "Done! Season deleted successfully.";
 	
 	@Override
 	public void validate() {
@@ -66,7 +65,7 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		deleteAllPermissionsForSeason();
 
-		setSeasonDeleted(true);
+		setPopupMessage(SEASON_DELETE_CONFIRMATION_TEXT);
 		
 		return BGTConstants.success;
 	}
@@ -95,15 +94,6 @@ public class SeasonDelete extends ShiroBaseAction {
 
 	public void setSeason(Season season) {
 		this.season = season;
-	}
-
-	// method must be named like this for struts to pick it up as a param
-	public boolean getIsSeasonDeleted() {
-		return isSeasonDeleted;
-	}
-
-	public void setSeasonDeleted(boolean isSeasonDeleted) {
-		this.isSeasonDeleted = isSeasonDeleted;
 	}
 
 }

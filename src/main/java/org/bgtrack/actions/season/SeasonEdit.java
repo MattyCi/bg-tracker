@@ -29,14 +29,13 @@ public class SeasonEdit extends ShiroBaseAction {
 	Season season;
 	
 	private String editSeasonPermissionValue;
-		
-	private Boolean seasonEdited = false;
-	
+			
 	private Boolean errorsOccurred = false;
 
 	private static final String seasonEditPermissionsErrorText = "Sorry, only a season admin may edit the season!";
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided is earlier than the season start date, please choose a valid date and try again.";
 	private static final String GENERIC_SEASON_UPDATE_ERROR_TEXT = "Sorry... something went wrong and we were unable to update the season data.";
+	private static final String SEASON_EDIT_CONFIRMATION_TEXT = "Done! Season edited successfully.";
 	
 	@Override
 	public void validate() {
@@ -98,7 +97,7 @@ public class SeasonEdit extends ShiroBaseAction {
 		if (errorsOccurred)
 			return ERROR;
 		
-		seasonEdited = true;
+		setPopupMessage(SEASON_EDIT_CONFIRMATION_TEXT);
 		
 		return SUCCESS;
 	}
@@ -156,14 +155,6 @@ public class SeasonEdit extends ShiroBaseAction {
 
 	public void setSeasonEndDate(String seasonEndDate) {
 		this.seasonEndDate = seasonEndDate;
-	}
-
-	public Boolean getSeasonEdited() {
-		return seasonEdited;
-	}
-
-	public void setSeasonEdited(Boolean seasonEdited) {
-		this.seasonEdited = seasonEdited;
 	}
 
 }
