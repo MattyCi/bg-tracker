@@ -39,6 +39,7 @@ public class SeasonDAO {
 		
 		String query = "from Season as season where season.seasonId in "
 				+ "(select ss.season.seasonId from SeasonStanding as ss where ss.reguser.userId=:currentUserId) "
+				+ "or season.creator.userId=:currentUserId "
 				+ "order by NAME ASC";
 		@SuppressWarnings("unchecked")
 		List<Season> listOfSeasons = (List<Season>) session.createQuery(query).setParameter("currentUserId", currentUserId).list();
