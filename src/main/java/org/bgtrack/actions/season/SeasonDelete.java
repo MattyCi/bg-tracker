@@ -20,7 +20,7 @@ public class SeasonDelete extends ShiroBaseAction {
 	
 	private String deleteSeasonPermissionValue;
 	
-	private static final String seasonDeletePermissionsErrorText = "Sorry, only the season creator may delete the season!";
+	private static final String SEASON_DELETE_PERMISSIONS_ERROR_TEXT = "Sorry, only the season creator may delete the season!";
 	private static final String SEASON_DELETE_CONFIRMATION_TEXT = "Done! Season deleted successfully.";
 	
 	@Override
@@ -30,7 +30,7 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			
-			addActionError(BGTConstants.checkFields);
+			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
 			
@@ -40,7 +40,7 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		if (season == null) {
 			
-			addActionError(BGTConstants.checkFields);
+			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
 			
@@ -50,7 +50,7 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		if (!this.isExecutingUserPermitted(deleteSeasonPermissionValue)) {
 			
-			addActionError(seasonDeletePermissionsErrorText);
+			addActionError(SEASON_DELETE_PERMISSIONS_ERROR_TEXT);
 			
 			throw new AuthorizationException("User: " + this.getShiroUser().getPrincipal() + " does not have the required "
 					+ "permissions: "+ deleteSeasonPermissionValue + " for action: " + this.getClass() );
@@ -67,7 +67,7 @@ public class SeasonDelete extends ShiroBaseAction {
 
 		setPopupMessage(SEASON_DELETE_CONFIRMATION_TEXT);
 		
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 
 	private void deleteAllPermissionsForSeason() {

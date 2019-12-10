@@ -28,20 +28,20 @@ public class SeasonView extends ShiroBaseAction {
 	public String execute() {
 		
 		if (!this.shiroUser.isAuthenticated()) {
-			addActionError(BGTConstants.authenticationError);
-			return BGTConstants.error;
+			addActionError(BGTConstants.AUTHENTICATION_ERROR);
+			return BGTConstants.ERROR;
 		}
 		
 		if (seasonId.isEmpty() || seasonId.length() == 0) {
-			addActionError(BGTConstants.seasonIdError);
-			return BGTConstants.error;
+			addActionError(BGTConstants.SEASON_ID_ERROR);
+			return BGTConstants.ERROR;
 		}
 		
 		try {
 			this.setSeason(SeasonDAO.getSeasonById(Integer.parseInt(seasonId), true));
 		} catch (NumberFormatException e) {
-			addActionError(BGTConstants.seasonIdError);
-			return BGTConstants.error; 
+			addActionError(BGTConstants.SEASON_ID_ERROR);
+			return BGTConstants.ERROR; 
 		}
 		
 		buildVictors(this.getSeason().getRounds());
@@ -50,10 +50,10 @@ public class SeasonView extends ShiroBaseAction {
 			determineSeasonStatus();
 		
 		if (errorsOccured) {
-			return BGTConstants.error;
+			return BGTConstants.ERROR;
 		}
 
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 
 	private void buildVictors(List<Round> rounds) {

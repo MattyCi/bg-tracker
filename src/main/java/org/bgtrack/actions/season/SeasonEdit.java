@@ -31,8 +31,8 @@ public class SeasonEdit extends ShiroBaseAction {
 	private String editSeasonPermissionValue;
 			
 	private Boolean errorsOccurred = false;
-
-	private static final String seasonEditPermissionsErrorText = "Sorry, only a season admin may edit the season!";
+	
+	private static final String SEASON_EDIT_PERMISSIONS_ERROR_TEXT = "Sorry, only a season admin may edit the season!";
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided is earlier than the season start date, please choose a valid date and try again.";
 	private static final String GENERIC_SEASON_UPDATE_ERROR_TEXT = "Sorry... something went wrong and we were unable to update the season data.";
 	private static final String SEASON_EDIT_CONFIRMATION_TEXT = "Done! Season edited successfully.";
@@ -44,7 +44,7 @@ public class SeasonEdit extends ShiroBaseAction {
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			
-			addActionError(BGTConstants.checkFields);
+			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
 			
@@ -54,7 +54,7 @@ public class SeasonEdit extends ShiroBaseAction {
 		
 		if (season == null) {
 			
-			addActionError(BGTConstants.checkFields);
+			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
 			
@@ -64,7 +64,7 @@ public class SeasonEdit extends ShiroBaseAction {
 		
 		if (!this.isExecutingUserPermitted(editSeasonPermissionValue)) {           
 			
-			addActionError(seasonEditPermissionsErrorText);
+			addActionError(SEASON_EDIT_PERMISSIONS_ERROR_TEXT);
 			
 			throw new AuthorizationException("User: " + this.getShiroUser().getPrincipal() + " does not have the required "
 					+ "permissions: "+ editSeasonPermissionValue + " for action: " + this.getClass() );
@@ -83,7 +83,7 @@ public class SeasonEdit extends ShiroBaseAction {
 			
 		} catch (ParseException e) {
 			
-			addActionError(BGTConstants.dateError);
+			addActionError(BGTConstants.DATE_ERROR);
 			return ERROR;
 			
 		} catch (Exception e) {

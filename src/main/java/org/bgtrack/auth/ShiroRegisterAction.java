@@ -35,8 +35,8 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 		
 		// ensure the user is not already logged in
 		if (this.shiroUser.isAuthenticated()) {
-			addActionError(BGTConstants.alreadyLoggedIn);
-			return BGTConstants.error;
+			addActionError(BGTConstants.ALREADY_LOGGED_IN);
+			return BGTConstants.ERROR;
 		}
 		
 		// validate email is valid
@@ -44,13 +44,13 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 		
 		// isValid will also protect against null strings (no null checks needed)
 		if (!emailValidator.isValid(username)) {
-			addActionError(BGTConstants.invalidEmail);
-			return BGTConstants.error;
+			addActionError(BGTConstants.INVALID_EMAIL);
+			return BGTConstants.ERROR;
 		}
 		
 		if (!password.equals(passwordVerify)) {
-			addActionError(BGTConstants.passwordMismatch);
-			return BGTConstants.error;
+			addActionError(BGTConstants.PASSWORD_MISMATCH);
+			return BGTConstants.ERROR;
 		}
 		
 		// validate password strength
@@ -59,18 +59,18 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 		
 		if (!result.isValid()) {
 			addActionError(validator.getMessages(result).get(0));
-			return BGTConstants.error;
+			return BGTConstants.ERROR;
 		}
 
 		// ensure user does not already exist
 		if(UserDAO.getUserByEmail(username) != null) {
-			addActionError(BGTConstants.genericError);
-			return BGTConstants.error;
+			addActionError(BGTConstants.GENERIC_ERROR);
+			return BGTConstants.ERROR;
 		}
 		
 		if (firstName.isEmpty() || lastName.isEmpty() || firstName.length() == 0 || lastName.length() == 0) {
-			addActionError(BGTConstants.emptyName);
-			return BGTConstants.error;
+			addActionError(BGTConstants.EMPTY_NAME);
+			return BGTConstants.ERROR;
 		}
 		
 		username = username.toLowerCase();
@@ -78,12 +78,12 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 		registerUser(username, password, firstName, lastName);
 				
 		if (errorsOccured) {
-			addActionError(BGTConstants.genericError);
-			return BGTConstants.error;
+			addActionError(BGTConstants.GENERIC_ERROR);
+			return BGTConstants.ERROR;
 		}
 
 		// if we reach this, user will now finally log in through struts2 action chaining
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 
 	public void registerUser(String email, String plainTextPassword, String firstName, String lastName) {

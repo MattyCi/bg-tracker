@@ -15,7 +15,7 @@ import org.bgtrack.utils.HibernateUtil;
 public class RoundDelete extends ShiroBaseAction {
 	private static final long serialVersionUID = 8752947492063852728L;
 	
-	private static final String roundDeletePermissionsErrorText = "Sorry, only a season's creator or admin can delete a round!";
+	private static final String ROUND_DELETE_PERMISSIONS_ERROR_TEXT = "Sorry, only a season's creator or admin can delete a round!";
 	private static final String ROUND_DELETE_CONFIRMATION_TEXT = "Done! Round deleted successfully!";
 	
 	private String roundId;
@@ -32,7 +32,7 @@ public class RoundDelete extends ShiroBaseAction {
 		super.validate();
 		
 		if (roundId == null || roundId.isEmpty()) {
-			this.addActionError(BGTConstants.checkFields);
+			this.addActionError(BGTConstants.CHECK_FIELDS);
 		}
 		
 		roundToDelete = RoundDAO.getRoundById(roundId);
@@ -42,7 +42,7 @@ public class RoundDelete extends ShiroBaseAction {
 		this.setSeasonId(seasonContainingRound.getSeasonId().toString());
 		
 		if (!this.isExecutingUserPermitted("season:deleteround:"+this.seasonId)) {
-			this.addActionError(roundDeletePermissionsErrorText);
+			this.addActionError(ROUND_DELETE_PERMISSIONS_ERROR_TEXT);
 		}
 		
 	}
@@ -58,7 +58,7 @@ public class RoundDelete extends ShiroBaseAction {
 		
 		this.setPopupMessage(ROUND_DELETE_CONFIRMATION_TEXT);
 		
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 	
 	private void recalculateSeasonScoring(Season seasonContainingRound) {

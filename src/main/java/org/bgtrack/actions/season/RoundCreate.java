@@ -40,8 +40,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	RoundResultArrayList roundResultList;
 	
 	private String createRoundPermissionValue;
-
-	private static final String roundCreatePermissionsErrorText = "Sorry, only current players of a season can create rounds!";
+	
+	private static final String ROUND_CREATE_PERMISSIONS_ERROR_TEXT = "Sorry, only current players of a season can create rounds!";
 	private static final String MORE_PLAYERS_REQUIRED_ERROR_TEXT = "More than one player is required to create a round.";
 	private static final String TWO_OF_SAME_PLAYER_ERROR_TEXT = "The same player was added to the round twice. Please try again.";
 	private static final String PLACES_INVALID_ERROR_TEXT = "The places submitted were not in a valid order.";
@@ -53,7 +53,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			
-			addActionError(BGTConstants.checkFields);
+			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
 			
@@ -63,7 +63,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if (season == null) {
 			
-			addActionError(BGTConstants.checkFields);
+			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
 			
@@ -71,7 +71,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if ("I".equals(this.season.getStatus())) {
 			
-			addActionError(BGTConstants.seasonInactiveError);
+			addActionError(BGTConstants.SEASON_INACTIVE_ERROR);
 			
 			return;
 			
@@ -81,7 +81,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if (!this.isExecutingUserPermitted(createRoundPermissionValue)) {
 			
-			addActionError(roundCreatePermissionsErrorText);
+			addActionError(ROUND_CREATE_PERMISSIONS_ERROR_TEXT);
 			
 			throw new AuthorizationException("User: " + this.getShiroUser().getPrincipal() + " does not have the required "
 					+ "permissions: "+ createRoundPermissionValue + " for action: " + this.getClass() );
@@ -149,10 +149,10 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		recalculateSeasonScoring();
 		
 		if (errorsOccured) {
-			return BGTConstants.error;
+			return BGTConstants.ERROR;
 		}
 
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 
 	private Boolean isUserAlreadyAdded(String userId) {

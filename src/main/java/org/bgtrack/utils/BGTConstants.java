@@ -6,37 +6,28 @@ package org.bgtrack.utils;
  */
 public final class BGTConstants {
 	// struts messages
-	public static final String success = "success";
-	public static final String error = "error";
-	
-	// user values
-	public static final char newGuestUserType = 'N';
-	public static final char guestUserType = 'G';
-	public static final char regUserType = 'R';
-	
-	// cookie values
-	public static final String guestIDCookieName = "guestID";
-	public static final String guestTokenCookieName = "guestToken";
-	
+	public static final String SUCCESS = "success";
+	public static final String ERROR = "error";
+
 	// error messages
-	public static final String genericError = "Sorry, we could not process your request.";
-	public static final String invalidEmail = "The email entered is invalid!";
-	public static final String passwordMismatch = "The passwords provided do not match!";
-	public static final String noAccount = "Sorry... we could not log you in. Please check your "
+	public static final String GENERIC_ERROR = "Sorry, we could not process your request.";
+	public static final String INVALID_EMAIL = "The email entered is invalid!";
+	public static final String PASSWORD_MISMATCH = "The passwords provided do not match!";
+	public static final String NO_ACCOUNT = "Sorry... we could not log you in. Please check your "
 			+ "credentials and try again.";
-	public static final String alreadyLoggedIn = "It seems you are already logged in as a user. "
+	public static final String ALREADY_LOGGED_IN = "It seems you are already logged in as a user. "
 			+ "Please log out and try to register again.";
-	public static String emptyName = "Either the first name or last name was not provided.";
-	public static String checkFields = "Please check the data submitted and try again.";
-	public static final String authenticationError = "User not authenticated, please log in once more.";
-	public static final String authorizationError = "User not authorized to run this command.";
-	public static final String logInPromp = "Please log in to perform this action.";
-	public static final String dateError = "There was an error with the format of the date provided.";
-	public static final String seasonIdError = "The season ID was incorrect.";
-	public static final String seasonInactiveError = "This season has ended, so rounds cannot be created for it.";
+	public static String EMPTY_NAME = "Either the first name or last name was not provided.";
+	public static String CHECK_FIELDS = "Please check the data submitted and try again.";
+	public static final String AUTHENTICATION_ERROR = "User not authenticated, please log in once more.";
+	public static final String AUTHORIZATION_ERROR = "User not authorized to run this command.";
+	public static final String LOG_IN_PROMPT = "Please log in to perform this action.";
+	public static final String DATE_ERROR = "There was an error with the format of the date provided.";
+	public static final String SEASON_ID_ERROR = "The season ID was incorrect.";
+	public static final String SEASON_INACTIVE_ERROR = "This season has ended, so rounds cannot be created for it.";
 	
 	// search
-	public static final String playerSearchParamMissing = "To search for a player, you must either specify a first or "
+	public static final String PLAYER_SEARCH_PARAM_MISSING = "To search for a player, you must either specify a first or "
 			+ "a last name.";
 	
 }

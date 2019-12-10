@@ -25,13 +25,13 @@ public class CalculateUserSeasonStatsAction extends ShiroBaseAction {
 		if (this.selectedUserId != null && !this.selectedUserId.isEmpty()) {
 			this.selectedUser = UserDAO.getUserByID(selectedUserId);
 		} else {
-			addActionError(BGTConstants.genericError);
+			addActionError(BGTConstants.GENERIC_ERROR);
 		}
 		
 		this.selectedSeason = SeasonDAO.getSeasonById(selectedSeasonId, true);
 		
 		if (this.selectedSeason == null) {
-			addActionError(BGTConstants.genericError);
+			addActionError(BGTConstants.GENERIC_ERROR);
 		}
 		
 	}
@@ -44,12 +44,12 @@ public class CalculateUserSeasonStatsAction extends ShiroBaseAction {
 		
 		if (userSeasonStats.getSeasonStandingList().isEmpty()) {
 			addActionError(PLAYER_HAS_NO_ROUNDS_PLAYED_ERROR_TEXT);
-			return BGTConstants.error;
+			return BGTConstants.ERROR;
 		}
 		
 		this.setUserSeasonStats(userSeasonStats);
 		
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 	
 	public UserSeasonStats getUserSeasonStats() {

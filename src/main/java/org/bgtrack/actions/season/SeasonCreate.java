@@ -31,23 +31,23 @@ public class SeasonCreate extends ShiroBaseAction {
 	public String execute() {
 		
 		if (!this.shiroUser.isAuthenticated()) {
-			addActionError(BGTConstants.authenticationError);
-			return BGTConstants.error;
+			addActionError(BGTConstants.AUTHENTICATION_ERROR);
+			return BGTConstants.ERROR;
 		}
 		
 		if (seasonName.isEmpty() || seasonGameId.isEmpty() || seasonEndDate.isEmpty() || seasonName.length() == 0 || 
 				seasonGameId.length() == 0 || seasonEndDate.length() == 0) {
-			addActionError(BGTConstants.checkFields);
-			return BGTConstants.error;
+			addActionError(BGTConstants.CHECK_FIELDS);
+			return BGTConstants.ERROR;
 		}
 
 		createSeason(seasonName, Integer.parseInt(seasonGameId), seasonEndDate);
 
 		if (errorsOccured) {
-			return BGTConstants.error;
+			return BGTConstants.ERROR;
 		}
 
-		return BGTConstants.success;
+		return BGTConstants.SUCCESS;
 	}
 
 	public void createSeason(String seasonName, int seasonGameId, String seasonEndDate) {
@@ -66,7 +66,7 @@ public class SeasonCreate extends ShiroBaseAction {
 		    }
 		    
 		} catch(Exception e) {
-			addActionError(BGTConstants.dateError);
+			addActionError(BGTConstants.DATE_ERROR);
 			errorsOccured = true;
 			return;
 		}

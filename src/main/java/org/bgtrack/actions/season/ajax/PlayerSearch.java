@@ -37,8 +37,8 @@ public class PlayerSearch extends JsonAction {
 	}
 
 	private void createErrorResponse() {
-		this.setJsonErrorObject(new JsonError(1, BGTConstants.playerSearchParamMissing));
-		this.addActionError(BGTConstants.playerSearchParamMissing);
+		this.setJsonErrorObject(new JsonError(1, BGTConstants.PLAYER_SEARCH_PARAM_MISSING));
+		this.addActionError(BGTConstants.PLAYER_SEARCH_PARAM_MISSING);
 	}
 	
 	@Override

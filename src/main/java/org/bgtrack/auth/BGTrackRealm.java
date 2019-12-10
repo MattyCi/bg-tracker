@@ -29,7 +29,7 @@ import org.bgtrack.models.user.Reguser;
  */
 public class BGTrackRealm extends JdbcRealm {
 	
-	private static final Logger log = LoggerFactory.getLogger(BGTrackRealm.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BGTrackRealm.class);
 	    
     protected static final String USER_PERMISSIONS_QUERY = "select PERM_VALUE from PERMISSIONS perm "
     		+ "inner join USER_PERMISSIONS uperm on uperm.PERM_ID = perm.PERM_ID "
@@ -91,8 +91,8 @@ public class BGTrackRealm extends JdbcRealm {
 
         } catch (SQLException e) {
             final String message = "There was a SQL error while authorizing user [" + username + "]";
-            if (log.isErrorEnabled()) {
-                log.error(message, e);
+            if (LOG.isErrorEnabled()) {
+            	LOG.error(message, e);
             }
 
             // Rethrow any SQL errors as an authorization exception
