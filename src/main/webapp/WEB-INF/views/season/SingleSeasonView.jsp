@@ -160,6 +160,7 @@
 			
 					<form id="round-create-form" action="/createRound" method="POST" class="my-auto">
 						<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
+						<input name="csrfToken" type="hidden" value="${csrfToken}">
 						<div id="player-add-container-0" class="form-row justify-content-center">
 						    
 						    <div class="col-xs-7 col-lg-12 float-left">

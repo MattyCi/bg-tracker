@@ -47,6 +47,11 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	private static final String PLACES_INVALID_ERROR_TEXT = "The places submitted were not in a valid order.";
 	
 	@Override
+	public Boolean isCsrfProtected() {
+		return true;
+	}
+	
+	@Override
 	public void validate() {
 		
 		super.validate();
