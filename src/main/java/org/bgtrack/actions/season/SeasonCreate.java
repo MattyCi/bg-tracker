@@ -28,6 +28,11 @@ public class SeasonCreate extends ShiroBaseAction {
 	
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please choose a valid date and try again.";
 	
+	@Override
+	public Boolean isCsrfProtected() {
+		return true;
+	}
+	
 	public String execute() {
 		
 		if (!this.shiroUser.isAuthenticated()) {

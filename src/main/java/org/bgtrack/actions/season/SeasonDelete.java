@@ -24,6 +24,11 @@ public class SeasonDelete extends ShiroBaseAction {
 	private static final String SEASON_DELETE_CONFIRMATION_TEXT = "Done! Season deleted successfully.";
 	
 	@Override
+	public Boolean isCsrfProtected() {
+		return true;
+	}
+	
+	@Override
 	public void validate() {
 		
 		super.validate();

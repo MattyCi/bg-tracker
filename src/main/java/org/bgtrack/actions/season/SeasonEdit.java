@@ -38,6 +38,11 @@ public class SeasonEdit extends ShiroBaseAction {
 	private static final String SEASON_EDIT_CONFIRMATION_TEXT = "Done! Season edited successfully.";
 	
 	@Override
+	public Boolean isCsrfProtected() {
+		return true;
+	}
+	
+	@Override
 	public void validate() {
 		
 		super.validate();

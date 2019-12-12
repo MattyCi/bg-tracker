@@ -73,6 +73,7 @@
 								<label for="new-season-end-date">New Season End Date</label>
 								<form id="season-edit-form" action="/editSeason">
 									<input name="seasonId" value="${season.seasonId}" type="hidden">
+									<input name="csrfToken" type="hidden" value="${csrfToken}">
 									<input name="seasonEndDate" type="text" class="form-control my-2" id="new-season-end-date" placeholder="Season End Date" autocomplete="off">
 									<small id="season-end-date-help" class="form-text text-muted">
 										Note that your current season end date cannot be before 
@@ -102,6 +103,7 @@
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 								<form id="delete-season-form" action="deleteSeason">
 									<input type="hidden" name="seasonId" value="${season.seasonId}">
+									<input name="csrfToken" type="hidden" value="${csrfToken}">
 									<button type="submit" class="btn btn-danger">Delete Season</button>
 								</form>
 							</div>

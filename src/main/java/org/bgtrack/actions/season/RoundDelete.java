@@ -27,6 +27,11 @@ public class RoundDelete extends ShiroBaseAction {
 	Season seasonContainingRound;
 
 	@Override
+	public Boolean isCsrfProtected() {
+		return true;
+	}
+	
+	@Override
 	public void validate() {
 		
 		super.validate();
