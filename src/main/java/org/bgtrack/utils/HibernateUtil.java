@@ -6,6 +6,9 @@ import java.time.Instant;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.bgtrack.actions.season.SeasonDelete;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.SeasonStanding;
 import org.hibernate.HibernateException;
@@ -16,6 +19,8 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
+	private static final Logger LOG = LogManager.getLogger(HibernateUtil.class);
+	
 	private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
 
 	private static SessionFactory buildSessionFactory() {
@@ -24,7 +29,7 @@ public class HibernateUtil {
 			return new Configuration().configure().buildSessionFactory();
 		} catch (Throwable ex) {
 			// Make sure you log the exception, as it might be swallowed
-			System.err.println("Initial SessionFactory creation failed." + ex);
+			LOG.fatal("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
@@ -53,7 +58,7 @@ public class HibernateUtil {
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();
-			System.err.println("Hibernate error occured: "+e);
+			LOG.error("Hibernate error occured: "+e);
 			errorsOccured = true;
 			throw e;
 		} finally {
@@ -71,7 +76,7 @@ public class HibernateUtil {
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();
-			System.err.println("Hibernate error occured: "+e);
+			LOG.error("Hibernate error occured: "+e);
 			throw e;
 		} finally {
 			session.close();
@@ -87,7 +92,7 @@ public class HibernateUtil {
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();
-			System.err.println("Hibernate error occured: "+e);
+			LOG.error("Hibernate error occured: "+e);
 			throw e;
 		} finally {
 			session.close();

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -19,8 +21,7 @@ import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.JdbcUtils;
 import org.bgtrack.models.user.daos.UserDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.bgtrack.models.user.Reguser;
 
 /**
@@ -28,8 +29,7 @@ import org.bgtrack.models.user.Reguser;
  * @author Matt
  */
 public class BGTrackRealm extends JdbcRealm {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(BGTrackRealm.class);
+	private static final Logger LOG = LogManager.getLogger(BGTrackRealm.class);
 	    
     protected static final String USER_PERMISSIONS_QUERY = "select PERM_VALUE from PERMISSIONS perm "
     		+ "inner join USER_PERMISSIONS uperm on uperm.PERM_ID = perm.PERM_ID "

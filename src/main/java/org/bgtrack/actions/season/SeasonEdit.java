@@ -2,26 +2,22 @@ package org.bgtrack.actions.season;
 
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationException;
-import org.bgtrack.auth.BGTrackRealm;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Season;
-import org.bgtrack.models.daos.AuthorizationDAO;
 import org.bgtrack.models.daos.SeasonDAO;
-import org.bgtrack.models.user.authorization.Permission;
 
 public class SeasonEdit extends ShiroBaseAction {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = LoggerFactory.getLogger(BGTrackRealm.class);
+	private static final Logger LOG = LogManager.getLogger(SeasonEdit.class);
 	
 	private String seasonId;
 	private String seasonEndDate;
@@ -49,6 +45,8 @@ public class SeasonEdit extends ShiroBaseAction {
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			
+			LOG.debug("user: {} gave invalid seasonId", shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
@@ -59,6 +57,8 @@ public class SeasonEdit extends ShiroBaseAction {
 		
 		if (season == null) {
 			
+			LOG.info("user {} trying to edit season but unable to find seasonId {} in database: " + shiroUser.getPrincipal(), seasonId);
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
@@ -68,6 +68,8 @@ public class SeasonEdit extends ShiroBaseAction {
 		editSeasonPermissionValue = "season:editseason:"+this.seasonId;
 		
 		if (!this.isExecutingUserPermitted(editSeasonPermissionValue)) {           
+			
+			LOG.info("user {} trying to edit season but does not have permission: " + shiroUser.getPrincipal());
 			
 			addActionError(SEASON_EDIT_PERMISSIONS_ERROR_TEXT);
 			
@@ -87,6 +89,8 @@ public class SeasonEdit extends ShiroBaseAction {
 			}
 			
 		} catch (ParseException e) {
+			
+			LOG.info("user {} trying to edit season but gave invalid date of {}: " + shiroUser.getPrincipal(), seasonEndDate);
 			
 			addActionError(BGTConstants.DATE_ERROR);
 			return ERROR;

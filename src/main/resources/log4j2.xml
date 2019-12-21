@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
-	<Appenders>
-		<Console name="console" target="SYSTEM_OUT">
-			<PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
-		</Console>
-	</Appenders>
-	<Loggers>
-		<Root level="debug" additivity="false">
+<Configuration status="WARN">
+    <Properties>
+        <Property name="logPath">seasongg/logs</Property>
+        <Property name="rollingFileName">log</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" />
+        </Console>
+        <RollingFile name="rollingFile" fileName="${logPath}/${rollingFileName}.log" filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" />
+            <Policies>
+                <!-- Causes a rollover if the log file is older than the current JVM's start time -->
+                <OnStartupTriggeringPolicy />
+                <!-- Causes a rollover once the date/time pattern no longer applies to the active file -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+		
+		<!-- season gg code only -->
+		<Logger name="org.bgtrack" level="DEBUG" additivity="false">
 			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingFile" />
+		</Logger>
+		
+		<!-- all other packages (dependencies) -->
+		<Root level="ERROR" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingFile" />
 		</Root>
-	</Loggers>
+		
+    </Loggers>
 </Configuration>

@@ -9,6 +9,8 @@ import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
 import org.bgtrack.utils.RoundResultArrayList;
 import org.bgtrack.utils.RoundResultArrayListImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
@@ -30,6 +32,9 @@ import org.bgtrack.models.user.daos.UserDAO;
 
 public class RoundCreate extends ShiroBaseAction implements HttpParametersAware {
 	private static final long serialVersionUID = -6328260956217475993L;
+	
+	private static final Logger LOG = LogManager.getLogger(RoundCreate.class);
+	
 	private String seasonName;
 	private String seasonId;
 	private String seasonEndDate;
@@ -58,6 +63,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			
+			LOG.info("parameter seasonId was empty for request to create round by " + shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
@@ -68,6 +75,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if (season == null) {
 			
+			LOG.info("season with id" + seasonId + " does not exist for request to create round by " + shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
@@ -75,6 +84,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 		
 		if ("I".equals(this.season.getStatus())) {
+			
+			LOG.info("season with id" + seasonId + " is inactive, but user " + shiroUser.getPrincipal() + " is trying to add a round.");
 			
 			addActionError(BGTConstants.SEASON_INACTIVE_ERROR);
 			
@@ -86,6 +97,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		
 		if (!this.isExecutingUserPermitted(createRoundPermissionValue)) {
 			
+			LOG.info("user " + shiroUser.getPrincipal() + " is trying to add a round to season "+ seasonId + " but they lack permissions.");
+			
 			addActionError(ROUND_CREATE_PERMISSIONS_ERROR_TEXT);
 			
 			throw new AuthorizationException("User: " + this.getShiroUser().getPrincipal() + " does not have the required "
@@ -94,7 +107,12 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 		
 		if(!multiplePlayersPlayed()) {
+			
+			LOG.info("user " + shiroUser.getPrincipal() + " is trying to add a round to season "+ seasonId + ", but they've added "
+					+ "only one player to the round.");
+			
 			addActionError(MORE_PLAYERS_REQUIRED_ERROR_TEXT);
+			
 		}
 		
 	}
@@ -130,6 +148,10 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			Reguser roundUser = UserDAO.getUserByID(userId.toString());
 			
 			if (!this.roundResultList.isEmpty() && isUserAlreadyAdded(roundUser.getUserId())) {
+				
+				LOG.info("user " + shiroUser.getPrincipal() + " is trying to add a round to season "+ seasonId + ", but they've added "
+						+ "two of the same player to the same round.");
+				
 				addActionError(TWO_OF_SAME_PLAYER_ERROR_TEXT);
 				return ERROR;
 			}
@@ -141,6 +163,10 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		}
 		
 		if( !arePlacesValid(this.roundResultList) ) {
+			
+			LOG.info("user " + shiroUser.getPrincipal() + " is trying to add a round to season "+ seasonId + ", but they've added "
+					+ "places which don't make sense.");
+			
 			addActionError(PLACES_INVALID_ERROR_TEXT);
 			return ERROR;
 		}
@@ -223,9 +249,17 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		roundResult.setPoints(points);
 		
 		if (isSeasonScoringTypeLayered()) {
+			
+			LOG.debug("season has layered scoring, adding layered points for player: " + 
+					roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName());
+			
 			roundResult.setLayeredPoints(determineModifier(roundResult));
+			
 		}
-
+		
+		LOG.debug("player: " + roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName()
+				+ " has earned " + roundResult.getPoints() + roundResult.getLayeredPoints() + " points" );
+		
 	}
 
 	private boolean isSeasonScoringTypeLayered() {
@@ -271,6 +305,9 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			}
 		}
 		
+		LOG.debug("player: " + roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName()
+				+ " has placed in " + roundResult.getPlace() + occurances + " times" );
+		
 		return occurances;
 	}
 	
@@ -302,6 +339,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 		}
 		
+		LOG.debug("last place value: " + lastPlaceValue);
+		
 		return lastPlaceValue;
 		
 	}
@@ -311,6 +350,9 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		for (int i = lastPlaceValue; i > 0; i--) {
 			
 			if (!roundResultList.doesRoundResultListContainPlace(i)) {
+				
+				LOG.info("round result list missing place: " + i + ", but this place should exist");
+				
 				return false;
 			}
 			
@@ -339,14 +381,21 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		Subject roundPlayerSubject = new Subject.Builder().principals(principals).buildSubject();
 		
 		if (roundPlayerSubject.isPermitted(createRoundPermissionValue)) {
+			
+			LOG.debug("player " + roundUser.getFirstName() + roundUser.getLastName() + " already has round create permission");
+			
 			return true;
 		}
+		
+		LOG.debug("player " + roundUser.getFirstName() + roundUser.getLastName() + " missing round create permission");
 		
 		return false;
 	}
 	
 	private void grantPlayerRoundCreatePermission(Reguser roundUser) {
-
+		
+		LOG.debug("granting player " + roundUser.getFirstName() + roundUser.getLastName() + " round create permission");
+		
 		Permission permission = AuthorizationDAO.getPermissionByValue(createRoundPermissionValue);
 		
 		if (permission == null) {
@@ -380,6 +429,9 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	}
 
 	private void recalculateSeasonScoring() {
+		
+		LOG.debug("recalculating season scoring for scoring type: " + this.season.getScoringType());
+		
 		SeasonStandingHelper seasonStandingHelper = SeasonStandingHelperFactory.getSeasonStandingHelper(this.season.getScoringType());
 		seasonStandingHelper.setSeason(this.season);
 		seasonStandingHelper.buildStandings();

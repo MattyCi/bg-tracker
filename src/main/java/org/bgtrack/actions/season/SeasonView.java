@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.RoundResult;
@@ -19,6 +21,9 @@ import org.bgtrack.models.user.Reguser;
 
 public class SeasonView extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
+	private static final Logger LOG = LogManager.getLogger(SeasonView.class);
+	
+	
 	private String seasonId;
 	private Season season;
 	private boolean errorsOccured = false;
@@ -63,7 +68,9 @@ public class SeasonView extends ShiroBaseAction {
 			List<Reguser> victors = RoundDAO.getVictorsForRound(round.getRoundId());
 			
 			if (victors.size() != 1) {
-				// we have a tie
+
+				LOG.debug("there is a tie for roundId {}", round.getRoundId());
+				
 				StringBuilder tiedVictors = new StringBuilder();
 				ListIterator<Reguser> iterator = victors.listIterator();
 				
@@ -76,9 +83,17 @@ public class SeasonView extends ShiroBaseAction {
 				}
 				
 				tiedVictors.append("(TIE)");
+				
+				LOG.debug("users {} tied for roundId {}", tiedVictors.toString(), round.getRoundId());
+				
 				this.getListofVictors().add(tiedVictors.toString());
+			
 			} else {
+				
+				LOG.debug("user {} is victor for roundId {}", round.getRoundId());
+				
 				this.getListofVictors().add(victors.get(0).getFirstName()+" "+victors.get(0).getLastName());
+				
 			}
 		}
 	}
@@ -88,6 +103,8 @@ public class SeasonView extends ShiroBaseAction {
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		
 		if(currentTime.after(this.getSeason().getEndDate())) {
+			
+			LOG.info("currentTime is after season end date, marking seasonId {} inactive", seasonId);
 			
 			SeasonDAO.markSeasonAsInactive(Integer.parseInt(seasonId));
 			

@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import org.bgtrack.utils.BGTConstants;
 
 import org.bgtrack.utils.HibernateUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.daos.GameDAO;
@@ -18,6 +20,9 @@ import org.bgtrack.models.user.authorization.UserPermission;
 
 public class SeasonCreate extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
+	
+	private static final Logger LOG = LogManager.getLogger(SeasonCreate.class);
+	
 	private String seasonName;
 	private String seasonGameId;
 	private String seasonEndDate;
@@ -36,12 +41,18 @@ public class SeasonCreate extends ShiroBaseAction {
 	public String execute() {
 		
 		if (!this.shiroUser.isAuthenticated()) {
+			
+			LOG.info("user trying to create season but is not authenticated: " + shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.AUTHENTICATION_ERROR);
 			return BGTConstants.ERROR;
 		}
 		
 		if (seasonName.isEmpty() || seasonGameId.isEmpty() || seasonEndDate.isEmpty() || seasonName.length() == 0 || 
 				seasonGameId.length() == 0 || seasonEndDate.length() == 0) {
+			
+			LOG.info("either the season name, gameId or start or end dates were empty: " + shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			return BGTConstants.ERROR;
 		}
@@ -65,12 +76,18 @@ public class SeasonCreate extends ShiroBaseAction {
 		    seasonEndTimestamp = new java.sql.Timestamp(parsedDate.getTime());
 		    
 		    if (seasonEndTimestamp.before(seasonStartTimestamp)) {
+		    	
+		    	LOG.info("seasonEndTimestamp is before seasonStartTimestamp: " + shiroUser.getPrincipal());
+		    	
 		    	addActionError(INVALID_END_DATE_ERROR_TEXT);
 		    	errorsOccured = true;
 		    	return;
 		    }
 		    
 		} catch(Exception e) {
+			
+			LOG.info("user entered invalid date to create season: " + shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.DATE_ERROR);
 			errorsOccured = true;
 			return;
@@ -81,6 +98,14 @@ public class SeasonCreate extends ShiroBaseAction {
 		season.setGame(GameDAO.getGameById(seasonGameId));
 		season.setStartDate(seasonStartTimestamp);
 		season.setEndDate(seasonEndTimestamp);
+		
+		if (seasonScoringType == null || "".equals(seasonScoringType)) {
+			LOG.info("seasonEndTimestamp is before seasonStartTimestamp: " + shiroUser.getPrincipal());
+			addActionError(BGTConstants.SCORING_TYPE_EMPTY);
+			errorsOccured = true;
+			return;
+		}
+		
 		season.setScoringType(seasonScoringType);
 		
 		season.setStatus("A");
@@ -95,7 +120,7 @@ public class SeasonCreate extends ShiroBaseAction {
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();
-			System.err.println("Hibernate error occured: "+e);
+			LOG.error("Hibernate error occured: "+e);
 			errorsOccured = true;
 			throw e;
 		} finally {
@@ -125,6 +150,9 @@ public class SeasonCreate extends ShiroBaseAction {
 	}
 	
 	private void associateUserToPermission(Season season, Permission permission) {
+		
+		LOG.debug("granting user admin rights for new season: " + shiroUser.getPrincipal());
+		
 		UserPermission userPermission = new UserPermission();
 		userPermission.setPermission(permission);
 		userPermission.setUser(season.getCreator());

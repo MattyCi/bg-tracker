@@ -25,6 +25,7 @@ public final class BGTConstants {
 	public static final String DATE_ERROR = "There was an error with the format of the date provided.";
 	public static final String SEASON_ID_ERROR = "The season ID was incorrect.";
 	public static final String SEASON_INACTIVE_ERROR = "This season has ended, so rounds cannot be created for it.";
+	public static final String SCORING_TYPE_EMPTY = "Please provide a season scoring type.";
 	
 	// search
 	public static final String PLAYER_SEARCH_PARAM_MISSING = "To search for a player, you must either specify a first or "

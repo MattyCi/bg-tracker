@@ -5,6 +5,8 @@ import org.bgtrack.utils.HibernateUtil;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationException;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Season;
@@ -14,6 +16,8 @@ import org.bgtrack.models.user.authorization.Permission;
 
 public class SeasonDelete extends ShiroBaseAction {
 	private static final long serialVersionUID = -2322751648052461161L;
+	
+	private static final Logger LOG = LogManager.getLogger(SeasonDelete.class);
 	
 	private String seasonId;
 	Season season;
@@ -35,6 +39,8 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		if (null == seasonId || seasonId.length() == 0) {
 			
+			LOG.info("user trying to delete season but no seasonId was given: " + shiroUser.getPrincipal());
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
@@ -45,6 +51,8 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		if (season == null) {
 			
+			LOG.info("user {} trying to delete season but unable to find seasonId {} in database: " + shiroUser.getPrincipal(), seasonId);
+			
 			addActionError(BGTConstants.CHECK_FIELDS);
 			
 			return;
@@ -52,8 +60,10 @@ public class SeasonDelete extends ShiroBaseAction {
 		}
 		
 		deleteSeasonPermissionValue = "season:deleteseason:"+this.seasonId;
-		
+
 		if (!this.isExecutingUserPermitted(deleteSeasonPermissionValue)) {
+			
+			LOG.info("user {} trying to delete season but does not have rights for seasonId {}", shiroUser.getPrincipal() ,seasonId);
 			
 			addActionError(SEASON_DELETE_PERMISSIONS_ERROR_TEXT);
 			
@@ -80,7 +90,11 @@ public class SeasonDelete extends ShiroBaseAction {
 		List<Permission> allPermissionsForSeason = AuthorizationDAO.getAllPermissionsForSeason(seasonId);
 		
 		for (Permission permissionForSeason : allPermissionsForSeason) {
+			
+			LOG.debug("deleting permission: {} for seasonId: {}", permissionForSeason.getPermValue(), seasonId);
+			
 			HibernateUtil.deleteEntity(permissionForSeason);
+			
 		}
 		
 	}

@@ -1,5 +1,7 @@
 package org.bgtrack.actions.season;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.RoundResult;
@@ -14,6 +16,8 @@ import org.bgtrack.utils.HibernateUtil;
 
 public class RoundDelete extends ShiroBaseAction {
 	private static final long serialVersionUID = 8752947492063852728L;
+	
+	private static final Logger LOG = LogManager.getLogger(RoundDelete.class);
 	
 	private static final String ROUND_DELETE_PERMISSIONS_ERROR_TEXT = "Sorry, only a season's creator or admin can delete a round!";
 	private static final String ROUND_DELETE_CONFIRMATION_TEXT = "Done! Round deleted successfully!";
@@ -37,7 +41,11 @@ public class RoundDelete extends ShiroBaseAction {
 		super.validate();
 		
 		if (roundId == null || roundId.isEmpty()) {
+			
+			LOG.info("parameter roundId was empty for request to delete round by " + shiroUser.getPrincipal());
+			
 			this.addActionError(BGTConstants.CHECK_FIELDS);
+			
 		}
 		
 		roundToDelete = RoundDAO.getRoundById(roundId);
@@ -47,7 +55,11 @@ public class RoundDelete extends ShiroBaseAction {
 		this.setSeasonId(seasonContainingRound.getSeasonId().toString());
 		
 		if (!this.isExecutingUserPermitted("season:deleteround:"+this.seasonId)) {
+			
+			LOG.info("user " + shiroUser.getPrincipal() + " is trying to delete a round to season "+ seasonId + " but they lack permissions.");
+			
 			this.addActionError(ROUND_DELETE_PERMISSIONS_ERROR_TEXT);
+			
 		}
 		
 	}
@@ -77,7 +89,12 @@ public class RoundDelete extends ShiroBaseAction {
 		for (RoundResult deletedRoundResult : roundToDelete.getRoundResults()) {
 			
 			if (userNoLongerInSeason(deletedRoundResult.getReguser())) {
+				
+				LOG.debug("user " + deletedRoundResult.getReguser().getEmail() + " is no longer allowed to have round "
+						+ "delete permissions for season: "+ seasonId + ". removing permissions");
+				
 				deleteSeasonPermission(deletedRoundResult.getReguser());
+				
 			}
 			
 		}
