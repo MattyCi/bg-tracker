@@ -100,7 +100,7 @@ public class SeasonCreate extends ShiroBaseAction {
 		season.setEndDate(seasonEndTimestamp);
 		
 		if (seasonScoringType == null || "".equals(seasonScoringType)) {
-			LOG.info("seasonEndTimestamp is before seasonStartTimestamp: " + shiroUser.getPrincipal());
+			LOG.info("season scoring type was not provided: " + shiroUser.getPrincipal());
 			addActionError(BGTConstants.SCORING_TYPE_EMPTY);
 			errorsOccured = true;
 			return;

@@ -21,6 +21,7 @@ import org.apache.struts2.interceptor.HttpParametersAware;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.RoundResult;
+import org.bgtrack.models.ScoringType;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.daos.AuthorizationDAO;
 import org.bgtrack.models.daos.RoundDAO;
@@ -264,7 +265,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 	private boolean isSeasonScoringTypeLayered() {
 		
-		if("L".equals(this.season.getScoringType())) {
+		if(ScoringType.LAYERED.toString().equals(this.season.getScoringType())) {
 			return true;
 		} else {
 			return false;
