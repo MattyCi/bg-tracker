@@ -5,6 +5,8 @@
 <%@taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 
+<%@ page import="org.bgtrack.models.SeasonStatus" %>
+
 <!DOCTYPE html>
 <html>
 <head>

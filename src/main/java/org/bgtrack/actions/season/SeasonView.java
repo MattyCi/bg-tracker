@@ -2,10 +2,8 @@ package org.bgtrack.actions.season;
 
 import org.bgtrack.utils.BGTConstants;
 
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -13,8 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
-import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.Season;
+import org.bgtrack.models.SeasonStatus;
 import org.bgtrack.models.daos.RoundDAO;
 import org.bgtrack.models.daos.SeasonDAO;
 import org.bgtrack.models.user.Reguser;
@@ -23,11 +21,12 @@ public class SeasonView extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
 	private static final Logger LOG = LogManager.getLogger(SeasonView.class);
 	
-	
 	private String seasonId;
 	private Season season;
 	private boolean errorsOccured = false;
 	private List<String> listofVictors;
+	
+	@SuppressWarnings("unused")
 	private boolean seasonStatus;
 	
 	public String execute() {
@@ -51,7 +50,7 @@ public class SeasonView extends ShiroBaseAction {
 		
 		buildVictors(this.getSeason().getRounds());
 		
-		if ("A".equals(season.getStatus()))
+		if (SeasonStatus.ACTIVE.toString().equals(season.getStatus()))
 			determineSeasonStatus();
 		
 		if (errorsOccured) {
@@ -136,9 +135,11 @@ public class SeasonView extends ShiroBaseAction {
 		this.listofVictors = listofVictors;
 	}
 
-	public boolean getSeasonStatus() {
+	// commenting getter, because struts will set this property to the JSP layer
+	// and it will interfere with the name of our SeasonStatus enum type
+	/*public boolean getSeasonStatus() {
 		return seasonStatus;
-	}
+	}*/
 
 	public void setSeasonStatus(boolean seasonStatus) {
 		this.seasonStatus = seasonStatus;

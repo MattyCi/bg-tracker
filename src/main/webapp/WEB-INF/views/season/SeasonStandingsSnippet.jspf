@@ -36,7 +36,7 @@
 					<c:set var="trClass" value="text-warning" />
 					<c:set var="linkClass" value="text-warning" />
 				</c:when>
-				<c:when test="${season.status == 'I' && seasonStanding.getPlace() eq 1}">
+				<c:when test="${season.status == SeasonStatus.INACTIVE.toString() && seasonStanding.getPlace() eq 1}">
 					<c:set var="isVictor" value="true" />
 					<c:set var="trClass" value="gold-gradient" />
 				</c:when>

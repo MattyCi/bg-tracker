@@ -7,6 +7,8 @@
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 <jsp:useBean id="SeasonDAO" class="org.bgtrack.models.daos.SeasonDAO" scope="session"/>
 
+<%@ page import="org.bgtrack.models.SeasonStatus" %>
+
 <c:set var="usersInSeason" value="${SeasonDAO.getAllUsersInSeason(season.seasonId)}" />
 
 <!DOCTYPE html>
@@ -22,7 +24,7 @@
 	</shiro:notAuthenticated>
 </head>
 <body> 
-
+	
 	<%@ include file="../../snippets/Nav.jspf" %>
 	
 	<div class="container">
@@ -121,7 +123,7 @@
 					<h3>Season Info</h3>
 					<p class="h3">
 						<c:choose>
-							<c:when test="${season.status == 'A'}">
+							<c:when test="${season.status == SeasonStatus.ACTIVE.toString()}">
 								<span class="badge badge-success">Season Active</span>
 							</c:when>
 							<c:otherwise>
@@ -221,7 +223,7 @@
 							<div class="col-md-6 pt-3 ml-auto">
 								
 								<c:choose>
-									<c:when test="${season.status == 'A'}">
+									<c:when test="${season.status == SeasonStatus.ACTIVE.toString()}">
 										<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
 									</c:when>
 									<c:otherwise>
@@ -235,7 +237,7 @@
 							<div class="col-md-6 py-4 ml-auto">
 							
 								<c:choose>
-									<c:when test="${season.status == 'A'}">
+									<c:when test="${season.status == SeasonStatus.ACTIVE.toString()}">
 										<button id="round-create-btn" type="button" class="btn btn-success btn-block mb-2">Create Round</button>
 									</c:when>
 									<c:otherwise>
