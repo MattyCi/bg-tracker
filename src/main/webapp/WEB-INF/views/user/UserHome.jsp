@@ -6,6 +6,8 @@
 
 <%@ include file="../../snippets/PopupMessage.jspf" %>
 
+<%@ page import="org.bgtrack.models.ScoringType" %>
+
 <div class="row pt-2">
 
 	<div class="col-12 col-md-6 mx-auto">
@@ -38,8 +40,8 @@
 			</select> 
 			<input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date" autocomplete="off">
 			<select name="seasonScoringType" class="form-control" id="seasonScoringTypeSelect">
-				<option value="A">Averaged Scoring</option>
-				<option value="L">Layered Scoring</option>
+				<option value="${ScoringType.AVERAGED.toString()}">Averaged Scoring</option>
+				<option value="${ScoringType.LAYERED.toString()}">Layered Scoring</option>
 			</select>
 			<button type="submit" class="btn btn-success btn-lg btn-block my-4">Create Season</button>
 		</form>
