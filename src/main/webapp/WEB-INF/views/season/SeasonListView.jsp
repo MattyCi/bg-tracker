@@ -19,7 +19,7 @@
 <body>
 	<%@ include file="/WEB-INF/snippets/Nav.jspf" %>
 	
-	<div class="container">
+	<div class="container content">
 		<%@ include file="/WEB-INF/snippets/Header.jspf" %>
 		
 		<shiro:authenticated>
@@ -66,5 +66,8 @@
 			</shiro:authenticated>
 		
 	</div>
+	
+	<%@ include file="/WEB-INF/snippets/Footer.jspf" %>
+	
 </body>
 </html>

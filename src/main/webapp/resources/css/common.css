@@ -1,4 +1,21 @@
 
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
 .season-gg-jumbotron {
 	background-color: #ecf0f1;
 	padding: 2rem 1rem;
@@ -130,4 +147,3 @@
 .clickable {
     cursor: pointer;
 }
-

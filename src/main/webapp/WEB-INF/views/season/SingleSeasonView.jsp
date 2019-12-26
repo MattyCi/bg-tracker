@@ -27,7 +27,7 @@
 	
 	<%@ include file="../../snippets/Nav.jspf" %>
 	
-	<div class="container">
+	<div class="container content">
 		<%@ include file="../../snippets/Header.jspf" %>
 		
 		<shiro:authenticated>
@@ -348,6 +348,8 @@
 			field : document.getElementById('new-season-end-date')
 		});
 	</script>
+
+	<%@ include file="/WEB-INF/snippets/Footer.jspf" %>
 
 </body>
 </html>
