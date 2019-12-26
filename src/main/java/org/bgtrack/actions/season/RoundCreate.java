@@ -249,23 +249,23 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 		roundResult.setPoints(points);
 		
-		if (isSeasonScoringTypeLayered()) {
+		if (isSeasonScoringTypeHandicapped()) {
 			
-			LOG.debug("season has layered scoring, adding layered points for player: " + 
+			LOG.debug("season has handicap scoring, adding handicap points for player: " + 
 					roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName());
 			
-			roundResult.setLayeredPoints(determineModifier(roundResult));
+			roundResult.setHandicapPoints(determineModifier(roundResult));
 			
 		}
 		
 		LOG.debug("player: " + roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName()
-				+ " has earned " + roundResult.getPoints() + roundResult.getLayeredPoints() + " points" );
+				+ " has earned " + roundResult.getPoints() + roundResult.getHandicapPoints() + " points" );
 		
 	}
 
-	private boolean isSeasonScoringTypeLayered() {
+	private boolean isSeasonScoringTypeHandicapped() {
 		
-		if(ScoringType.LAYERED.toString().equals(this.season.getScoringType())) {
+		if(ScoringType.HANDICAPPED.toString().equals(this.season.getScoringType())) {
 			return true;
 		} else {
 			return false;
@@ -275,14 +275,14 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 
 	private double determineModifier(RoundResult roundResult) {
 		
-		// only award layered points if player came in 4th place or worse
+		// only award handicap points if player came in 4th place or worse
 		if (roundResult.getPlace().compareTo( BigInteger.valueOf(3) ) < 1 )
 			return 0;
 		
 		int occurancesOfPlace = determineOccuarancesOfPlace(roundResult);
 		
 		/**
-		 * Players do not receive extra layered points from the first occurrence of a place in a round.
+		 * Players do not receive extra handicap points from the first occurrence of a place in a round.
 		 * ie. a player comes in 3rd place for two rounds. For the first occurrence of 3rd place, they
 		 * are not rewarded any extra points. But the second time they came in 3rd, they got an extra
 		 * 0.25 points.

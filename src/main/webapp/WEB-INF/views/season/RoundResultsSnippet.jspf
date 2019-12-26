@@ -73,7 +73,7 @@
 
 					<tr class="${highlightCurrentPlayerRow}">
 						<td>${roundResult.getPlace()}</td>
-						<td>${roundResult.getPoints() + roundResult.getLayeredPoints()}</td>
+						<td>${roundResult.getPoints() + roundResult.handicapPoints}</td>
 						<td>
 							<a class="${userStatLinkClass}"
 								href="/viewPlayerSeasonStats?selectedSeasonId=${round.season.getSeasonId()}&selectedUserId=${roundResult.getReguser().getUserId()}">

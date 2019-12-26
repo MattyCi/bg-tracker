@@ -23,8 +23,8 @@ public class RoundResult implements Serializable {
 	@Column(name="ROUND_RESULTS_ID")
 	private String roundResultsId;
 
-	@Column(name="LAYERED_POINTS")
-	private double layeredPoints;
+	@Column(name="HANDICAP_POINTS")
+	private double handicapPoints;
 
 	private BigInteger place;
 
@@ -51,12 +51,12 @@ public class RoundResult implements Serializable {
 		this.roundResultsId = roundResultsId;
 	}
 
-	public double getLayeredPoints() {
-		return this.layeredPoints;
+	public double getHandicapPoints() {
+		return this.handicapPoints;
 	}
 
-	public void setLayeredPoints(double layeredPoints) {
-		this.layeredPoints = layeredPoints;
+	public void setHandicapPoints(double handicapPoints) {
+		this.handicapPoints = handicapPoints;
 	}
 
 	public BigInteger getPlace() {

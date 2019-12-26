@@ -6,8 +6,8 @@ public class SeasonStandingHelperFactory {
 
 	public static SeasonStandingHelper getSeasonStandingHelper(String seasonScoringType) {
 		
-		if (ScoringType.LAYERED.toString().equals(seasonScoringType)) {
-			return new LayeredSeasonStandingHelper();
+		if (ScoringType.HANDICAPPED.toString().equals(seasonScoringType)) {
+			return new HandicappedSeasonStandingHelper();
 		} else {
 			return new AveragedSeasonStandingHelper();
 		}

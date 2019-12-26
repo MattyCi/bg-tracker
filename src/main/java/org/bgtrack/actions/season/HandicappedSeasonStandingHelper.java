@@ -4,12 +4,12 @@ import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.SeasonStanding;
 
 /**
- * Layered season standings are calculated by adding extra points for
- * players who play consistently at a certain place.
+ * Handicapped season standings are calculated by adding extra points for
+ * players who play consistently at lower places.
  * @author Matt
  *
  */
-public class LayeredSeasonStandingHelper extends SeasonStandingHelper {
+public class HandicappedSeasonStandingHelper extends SeasonStandingHelper {
 
 	@Override
 	protected void calculateSeasonTotalsForUser(RoundResult roundResult, SeasonStanding seasonStanding) {
@@ -17,7 +17,7 @@ public class LayeredSeasonStandingHelper extends SeasonStandingHelper {
 		int gamesPlayed = seasonStanding.getGamesPlayed();
 		
 		totalPoints += roundResult.getPoints();
-		totalPoints += roundResult.getLayeredPoints();
+		totalPoints += roundResult.getHandicapPoints();
 		gamesPlayed++;
 		
 		seasonStanding.setTotalPoints(totalPoints);

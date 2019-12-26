@@ -2,7 +2,7 @@ package org.bgtrack.models;
 
 public enum ScoringType {
 
-	AVERAGED("A"), LAYERED("L");
+	AVERAGED("A"), HANDICAPPED("H");
 
 	private final String scoringType;
 
