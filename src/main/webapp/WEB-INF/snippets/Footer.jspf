@@ -1,23 +1,4 @@
 
-<!-- <footer class="bg-primary w-100 text-white py-4">
-	<div class="container ">
-		<div class="row">
-			<div class="col-3">
-				<a class="navbar-brand" href="/"> <img class="logo-small" src="/resources/img/logo-small.png"
-					alt="">
-				</a>
-				<p class="pl-2"><a href="">Contact Us</a></p>
-			</div>
-			<div class="col-4">
-				<h5>SEASON GG</h5>
-				<p>Season GG is run and operated by a one man team from the Detroit area of Michigan.</p>
-			</div>
-		</div>
-	</div>
-</footer> -->
-
-
-
 <footer class="bg-primary w-100 text-white text-center py-4">
 	<div class="container">
 		<div class="row justify-content-center align-items-center">
