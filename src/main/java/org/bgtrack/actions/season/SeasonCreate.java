@@ -7,6 +7,7 @@ import java.util.Date;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.bgtrack.utils.BGTConstants;
 
 import org.bgtrack.utils.HibernateUtil;
@@ -32,6 +33,7 @@ public class SeasonCreate extends ShiroBaseAction {
 	private String createdSeasonId;
 	
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please choose a valid date and try again.";
+	private static final String SEASON_NAME_EXISTS_ERROR_TEXT = "Sorry, but the season name you provided already exists.";
 	
 	@Override
 	public Boolean isCsrfProtected() {
@@ -118,6 +120,12 @@ public class SeasonCreate extends ShiroBaseAction {
 			tx = session.beginTransaction();
 			session.save(season);
 			tx.commit();
+		} catch (ConstraintViolationException e) {
+			tx.rollback();
+			LOG.info("User {} tried creating a season with name {}, but name already exists", shiroUser.getPrincipal(), season.getName());
+			addActionError(SEASON_NAME_EXISTS_ERROR_TEXT);
+			errorsOccured = true;
+			return;
 		} catch (HibernateException e) {
 			tx.rollback();
 			LOG.error("Hibernate error occured: "+e);
