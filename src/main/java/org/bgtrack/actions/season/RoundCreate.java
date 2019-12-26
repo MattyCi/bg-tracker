@@ -274,6 +274,11 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	}
 
 	private double determineModifier(RoundResult roundResult) {
+		
+		// only award layered points if player came in 4th place or worse
+		if (roundResult.getPlace().compareTo( BigInteger.valueOf(3) ) < 1 )
+			return 0;
+		
 		int occurancesOfPlace = determineOccuarancesOfPlace(roundResult);
 		
 		/**
