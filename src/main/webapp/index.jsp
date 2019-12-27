@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,25 @@
 </head>
 <body>
 	<%@ include file="WEB-INF/snippets/Nav.jspf" %>
+
+	<shiro:notAuthenticated>
 	
+		<c:set var = "isGuestHomePage" value="${true}"/>
+		
+		<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img class="d-block w-100" src="/resources/img/dice-catch.jpg" alt="Playing with Dice">
+					<div class="carousel-caption d-none d-md-block text-left">
+						<h1>Season GG</h1>
+						<p class="lead">Become the board game champion amongst your friends</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</shiro:notAuthenticated>
+
 	<div class="container content">
 		<%@ include file="WEB-INF/snippets/Header.jspf" %>
 		
@@ -21,45 +40,85 @@
 		</shiro:authenticated>
 		
 		<shiro:notAuthenticated>
-		
-			<div class="row col-12 col-md-8 mx-auto my-4">
-				<div class="season-gg-jumbotron">
-					<p class="lead">One game isn't enough to determine who is the best. A true champion can
+
+			<div class="row text-center mt-4">
+				
+				<div class="col d-md-none mb-4">
+					<img class="logo-img" src="/resources/img/logo.png" alt="logo">
+				</div>
+				
+				<div class="col-lg-4">
+					<img
+						src="/resources/img/trophy.png"
+						alt="Trophy" width="140" height="140">
+					<h2>Compete</h2>
+					<p>
+						One game isn't enough to determine who is the best. A true champion can
 						only be proven throughout an entire season of games. Season GG allows you to track scores over
 						an entire season, so you can finally prove to your friends that you're better than them.
 					</p>
-					<hr class="my-4">
-					<p>Get started today by either logging in below, or registering if you haven't already!</p>
 				</div>
+				
+				<div class="col-lg-4">
+					<img class="rounded-circle"
+						src="/resources/img/question.png"
+						alt="Question Mark" width="140" height="140">
+					<h2>How does it Work?</h2>
+					<p>
+						Create a season to get started for free, determine when the season will end,
+						and choose a game to play for the duration of the competition.
+					</p>
+					<p>
+						Track the results of each round you play every time your friends get together to play.
+						The better you play, the more points are awarded to you for the round.
+					</p>
+					<p>
+						At the end of the season, whoever has scored the most points (on average) becomes the 
+						season champion.
+					</p>
+				</div>
+				
+				<div class="col-lg-4">
+					<img src="/resources/img/power-button.png" alt="Power Button" width="140" height="140">
+					<h2>Get Started</h2>
+					<p>
+						To get started, create a free account below. Once registered, you can create your 
+						first season.
+					</p>
+				</div>
+				
 			</div>
 		
 			<div class="row">
-				<div class="col-12 col-md-8 mx-auto text-center">
-					<button class="btn btn-primary btn-lg btn-block" onclick="UserController.showLoginForm()">Log In</button>
-				</div>
-				<div class="col-12 col-md-8 mx-auto text-center mt-4">
-					<button href="#" role="button" class="btn btn-primary btn-lg btn-block" onclick="UserController.showRegisterForm()">Register</button>
-				</div>
-					
-					<div id="login-form" class="col-12 col-md-8 mx-auto d-none">
+	
+				<div class="col-md-6">
 					<form id="loginForm" action="/userLogIn" method="POST">
+						<h1 class="h3 mb-3 font-weight-normal text-center">Please sign in.</h1>
 						<input name="username" type="email" class="form-control my-2" id="login-username" aria-describedby="emailHelp" placeholder="Enter email">
 						<input name="password" type="password" class="form-control my-2" id="login-password" placeholder="Password">
-						<button type="submit" class="btn btn-success btn-lg btn-block my-2">Log In</button>
+						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Log In</button>
 					</form>
 				</div>
 				
-				<div id="register-form" class="col-12 col-md-8 mx-auto d-none">
+				<div class="col-md-6">
 					<form id="registerForm" action="/userRegister" method="POST">
+						<h1 class="h3 mb-3 font-weight-normal text-center">Or, register below.</h1>
 						<input name="username" type="email" class="form-control  my-2" id=register-username aria-describedby="emailHelp" placeholder="Enter email">
-						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password">
+						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password" autocomplete="new-password">
 						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Password">
 						<input name="firstName" type="text" class="form-control  my-2" id="register-first-name" placeholder="First Name">
 						<input name="lastName" type="text" class="form-control  my-2" id="register-last-name" placeholder="Last Name">
-						<button type="submit" class="btn btn-success btn-lg btn-block  my-2">Register</button>
+						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Register</button>
 					</form>
 				</div>
-				
+
+				<div class="col-12 mt-4">
+					<p class="small muted text-left">
+						Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
+							Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
+					</p>
+				</div>
+
 			</div>
 
 		</shiro:notAuthenticated>

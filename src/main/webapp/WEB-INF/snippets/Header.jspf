@@ -1,8 +1,11 @@
-<div class="row mt-4">
-	<div class="col-12 col-md-8 mx-auto">
-		<img class="logo-img" src="/resources/img/logo.png" alt="logo">
+
+<c:if test="${!isGuestHomePage}">
+	<div class="row mt-4">
+		<div class="col-12 col-md-8 mx-auto">
+			<img class="logo-img" src="/resources/img/logo.png" alt="logo">
+		</div>
 	</div>
-</div>
+</c:if>
 
 <s:if test="hasActionErrors()">
 	<div class="row">

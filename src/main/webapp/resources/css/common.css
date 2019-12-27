@@ -125,11 +125,20 @@ footer {
   cursor: pointer;
 }
 
+.btn-rspnsv {
+	width: 100%;
+}
+
 @media (min-width: 576px) {
+	
 	.verticle-line {
 		padding-right:20px;
 		border-right: 3px;
 		border-right: 1px solid #EEEEEE;
+	}
+	
+	.btn-rspnsv {
+		width: 50%;
 	}
 }
 
