@@ -18,7 +18,8 @@
 	</div>
 
 	<div class="col-12 col-md-6 py-2 mx-auto">
-		<a href="/viewSeasonList?view=usersSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start full-height">
+		<a href="/viewSeasonList?view=usersSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start full-height
+			bg-dark text-white">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">Your Seasons</h5>
 			</div>
@@ -26,7 +27,8 @@
 		</a>
 	</div>
 	<div class="col-12 col-md-6 py-2 mx-auto">
-		<a href="/viewSeasonList?view=allSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start h-100">
+		<a href="/viewSeasonList?view=allSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start h-100
+			bg-dark text-white">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">All Seasons</h5>
 			</div>
