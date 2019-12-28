@@ -13,15 +13,15 @@
 					<img class="logo-small" src="/resources/img/logo-small.png">
 				</a>
 			</div>
-			
+
 			<div class="col-4">
-				<a class="float-left" href="">Contact Us / Feedback</a>
+				<a href="javascript:void(0);" title="Contact Us" data-container="body"
+					data-toggle="popover" data-placement="top"
+					data-content="Please email us at seasonggfeedback@gmail.com to report a bug, leave feedback,
+					or for any other customer support related questions."
+					data-original-title="Contact Us">Contact Us</a>
 			</div>
 			
 		</div>
 	</div>
 </footer>
-
-				
-
-				
