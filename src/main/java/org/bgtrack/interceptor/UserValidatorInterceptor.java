@@ -3,6 +3,8 @@ package org.bgtrack.interceptor;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.bgtrack.auth.ShiroBaseAction;
@@ -19,6 +21,8 @@ import org.bgtrack.models.user.Reguser;
  */
 public class UserValidatorInterceptor implements Interceptor {
 	private static final long serialVersionUID = -4919863537675303155L;
+	
+	private static final Logger LOG = LogManager.getLogger(UserValidatorInterceptor.class);
 
 	public void destroy() {
 	}
@@ -33,13 +37,13 @@ public class UserValidatorInterceptor implements Interceptor {
 
 			 // determine whether this is a guest or registered user if guest user
 			if (shiroUser.getPrincipal() == null) {
-				System.out.println("Guest user running command!");
+				LOG.debug("Guest user is running command.");
 			} else {
-				// user is registered
-				System.out.println("user is registered");
 				Reguser regUser = UserDAO.getUserByEmail(shiroUser.getPrincipal().toString());
+				
+				LOG.debug("Registered user {} is running command.", regUser.getEmail());
+				
 				actionInvocation.getStack().setValue("regUser", regUser);
-				System.out.println("regUser is: "+ regUser.getFirstName());
 			}
 
 			actionInvocation.getStack().setValue("shiroUser", shiroUser);
