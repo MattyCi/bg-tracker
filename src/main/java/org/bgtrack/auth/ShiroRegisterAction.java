@@ -48,6 +48,9 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 			return BGTConstants.ERROR;
 		}
 		
+		username = username.trim();
+		username = username.toLowerCase();
+		
 		if (!password.equals(passwordVerify)) {
 			addActionError(BGTConstants.PASSWORD_MISMATCH);
 			return BGTConstants.ERROR;

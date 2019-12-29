@@ -29,6 +29,11 @@
 		<result>/index.jsp</result>
 	</action>
 	
+	<action name="viewMyAccount" class="org.bgtrack.auth.ShiroBaseAction">
+		<result name="success">/WEB-INF/views/user/MyAccount.jsp</result>
+		<result name="error">/index.jsp</result>
+	</action>
+	
 	<action name="userLogIn" class="org.bgtrack.auth.ShiroLogInAction">
 		<result name="success">/index.jsp</result>
 		<result name="error">/index.jsp</result>
@@ -45,6 +50,15 @@
     		<param name="actionName">userLogIn</param>
     	</result>
        	<result name="error">/index.jsp</result>
+   	</action>
+   	
+ 	<action name="userUpdate" class="org.bgtrack.auth.ShiroUpdateAction">
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">viewMyAccount</param>
+    		<param name="popupMessage">${popupMessage}</param>
+    	</result>
+    	<result name="input">/WEB-INF/views/user/MyAccount.jsp</result>
+       	<result name="error">/WEB-INF/views/user/MyAccount.jsp</result>
    	</action>
    	
 	<action name="createSeason" class="org.bgtrack.actions.season.SeasonCreate">
