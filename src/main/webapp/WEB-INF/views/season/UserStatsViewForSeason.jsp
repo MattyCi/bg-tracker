@@ -28,7 +28,13 @@
 		<shiro:authenticated>
 
 			<div class="row">
-				<div class="col-12 mx-auto text-center mt-4">
+				<div class="col-12 mt-4">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="viewSeason?seasonId=${UserSeasonStats.season.seasonId}"><e:forHtml value="${UserSeasonStats.season.name}" /></a></li>
+						<li class="breadcrumb-item active">User Season Stats</li>
+					</ol>
+				</div>
+				<div class="col-12 mx-auto text-center">
 					<p class="h1">
 						<e:forHtml value="${UserSeasonStats.season.name}" />
 					</p>
