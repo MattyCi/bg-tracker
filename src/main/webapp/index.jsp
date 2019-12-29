@@ -105,7 +105,7 @@
 						<h1 class="h3 mb-3 font-weight-normal text-center">Or, register below.</h1>
 						<input name="username" type="email" class="form-control  my-2" id=register-username aria-describedby="emailHelp" placeholder="Enter email">
 						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password" autocomplete="new-password">
-						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Password">
+						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Verify Password">
 						<input name="firstName" type="text" class="form-control  my-2" id="register-first-name" placeholder="First Name">
 						<input name="lastName" type="text" class="form-control  my-2" id="register-last-name" placeholder="Last Name">
 						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Register</button>
@@ -113,7 +113,7 @@
 				</div>
 
 				<div class="col-12 mt-4">
-					<p class="small muted text-left">
+					<p class="small text-muted text-left">
 						Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
 							Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
 					</p>
