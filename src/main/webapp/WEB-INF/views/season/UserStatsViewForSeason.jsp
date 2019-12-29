@@ -78,7 +78,11 @@
 			</div>
 				
 			<div class="row mb-5">
-				
+				<div class="col-12">
+					<p class="small mb-0">
+						<i class="fas fa-exclamation-circle text-warning"></i> Only showing round results that ${playerName} participated in for this season.
+					</p>
+				</div>
 				<c:set var="snippetListOfRounds" value="${UserSeasonStats.roundsUserParticipatedIn}" />
 				<c:set var="snippetListofVictors" value="${UserSeasonStats.listofVictors}" />
 				<c:set var="snippetSelectedUser" value="${UserSeasonStats.selectedUser}" />
