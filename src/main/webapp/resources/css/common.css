@@ -21,6 +21,16 @@ footer {
 	padding: 2rem 1rem;
 }
 
+.scrollable {
+  height: 475px;
+  overflow-y: scroll;
+}
+
+.sgg-align-middle {
+	display: flex;
+	align-items: center;
+}
+
 .no-top-border th {
 	border-top: none !important;
 }

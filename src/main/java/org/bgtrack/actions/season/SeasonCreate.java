@@ -14,6 +14,7 @@ import org.bgtrack.utils.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.ShiroBaseAction;
+import org.bgtrack.models.Game;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.daos.GameDAO;
 import org.bgtrack.models.user.authorization.Permission;
@@ -25,19 +26,35 @@ public class SeasonCreate extends ShiroBaseAction {
 	private static final Logger LOG = LogManager.getLogger(SeasonCreate.class);
 	
 	private String seasonName;
+	
 	private String seasonGameId;
+	private String seasonGameName;
+	
 	private String seasonEndDate;
 	private String seasonScoringType;
 	private boolean errorsOccured = false;
 
 	private String createdSeasonId;
 	
+	private static final String NO_GAME_SELECTED_ERROR_TEXT = "Please select a game to be played throughout the season.";
+
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please choose a valid date and try again.";
 	private static final String SEASON_NAME_EXISTS_ERROR_TEXT = "Sorry, but the season name you provided already exists.";
 	
 	@Override
 	public Boolean isCsrfProtected() {
 		return true;
+	}
+	
+	@Override
+	public void validate() {
+		super.validate();
+		
+		if (seasonGameId == null || seasonGameId.isEmpty() || 
+				seasonGameName == null || seasonGameName.isEmpty()) {
+			addActionError(NO_GAME_SELECTED_ERROR_TEXT);
+		}
+		
 	}
 	
 	public String execute() {
@@ -95,9 +112,15 @@ public class SeasonCreate extends ShiroBaseAction {
 			return;
 		}
 		
+		Game bggGame = GameDAO.getGameById(seasonGameId);
+		
+		if (bggGame == null) {
+			bggGame = createGame(seasonGameId);
+		}
+		
 		Season season = new Season();
 		season.setName(seasonName);
-		season.setGame(GameDAO.getGameById(seasonGameId));
+		season.setGame(bggGame);
 		season.setStartDate(seasonStartTimestamp);
 		season.setEndDate(seasonEndTimestamp);
 		
@@ -122,7 +145,7 @@ public class SeasonCreate extends ShiroBaseAction {
 			tx.commit();
 		} catch (ConstraintViolationException e) {
 			tx.rollback();
-			LOG.info("User {} tried creating a season with name {}, but name already exists", shiroUser.getPrincipal(), season.getName());
+			LOG.info("User {} tried creating a season with name {}, but name already exists. {}", shiroUser.getPrincipal(), season.getName(), e.getMessage());
 			addActionError(SEASON_NAME_EXISTS_ERROR_TEXT);
 			errorsOccured = true;
 			return;
@@ -139,6 +162,32 @@ public class SeasonCreate extends ShiroBaseAction {
 		
 		assignUserPermissionsForSeason(season);
 		
+	}
+
+	private Game createGame(int seasonGameId) {
+		Game bggGame;
+		bggGame = new Game();
+		
+		bggGame.setGameId(seasonGameId);
+		bggGame.setGameName(seasonGameName);
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			session.save(bggGame);
+			tx.commit();
+		} catch (HibernateException e) {
+			tx.rollback();
+			LOG.error("Hibernate error occured: "+e);
+			addActionError(BGTConstants.GENERIC_ERROR);
+			errorsOccured = true;
+			throw e;
+		} finally {
+			session.close();
+		}
+		return bggGame;
 	}
 
 	private void assignUserPermissionsForSeason(Season season) {
@@ -205,6 +254,14 @@ public class SeasonCreate extends ShiroBaseAction {
 
 	public void setCreatedSeasonId(String createdSeasonId) {
 		this.createdSeasonId = createdSeasonId;
+	}
+
+	public String getSeasonGameName() {
+		return seasonGameName;
+	}
+
+	public void setSeasonGameName(String seasonGameName) {
+		this.seasonGameName = seasonGameName;
 	}
 
 }

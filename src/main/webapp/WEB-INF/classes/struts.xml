@@ -66,6 +66,7 @@
     		<param name="actionName">viewSeason</param>
     		<param name="seasonId">${createdSeasonId}</param>
     	</result>
+    	<result name="input">/index.jsp</result>
 		<result name="error">/index.jsp</result>
    	</action>
    	

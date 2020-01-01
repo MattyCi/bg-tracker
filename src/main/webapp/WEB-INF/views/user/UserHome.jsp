@@ -46,43 +46,62 @@
 		</p>
 	</div>
 	
-	<div class="col-12 col-md-8 col-lg-6 mx-auto my-2">
+	<div class="col-12 col-md-10 col-lg-8 mx-auto my-2">
 		<form id="seasonCreateForm" action="/createSeason" method="POST">
 			<input name="csrfToken" type="hidden" value="${csrfToken}">
 			
 			<div class="form-group">
 				<label for="season-create-name" class="lead">Start off by giving your season a name.</label>
 				<input name="seasonName" type="text" class="form-control my-2" id="season-create-name" placeholder="Season Name" autocomplete="off"> 
-			</div>
-			
-			<div class="form-group">
-				<label for="season-game-select" class="lead">
-					Next, select a game to be played throughout this season.
+
+				<label for="game-search-input" class="lead">
+					Next, search for a game to be played throughout this season.
 				</label>
 				<small class="form-text text-muted">Please note that you cannot change this later.</small>
-				<select name="seasonGameId" class="form-control" id="season-game-select">
-					<c:forEach items="${GameDAO.getAllGames()}" var="game">
-						<option value="${game.getGameId()}">${game.getGameName()}</option>
-					</c:forEach>
-				</select>
-			</div>
+
+				<div class="input-group mb-3">
+					<input id="game-search-input" class="form-control" type="text" placeholder="Search for a Game">
+					<div class="input-group-append">
+						<button id="game-search-button" class="btn btn-block btn-secondary" type="button">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</div>
+
+				<p class="small p-0 m-0">
+					<i class="fas fa-power-off text-danger"></i> <a href="https://boardgamegeek.com/" target="_blank">Powered by Board Game Geek</a>
+				</p>
+				<div id="bgg-container" class="bg-light p-4 text-center border border-primary scrollable">
+					<div id="bgg-spinner" class="spinner-border text-primary" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div id="no-results-container" class="col-12 d-none">
+						<h3 class="text-danger">No results found...</h3>
+					</div>
+					<div id="bgg-search-results" class="row d-none">
+						<!-- BGG Results -->
+					</div>
+				</div>
+				<div id="selected-game-container" class="col-12 m-0 py-4 d-none text-center border border-primary">
+					<h4>Selected Game</h4>
+					<h5 id="selected-game-name"></h5>
+					<img id="selected-game-img">
+				</div>
+				
+				<input id="selected-bgg-game-id" name="seasonGameId" type="hidden">
+				<input id="selected-bgg-game-name" name="seasonGameName" type="hidden">
 			
-			<div class="form-group">
 				<label for="datepicker" class="lead">
 					Now, select a date for the season to end. Once the season ends, the player
 					in first place becomes the winning champion for that season.
 				</label>
 				<small class="form-text text-muted">The season end date CAN be changed later.</small>
 				<input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date" autocomplete="off">
-			</div>
-			
-			<div class="form-group">
+
 				<label for="season-scoring-select" class="lead">
 					Lastly, choose a season scoring type.
 				</label>
-			</div>
 
-			<div class="form-group">
 				<div id="accordion">
 					<div class="card">
 						<div class="card-header">
@@ -136,9 +155,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
+				
 				<label for="season-scoring-select" class="lead">
 					Choose scoring type below.
 				</label>

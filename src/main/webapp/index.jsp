@@ -10,6 +10,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="WEB-INF/snippets/CommonIncludes.jspf" />
+	<script src="./resources/js/BGGAPIWrapper.js"></script>
+	<script src="./resources/js/SeasonCreateUtil.js"></script>
 </head>
 <body>
 	<%@ include file="WEB-INF/snippets/Nav.jspf" %>

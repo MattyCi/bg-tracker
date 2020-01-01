@@ -19,6 +19,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="../../snippets/CommonIncludes.jspf" />
 	<script src="./resources/js/RoundController.js"></script>
+	<script src="./resources/js/BGGAPIWrapper.js"></script>
+	<script src="./resources/js/SeasonGameUtil.js"></script>
 	<shiro:notAuthenticated>
 		<meta http-equiv="Refresh" content="0; url=/">
 	</shiro:notAuthenticated>
@@ -134,12 +136,15 @@
 				</div>
 				
 				<div class="col-12 col-sm-6 mx-auto text-center verticle-line">
-					<h4>Start Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" /></h4>
-					<h4>End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.endDate}" /></h4>
-					<h4>Season Game: ${season.game.gameName}</h4>
+					<h4 id="season-game-name" data-bgg-id="${season.game.gameId}">${season.game.gameName}</h4>
+					
+					<img id="season-game-image" alt="season-game-${season.game.gameName}">
+					
 				</div>
 				
-				<div class="col-12 col-sm-6 mx-auto text-center">
+				<div class="col-12 col-sm-6 mt-4 mt-sm-0 text-center mx-auto">
+					<h4>Start Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" /></h4>
+					<h4>End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.endDate}" /></h4>
 					<h4>Total Rounds Played: ${season.rounds.size()}</h4>
 					<h4>Total Players: ${usersInSeason.size()}</h4>
 					<h4>
