@@ -11,7 +11,10 @@
 		<interceptor-stack name="shiro-default">
 			<interceptor-ref name="userValidator"/>
 			<interceptor-ref name="params"/> <!-- Run the params interceptor before the default stack. This allows us to access param values in our prepare() methods. -->
-			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="defaultStack">
+				<param name="exception.logEnabled">true</param>
+				<param name="exception.logLevel">ERROR</param>
+			</interceptor-ref>
 		</interceptor-stack>
 	</interceptors>
 	<default-interceptor-ref name="shiro-default"/>
@@ -23,6 +26,7 @@
 	<global-exception-mappings>
 		<exception-mapping exception="org.apache.shiro.authc.AuthenticationException" result="error" />
 		<exception-mapping exception="org.apache.shiro.authz.AuthorizationException" result="error" />
+		<exception-mapping exception="java.lang.Exception" result="error" />
 	</global-exception-mappings>
 	
   	<action name="homeView" >

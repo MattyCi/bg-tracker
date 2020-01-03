@@ -15,7 +15,7 @@
 </head>
 <body>
 	<%@ include file="WEB-INF/snippets/Nav.jspf" %>
-
+	
 	<shiro:notAuthenticated>
 	
 		<c:set var = "isGuestHomePage" value="${true}"/>
@@ -36,6 +36,15 @@
 
 	<div class="container content">
 		<%@ include file="WEB-INF/snippets/Header.jspf" %>
+
+		<c:if test="${exception != null}">
+			<div class="col-md-6 mx-auto alert alert-dismissible alert-danger mt-4 mb-0">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Sorry...</strong> Something went wrong on our end. Feel free to email us at
+				<a href="mailto:seasonggfeedback@gmail.com">seasonggfeedback@gmail.com</a> with a description
+				of the problem if this keeps occuring.
+			</div>
+		</c:if>
 		
 		<shiro:authenticated>
 			<jsp:include page="WEB-INF/views/user/UserHome.jsp"></jsp:include>
