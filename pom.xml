@@ -139,6 +139,47 @@
 	                </execution>
 	            </executions>
 	        </plugin>
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>${project.basedir}/src/main/webapp/WEB-INF/classes/hibernate.cfg.xml</include>
+						<include>${project.basedir}/src/main/webapp/WEB-INF/classes/shiro.ini</include>
+					</includes>
+					<replacements>
+						<replacement>
+							<token>@DB_USERNAME@</token>
+							<value>${env.SGG_DB_USER}</value>
+						</replacement>
+ 						<replacement>
+							<token>@DB_PASSWORD@</token>
+							<value>${env.SGG_DB_PW}</value>
+						</replacement>
+						<replacement>
+							<token>@HIBERNATE_DB@</token>
+							<value>${env.SGG_HIBERNATE_DB}</value>
+						</replacement>
+						<replacement>
+							<token>@DB_NAME@</token>
+							<value>${env.SGG_DB_NAME}</value>
+						</replacement>
+						<replacement>
+							<token>@SHIRO_DB@</token>
+							<value>${env.SGG_SHIRO_DB}</value>
+						</replacement>
+					</replacements>
+				</configuration>
+			</plugin>
         </plugins>
 		<finalName>bg-tracker</finalName>
 	</build>
