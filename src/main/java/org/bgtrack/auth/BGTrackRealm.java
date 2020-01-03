@@ -31,9 +31,9 @@ import org.bgtrack.models.user.Reguser;
 public class BGTrackRealm extends JdbcRealm {
 	private static final Logger LOG = LogManager.getLogger(BGTrackRealm.class);
 	    
-    protected static final String USER_PERMISSIONS_QUERY = "select PERM_VALUE from PERMISSIONS perm "
-    		+ "inner join USER_PERMISSIONS uperm on uperm.PERM_ID = perm.PERM_ID "
-			+ "where uperm.USER_ID = ?";
+    protected static final String USER_PERMISSIONS_QUERY = "select perm_value from permissions perm "
+    		+ "inner join user_permissions uperm on uperm.perm_id = perm.perm_id "
+			+ "where uperm.user_id = ?";
     
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
