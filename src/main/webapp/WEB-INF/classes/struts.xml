@@ -29,7 +29,7 @@
 		<exception-mapping exception="java.lang.Exception" result="error" />
 	</global-exception-mappings>
 	
-  	<action name="homeView" >
+  	<action name="homeView" class="org.bgtrack.auth.ShiroBaseAction">
 		<result>/index.jsp</result>
 	</action>
 	
@@ -39,7 +39,9 @@
 	</action>
 	
 	<action name="userLogIn" class="org.bgtrack.auth.ShiroLogInAction">
-		<result name="success">/index.jsp</result>
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">homeView</param>
+    	</result>
 		<result name="error">/index.jsp</result>
 	</action>
 	
