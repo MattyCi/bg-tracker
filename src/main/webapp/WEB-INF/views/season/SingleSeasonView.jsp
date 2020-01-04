@@ -150,9 +150,9 @@
 					</h4>
 					<h4>
 						${scoringTypeFullText} Scoring
-						<a class="small" href="javascript:void(0);" data-toggle="modal" data-target="#scoringDescriptionModal">
-							(What is this?)
-						</a>
+						<small>
+							<a href="javascript:void(0);" data-toggle="modal" data-target="#scoringDescriptionModal">(What is this?)</a>
+						</small>
 					</h4>
 					
 					<div class="modal fade" id="scoringDescriptionModal" tabindex="-1" role="dialog"
@@ -274,7 +274,7 @@
 									</c:when>
 									<c:otherwise>
 										<button id="round-create-btn" type="button" class="btn btn-secondary btn-block mb-2 disabled" disabled>Create Round</button>
-										<p class="text-muted text-small pl-2">Rounds can not be added for seasons which have ended.</p>
+										<p class="text-muted pl-2">Rounds can not be added for seasons which have ended.</p>
 									</c:otherwise>
 								</c:choose>
 								

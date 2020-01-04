@@ -79,7 +79,7 @@
 				
 			<div class="row mb-5">
 				<div class="col-12">
-					<p class="small mb-0">
+					<p class="small mb-0 mt-4">
 						<i class="fas fa-exclamation-circle text-warning"></i> Only showing round results that ${playerName} participated in for this season.
 					</p>
 				</div>
