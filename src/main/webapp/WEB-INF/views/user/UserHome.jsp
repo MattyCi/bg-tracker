@@ -101,60 +101,8 @@
 				<label for="season-scoring-select" class="lead">
 					Lastly, choose a season scoring type.
 				</label>
-
-				<div id="accordion">
-					<div class="card">
-						<div class="card-header">
-							<h5 class="mb-0">
-								<button class="btn btn-link" data-toggle="collapse" data-target="#avg-scoring-info"
-									aria-expanded="true" aria-controls="avg-scoring-info" type="button">Averaged
-									Scoring</button>
-							</h5>
-						</div>
-
-						<div id="avg-scoring-info" class="collapse show" data-parent="#accordion">
-							<div class="card-body">
-								<p>
-									Averaged scoring awards players points for each round in a linear fashion. ie. a
-									player in 1st place gets 10 points, a player in 2nd place gets nine points, and a player in
-									10th place or higher only gets one point. After a round is played, season standings are
-									calculated simply using averages like so:
-								</p>
-								<p>
-									<i>player's season score = total points earned in rounds throughout season / total rounds played</i>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="card">
-						<div class="card-header">
-							<h5 class="mb-0">
-								<button class="btn btn-link collapsed" data-toggle="collapse"
-									data-target="#handicapped-scoring-info" aria-expanded="false"
-									aria-controls="handicapped-scoring-info" type="button">Handicapped Scoring</button>
-							</h5>
-						</div>
-						<div id="handicapped-scoring-info" class="collapse" data-parent="#accordion">
-							<div class="card-body">
-								<p>
-									Handicapped scoring behaves exactly how averaged scoring works with one caveat: handicapped
-									scoring grants players an extra .25 points each round if they've finished that round in a
-									place they've placed in before. However, these extra handicap points are only awarded if
-									the player came in 4th place or worse for the round.
-								</p>
-								<p>
-									For example, if a player plays their first round and finishes in 4th, they will earn
-									7 points. If this same player finishes in 4th place again for the next round, they will
-									then be awarded 7.25 points for that round.
-								</p>
-								<p>
-									Handicapped scoring provides a modest handicap to players that consistently finish in
-									lower places.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
+				
+				<%@ include file="../../snippets/ScoringDescriptions.jspf" %>
 				
 				<label for="season-scoring-select" class="lead">
 					Choose scoring type below.

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
+import org.bgtrack.models.ScoringType;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.SeasonStatus;
 import org.bgtrack.models.daos.RoundDAO;
@@ -23,8 +24,13 @@ public class SeasonView extends ShiroBaseAction {
 	
 	private String seasonId;
 	private Season season;
+	private String scoringTypeFullText;
+
 	private boolean errorsOccured = false;
 	private List<String> listofVictors;
+	
+	private static final String AVERAGED_FULL_TEXT = "Averaged";
+	private static final String HANDICAP_FULL_TEXT = "Handicap";
 	
 	@SuppressWarnings("unused")
 	private boolean seasonStatus;
@@ -52,6 +58,8 @@ public class SeasonView extends ShiroBaseAction {
 		
 		if (SeasonStatus.ACTIVE.toString().equals(season.getStatus()))
 			determineSeasonStatus();
+		
+		determineScoringType(season.getScoringType());
 		
 		if (errorsOccured) {
 			return BGTConstants.ERROR;
@@ -110,6 +118,19 @@ public class SeasonView extends ShiroBaseAction {
 		}
 		
 	}
+	
+	private void determineScoringType(String scoringType) {
+
+		if (scoringType == null || "".equals(scoringType))
+			return;
+		
+		if (scoringType.equals(ScoringType.AVERAGED.toString()))
+			this.setScoringTypeFullText(AVERAGED_FULL_TEXT);
+		
+		if (scoringType.equals(ScoringType.HANDICAPPED.toString()))
+			this.setScoringTypeFullText(HANDICAP_FULL_TEXT);
+		
+	}
 
 	public String getSeasonId() {
 		return seasonId;
@@ -143,6 +164,14 @@ public class SeasonView extends ShiroBaseAction {
 
 	public void setSeasonStatus(boolean seasonStatus) {
 		this.seasonStatus = seasonStatus;
+	}
+	
+	public String getScoringTypeFullText() {
+		return scoringTypeFullText;
+	}
+
+	public void setScoringTypeFullText(String scoringTypeFullText) {
+		this.scoringTypeFullText = scoringTypeFullText;
 	}
 	
 }

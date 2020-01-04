@@ -148,6 +148,35 @@
 					<h4>
 						Season Creator: <e:forHtml value="${season.creator.firstName}" /> <e:forHtml value="${season.creator.lastName}" />
 					</h4>
+					<h4>
+						${scoringTypeFullText} Scoring
+						<a class="small" href="javascript:void(0);" data-toggle="modal" data-target="#scoringDescriptionModal">
+							(What is this?)
+						</a>
+					</h4>
+					
+					<div class="modal fade" id="scoringDescriptionModal" tabindex="-1" role="dialog"
+						aria-labelledby="scoringDescriptionModalTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title text-primary">
+										This season is using <strong>${scoringTypeFullText}</strong> scoring
+									</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<%@ include file="../../snippets/ScoringDescriptions.jspf" %>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 				
 				<hr style="width: 100%; ; height: 1px; background-color: #EEEEEE;">
