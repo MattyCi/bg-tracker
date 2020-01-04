@@ -87,4 +87,13 @@
 		</c:forEach>
 	</tbody>
 </table>
-<p class="text-muted text-small pl-2">*Ineligible players will be highlighted with yellow text.</p>
+<small class="text-muted pl-2">
+	<i class="fas fa-exclamation-circle text-warning"></i>
+	<a href="javascript:void(0);" title="Player Ineligibility" data-container="body"
+		data-toggle="popover" data-placement="top"
+		data-content="Players that haven't played at least half the average of games played by other
+			players are considered ineligible. They must participate in more games before they can be
+			placed in the season. This is done to avoid a player winning the season by only playing a few rounds."
+		data-original-title="Player Ineligibility">
+		Ineligible players</a> will be highlighted with yellow text.
+</small>
