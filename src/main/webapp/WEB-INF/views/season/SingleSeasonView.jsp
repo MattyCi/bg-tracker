@@ -137,9 +137,7 @@
 				
 				<div class="col-12 col-sm-6 mx-auto text-center verticle-line">
 					<h4 id="season-game-name" data-bgg-id="${season.game.gameId}">${season.game.gameName}</h4>
-					
 					<img id="season-game-image" alt="season-game-${season.game.gameName}">
-					
 				</div>
 				
 				<div class="col-12 col-sm-6 mt-4 mt-sm-0 text-center mx-auto">
