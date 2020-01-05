@@ -36,6 +36,37 @@
 					<h5>
 						<e:forHtml value="${shiroUser.principal}" />
 					</h5>
+					<button id="account-delete-button" type="button" data-toggle="modal"
+						class="btn btn-danger my-2" data-target="#delete-account-modal">
+						Delete Account
+					</button>
+				</div>
+				
+				<div class="modal" id="delete-account-modal" tabindex="-1" role="dialog" aria-labelledby="delete-account-modal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Account Delete Confirm</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">Are you absolutely sure you wish to delete your account? This action <i>cannot</i> be undone.</div>
+							<div class="modal-footer">
+								<form id="delete-account-form" action="deleteAccount">
+									<input name="csrfToken" type="hidden" value="${csrfToken}">
+									
+									<p>You must provide your current password below to delete your account.</p>
+									<input name="currentPassword" type="password" class="form-control mb-4" placeholder="Current Password" autocomplete="new-password">
+									
+									<span class="float-right">
+										<button type="submit" class="btn btn-danger">Delete Account</button>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+									</span>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 				
 				<div class="col-md-6 mx-auto mt-4">

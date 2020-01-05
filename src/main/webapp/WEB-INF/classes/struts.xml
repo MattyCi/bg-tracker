@@ -29,6 +29,10 @@
 		<exception-mapping exception="java.lang.Exception" result="error" />
 	</global-exception-mappings>
 	
+  	<action name="guestHomeView" class="com.opensymphony.xwork2.ActionSupport">
+		<result>/index.jsp</result>
+	</action>
+	
   	<action name="homeView" class="org.bgtrack.auth.ShiroBaseAction">
 		<result>/index.jsp</result>
 	</action>
@@ -65,6 +69,14 @@
     	</result>
     	<result name="input">/WEB-INF/views/user/MyAccount.jsp</result>
        	<result name="error">/WEB-INF/views/user/MyAccount.jsp</result>
+   	</action>
+   	
+	<action name="deleteAccount" class="org.bgtrack.auth.ShiroDeleteAction">
+  	    <result name="success" type="redirectAction">
+    		<param name="actionName">guestHomeView</param>
+    		<param name="popupMessage">${popupMessage}</param>
+    	</result>
+    	<result name="error, input">/WEB-INF/views/user/MyAccount.jsp</result>
    	</action>
    	
 	<action name="createSeason" class="org.bgtrack.actions.season.SeasonCreate">

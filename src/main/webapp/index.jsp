@@ -2,6 +2,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 
 <!DOCTYPE html>
 <html>
@@ -36,6 +37,8 @@
 
 	<div class="container content">
 		<%@ include file="WEB-INF/snippets/Header.jspf" %>
+		
+		<%@ include file="./WEB-INF/snippets/PopupMessage.jspf" %>
 
 		<c:if test="${exception != null && actionErrors == null}">
 			<div class="col-md-6 mx-auto alert alert-dismissible alert-danger mt-4 mb-0">
