@@ -20,6 +20,7 @@
 		<property name="hibernate.show_sql">false</property>
 		
 		<mapping class="org.bgtrack.models.user.Reguser"></mapping>
+		<mapping class="org.bgtrack.models.user.AccountRedeemToken"></mapping>
 		
 		<mapping class="org.bgtrack.models.user.authorization.Permission"></mapping>
 		<mapping class="org.bgtrack.models.user.authorization.Role"></mapping>

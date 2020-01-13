@@ -37,7 +37,7 @@
 		<result>/index.jsp</result>
 	</action>
 	
-	<action name="viewMyAccount" class="org.bgtrack.auth.ShiroBaseAction">
+	<action name="viewMyAccount" class="org.bgtrack.auth.PrepareMyAccountAction">
 		<result name="success">/WEB-INF/views/user/MyAccount.jsp</result>
 		<result name="error">/index.jsp</result>
 	</action>
@@ -149,6 +149,28 @@
 	        <param name="noCache">true</param>
 	        <param name="excludeNullProperties">true</param>
 	        <param name="root">personSearchResponses</param>
+	    </result>
+	    
+   	    <result name="error" type="json">
+	        <param name="noCache">true</param>
+	        <param name="excludeNullProperties">true</param>
+	        <param name="root">jsonErrorObject</param>
+	    </result>
+	    
+     	<result name="input" type="json">
+	        <param name="noCache">true</param>
+	        <param name="excludeNullProperties">true</param>
+	        <param name="root">jsonErrorObject</param>
+	    </result>
+	    
+	</action>
+	
+   	<action name="createGuestPlayer" class="org.bgtrack.actions.season.ajax.GuestPlayerCreate">
+	    
+	    <result name="success" type="json">
+	        <param name="noCache">true</param>
+	        <param name="excludeNullProperties">true</param>
+	        <param name="root">guestPlayerCreateResponse</param>
 	    </result>
 	    
    	    <result name="error" type="json">

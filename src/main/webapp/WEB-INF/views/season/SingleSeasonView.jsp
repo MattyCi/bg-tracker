@@ -21,6 +21,7 @@
 	<script src="./resources/js/RoundController.js"></script>
 	<script src="./resources/js/BGGAPIWrapper.js"></script>
 	<script src="./resources/js/SeasonGameUtil.js"></script>
+	<script src="./resources/js/PlayerCreatorController.js"></script>
 	<shiro:notAuthenticated>
 		<meta http-equiv="Refresh" content="0; url=/">
 	</shiro:notAuthenticated>
@@ -77,7 +78,7 @@
 								<label for="new-season-end-date">New Season End Date</label>
 								<form id="season-edit-form" action="/editSeason">
 									<input name="seasonId" value="${season.seasonId}" type="hidden">
-									<input name="csrfToken" type="hidden" value="${csrfToken}">
+									<input id="csrf-token" name="csrfToken" type="hidden" value="${csrfToken}">
 									<input name="seasonEndDate" type="text" class="form-control my-2" id="new-season-end-date" placeholder="Season End Date" autocomplete="off">
 									<small id="season-end-date-help" class="form-text text-muted">
 										Note that your current season end date cannot be before 
@@ -205,7 +206,7 @@
 									<c:choose>
 										<c:when test="${empty usersInSeason}">
 											
-											<option value="" selected disabled hidden>Search to Add More Players Below</option>
+											<option value="default-text" selected disabled hidden>Search to Add More Players Below</option>
 											<option value="${season.creator.userId}">
 												<e:forHtml value="${season.creator.firstName}" /> <e:forHtml value="${season.creator.lastName}" />
 											</option>
@@ -213,7 +214,7 @@
 										</c:when>
 										<c:otherwise>
 											
-											<option value="" selected disabled hidden>Choose from Recent Players</option>
+											<option value="default-text" selected disabled hidden>Choose from Recent Players</option>
 											<c:forEach items="${usersInSeason}" var="user">
 												<option value="${user.getUserId()}">
 													<e:forHtml value="${user.firstName}" /> <e:forHtml value="${user.lastName}" />
@@ -252,6 +253,14 @@
 						</div>
 						
 						<div class="row">
+						
+							<div class="col-12">
+								<p>
+									Need to create a new player account for a friend? <a id="create-user-link" href="javascript:void(0);"
+									data-toggle="modal" data-target="#create-user-modal"> Click here!</a>
+								</p>
+							</div>
+						
 							<div class="col-md-6 pt-3 ml-auto">
 								
 								<c:choose>
@@ -266,6 +275,7 @@
 							</div>
 						</div>
 						<div class="row">
+						
 							<div class="col-md-6 py-4 ml-auto">
 							
 								<c:choose>
@@ -284,7 +294,76 @@
 				</div>
 				
 			</div>
-			
+
+			<div class="modal fade" id="create-user-modal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Create a Player</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							
+							<div id="player-create-success-container" class="d-none">
+								
+								<div class="alert alert-dismissible alert-success">
+									<strong>Success!</strong> 
+									Have your friend redeem their SeasonGG account so they can record rounds, 
+									build their stats, and start seasons of their own. Provide your friend 
+									with their account redemption code, where they can use the code 
+									at the link below to redeem their account.
+								</div>
+								
+								<p class="text-primary">
+									Note: player accounts that you've created will always be listed under
+									your <a href="/viewMyAccount" target="_blank">account</a> page. You can
+									retrieve their account redemption code at any time.
+								</p>
+								
+								<p id="player-create-name" class="text-primary mb-0"></p>
+								
+								<p id="player-create-redeem-code" class="text-info word-wrap"></p>
+								
+								<p>
+									Have your friend redeem their account 
+									<a id="player-create-redeem-link" href="" target="_blank">
+										here
+									</a>.
+								</p>
+								
+								<p class="text-primary">You can also add another player below:</p>
+								
+								<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+								
+							</div>
+							
+							<form id="create-guest-player-form" action="/createGuestPlayer" method="POST">
+								<p>Enter the new player's information below:</p>
+								<p id="player-create-err-msg" class="d-none text-danger"></p>
+								<input name="firstName" type="text" class="form-control  my-2"
+									id="player-create-first-name" placeholder="First Name">
+								<input name="lastName" type="text" class="form-control  my-2"
+									id="player-create-last-name" placeholder="Last Name">
+								<button id="create-player-btn" type="button" class="btn btn-primary">Create Player</button>
+							</form>
+							
+							<div id="create-player-spinner" class="d-none justify-content-center">
+								<div class="spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+							</div>
+							
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col-12 mx-auto text-center mt-4">
 					<h3>Round Results</h3>

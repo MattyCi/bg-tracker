@@ -3,6 +3,7 @@ package org.bgtrack.models.user;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.bgtrack.models.user.AccountRedeemToken;
 import org.bgtrack.models.RoundResult;
 
 import java.sql.Timestamp;
@@ -42,6 +43,14 @@ public class Reguser implements Serializable {
 	//bi-directional many-to-one association to RoundResult
 	@OneToMany(mappedBy="reguser")
 	private List<RoundResult> roundResults;
+	
+	//bi-directional one-to-one association to AccountRedeemToken
+	@OneToOne(mappedBy="reguser")
+	private AccountRedeemToken accountRedeemToken;
+	
+	//bi-directional many-to-one association to AccountRedeemToken
+	@OneToMany(mappedBy="creator")
+	private List<AccountRedeemToken> createdAccountRedeemTokens;
 
 	public Reguser() {
 	}
@@ -122,6 +131,36 @@ public class Reguser implements Serializable {
 		roundResult.setReguser(null);
 
 		return roundResult;
+	}
+	
+	public AccountRedeemToken getAccountRedeemToken() {
+		return this.accountRedeemToken;
+	}
+
+	public void setAccountRedeemToken(AccountRedeemToken accountRedeemToken) {
+		this.accountRedeemToken = accountRedeemToken;
+	}
+	
+	public List<AccountRedeemToken> getCreatedAccountRedeemTokens() {
+		return this.createdAccountRedeemTokens;
+	}
+
+	public void setCreatedAccountRedeemTokens(List<AccountRedeemToken> createdAccountRedeemTokens) {
+		this.createdAccountRedeemTokens = createdAccountRedeemTokens;
+	}
+
+	public AccountRedeemToken addCreatedAccountRedeemToken(AccountRedeemToken accountRedeemToken) {
+		getCreatedAccountRedeemTokens().add(accountRedeemToken);
+		accountRedeemToken.setCreator(this);
+
+		return accountRedeemToken;
+	}
+
+	public AccountRedeemToken removeCreatedAccountRedeemToken(AccountRedeemToken accountRedeemToken) {
+		getCreatedAccountRedeemTokens().remove(accountRedeemToken);
+		accountRedeemToken.setCreator(null);
+
+		return accountRedeemToken;
 	}
 
 }

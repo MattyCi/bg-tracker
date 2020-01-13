@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import java.util.List;
 
 import org.bgtrack.models.Round;
+import org.bgtrack.models.user.AccountRedeemToken;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
 
@@ -75,6 +76,21 @@ public class UserDAO {
 		
 		List<Reguser> matchedUsers = (List<Reguser>) session.createQuery(query)
 				.setParameter("lastName", "%"+lastName+"%").list();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return matchedUsers;
+	}
+	
+	public static List<AccountRedeemToken> getAccountRedeemTokensUserCreated(String userId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		String query = "from AccountRedeemToken where CREATOR=:userId";
+		
+		List<AccountRedeemToken> matchedUsers = (List<AccountRedeemToken>) session.createQuery(query)
+				.setParameter("userId", userId).list();
 		
 		session.getTransaction().commit();
 		session.close();

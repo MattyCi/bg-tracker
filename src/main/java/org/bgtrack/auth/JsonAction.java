@@ -17,6 +17,15 @@ public class JsonAction extends ShiroBaseAction {
 			
 		}
 		
+		if (isCsrfProtected() && isCsrfDetected()) {
+			
+			this.setJsonErrorObject(new JsonError(2, "CSRF request detected. Please log in again."));
+			addActionError("CSRF request detected. Please log in again.");
+			
+			LOG.info("CSRF attempt detected for user " + shiroUser.getPrincipal() + " requesting action: " + this.getClass().getName());
+			
+		}
+		
 	}
 	
 	public JsonError getJsonErrorObject() {

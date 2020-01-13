@@ -69,7 +69,12 @@
 					</div>
 				</div>
 				
-				<div class="col-md-6 mx-auto mt-4">
+				<div class="col-12">
+					<hr class="my-4">
+				</div>
+				
+				
+				<div class="col-md-6 mx-auto">
 					<form id="account-update-form" action="/userUpdate" method="POST" autocomplete="off">
 						
 						<h1 class="h3 mb-3 font-weight-normal text-center">Update Account Below</h1>
@@ -92,6 +97,34 @@
 						<button type="submit" class="btn btn-success btn-lg my-2">Update Account</button>
 					</form>
 				</div>
+				
+				<c:if test="${not empty createdTokens}">
+					
+					<div class="col-12 d-md-none .d-lg-block">
+						<hr class="my-4">
+					</div>
+					
+					<div class="col-md-6 mx-auto">
+						
+						<h1 class="h3 mb-3 font-weight-normal text-center">Accounts You've Created</h1>
+						<p>
+							These are the accounts you've created for friends. Your friends can redeem their 
+							accounts <a href="/accountRedeem" target="_blank">here</a>. 
+							You must provide them with their corresponding token so they may claim and take 
+							control of their account.
+						</p>
+						
+						<c:forEach items="${createdTokens}" var="tokenEntity">
+							
+							<h5 class="text-white text-center bg-primary word-wrap mb-0 py-2">
+								<e:forHtml value="${tokenEntity.reguser.firstName}" /> <e:forHtml value="${tokenEntity.reguser.lastName}" />
+							</h5>
+							<h6 class="bg-light text-center word-wrap p-2">${tokenEntity.redeemToken}</h6>
+						
+						</c:forEach>	
+						
+					</div>
+				</c:if>
 				
 				<div class="col-12 mt-4">
 					<p class="small text-muted text-left">

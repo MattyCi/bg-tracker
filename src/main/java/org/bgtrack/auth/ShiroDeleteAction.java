@@ -61,14 +61,8 @@ public class ShiroDeleteAction extends ShiroBaseAction {
 			
 			userBuilder.buildUsername(deletedUsername);
 			
-			String newDeletedPassword = RandomStringUtils.randomAlphabetic(12);
-			
-			Random rand = new Random();
-			newDeletedPassword += rand.nextInt();
-			newDeletedPassword += rand.nextInt();
-			
-			System.out.println("newDeletedPassword: "+newDeletedPassword);
-			
+			String newDeletedPassword = userBuilder.generateRandomPassword();
+						
 			userBuilder.buildPassword(newDeletedPassword, newDeletedPassword);
 			
 		} catch (UserBuilderException e) {

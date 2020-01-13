@@ -11,5 +11,6 @@
 		<class>org.bgtrack.models.user.authorization.RolesPermission</class>
 		<class>org.bgtrack.models.user.authorization.UserPermission</class>
 		<class>org.bgtrack.models.user.authorization.UserRole</class>
+		<class>org.bgtrack.models.user.AccountRedeemToken</class>
 	</persistence-unit>
 </persistence>

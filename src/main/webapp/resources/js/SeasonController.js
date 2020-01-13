@@ -181,6 +181,12 @@ var SeasonController = {
 			if (element.getAttribute("data-round-info") === 'true') {
 
 				if (element.id.includes("recent-players-select")) {
+					
+					if (element.selectedOptions[0].value == "default-text") {
+						alert("You must select a player in one of your entries.");
+						return;
+					}
+					
 					roundResultsNames[roundResultCount] = element.selectedOptions[0].innerHTML;
 					
 					if (!this.isValidPlayer(roundResultsNames[roundResultCount])) {
