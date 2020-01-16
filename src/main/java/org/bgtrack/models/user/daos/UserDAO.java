@@ -98,4 +98,19 @@ public class UserDAO {
 		return matchedUsers;
 	}
 	
+	public static AccountRedeemToken getAccountRedeemToken(String token) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		String query = "from AccountRedeemToken where redeemToken=:token";
+		
+		AccountRedeemToken tokenResult = (AccountRedeemToken) session.createQuery(query)
+				.setParameter("token", token).uniqueResult();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return tokenResult;
+	}
+	
 }

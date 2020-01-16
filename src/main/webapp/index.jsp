@@ -40,15 +40,6 @@
 		
 		<%@ include file="./WEB-INF/snippets/PopupMessage.jspf" %>
 		
-		<c:if test="${exception != null && (actionErrors == null || empty actionErrors ) }">
-			<div class="col-md-6 mx-auto alert alert-dismissible alert-danger mt-4 mb-0">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<strong>Sorry...</strong> Something went wrong on our end. Feel free to email us at
-				<a href="mailto:seasonggfeedback@gmail.com">seasonggfeedback@gmail.com</a> with a description
-				of the problem if this keeps occuring.
-			</div>
-		</c:if>
-		
 		<shiro:authenticated>
 			<jsp:include page="WEB-INF/views/user/UserHome.jsp"></jsp:include>
 		</shiro:authenticated>
@@ -124,13 +115,6 @@
 						<input name="lastName" type="text" class="form-control  my-2" id="register-last-name" placeholder="Last Name">
 						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Register</button>
 					</form>
-				</div>
-
-				<div class="col-12 mt-4">
-					<p class="small text-muted text-left">
-						Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
-							Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
-					</p>
 				</div>
 
 			</div>

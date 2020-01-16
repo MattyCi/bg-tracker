@@ -6,20 +6,24 @@
 			<div class="col-12">
 				<h4>SEASON GG</h4>
 				<p>Season GG is run and operated by a one man team from the Detroit area of Michigan.</p>
+				<p class="small text-muted">
+					Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
+						Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
+				</p>
 			</div>
 			
-			<div class="col-4">
-				<a class="navbar-brand float-right" href="/">
+			<div class=col-12>
+				
+				<a class="navbar-brand" href="/">
 					<img class="logo-small" src="/resources/img/logo-small.png">
 				</a>
-			</div>
-
-			<div class="col-4">
+				
 				<a href="javascript:void(0);" title="Contact Us" data-container="body"
 					data-toggle="popover" data-placement="top"
 					data-content="Please email us at seasonggfeedback@gmail.com to report a bug, leave feedback,
 					or for any other customer support related questions."
 					data-original-title="Contact Us">Contact Us</a>
+				
 			</div>
 			
 		</div>

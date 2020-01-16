@@ -3,6 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,12 +31,34 @@
 				
 				<div class="col-md-6 mt-4 text-center">
 					<h1 class="h3 mb-3 font-weight-normal text-center">Current Account Info</h1>
+
+					<c:if test="${!empty popupMessage && fn:startsWith(popupMessage, 'Welcome')}">
+						<c:set var="isAccountRedeemed" value="true" />
+					</c:if>
+
+					<c:if test="${isAccountRedeemed}">
+						<div class="alert alert-dismissible alert-warning text-black">
+							<p class="lead">
+								<strong>Your username is: <e:forHtml value="${shiroUser.principal}" /></strong>
+							</p>
+							<p>
+								Take note of your username. You will need this to log in again.
+							</p>
+							<hr>
+							<p class="mb-0">
+								You may also change your username below, if desired.			
+							</p>
+						</div>
+					</c:if>
+
 					<h5>
 						<e:forHtml value="${regUser.firstName}" /> <e:forHtml value="${regUser.lastName}" />
 					</h5>
-					<h5>
-						<e:forHtml value="${shiroUser.principal}" />
-					</h5>
+					<c:if test="${!isAccountRedeemed}">
+						<h5>
+							<e:forHtml value="${shiroUser.principal}" />
+						</h5>
+					</c:if>
 					<button id="account-delete-button" type="button" data-toggle="modal"
 						class="btn btn-danger my-2" data-target="#delete-account-modal">
 						Delete Account
@@ -125,13 +148,6 @@
 						
 					</div>
 				</c:if>
-				
-				<div class="col-12 mt-4">
-					<p class="small text-muted text-left">
-						Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
-							Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
-					</p>
-				</div>
 				
 			</div>
 		</shiro:authenticated>

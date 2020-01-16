@@ -155,6 +155,9 @@ public class UserBuilder {
 		AccountRedeemToken acctRedeemToken = new AccountRedeemToken();
 		acctRedeemToken.setRedeemToken(digest);
 		
+		Timestamp dateCreated = new Timestamp(System.currentTimeMillis());
+		acctRedeemToken.setDateCreated(dateCreated);
+		
 		this.regUser.setAccountRedeemToken(acctRedeemToken);
 		
 	}

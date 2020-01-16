@@ -99,7 +99,7 @@ var PlayerCreatorController = {
 		
 		let acctRedeemLinkElement = $("#player-create-redeem-link");
 		
-		acctRedeemLinkElement.attr("href", window.location.host + "/accountRedeem?token=" + playerCreateResponse.accountRedeemToken);
+		acctRedeemLinkElement.attr("href", "/accountRedeem");
 		
 		this.addNewPlayerToSelectElements(playerCreateResponse);
 		

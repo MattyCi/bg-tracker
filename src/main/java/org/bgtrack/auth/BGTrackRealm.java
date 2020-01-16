@@ -55,7 +55,7 @@ public class BGTrackRealm extends JdbcRealm {
 					new UserCredSalt(username, user.getPassword(), user.getSalt());
 			return info;
 		} else {
-			System.out.println("Username is null.");
+			LOG.info("Username is null.");
 			return null;
 		}
 	}

@@ -42,9 +42,32 @@
 		<result name="error">/index.jsp</result>
 	</action>
 	
+	<action name="accountRedeem" class="com.opensymphony.xwork2.ActionSupport">
+		<result name="success">/WEB-INF/views/user/AccountRedeem.jsp</result>
+		<result name="error">/WEB-INF/views/user/AccountRedeem.jsp</result>
+	</action>
+	
+	<action name="attemptAccountRedeem" class="org.bgtrack.auth.RedeemAccountAction">
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">userLogInForAccount</param>
+    		<param name="username">${username}</param>
+    		<param name="password">${password}</param>
+    		<param name="popupMessage">${popupMessage}</param>
+    	</result>
+		<result name="error, input">/WEB-INF/views/user/AccountRedeem.jsp</result>
+	</action>
+	
 	<action name="userLogIn" class="org.bgtrack.auth.ShiroLogInAction">
     	<result name="success" type="redirectAction">
     		<param name="actionName">homeView</param>
+    	</result>
+		<result name="error">/index.jsp</result>
+	</action>
+	
+	<action name="userLogInForAccount" class="org.bgtrack.auth.ShiroLogInAction">
+    	<result name="success" type="redirectAction">
+    		<param name="actionName">viewMyAccount</param>
+    		<param name="popupMessage">${popupMessage}</param>
     	</result>
 		<result name="error">/index.jsp</result>
 	</action>

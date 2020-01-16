@@ -8,9 +8,6 @@ import javax.persistence.EntityManagerFactory;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bgtrack.actions.season.SeasonDelete;
-import org.bgtrack.models.Season;
-import org.bgtrack.models.SeasonStanding;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

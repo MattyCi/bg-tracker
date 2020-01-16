@@ -1,6 +1,8 @@
 package org.bgtrack.models.user;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 
@@ -20,6 +22,9 @@ public class AccountRedeemToken implements Serializable {
 
 	@Column(name="REDEEM_TOKEN")
 	private String redeemToken;
+	
+	@Column(name="DATE_CREATED")
+	private Timestamp dateCreated;
 
 	//bi-directional one-to-one association to Reguser
 	@OneToOne
@@ -50,6 +55,14 @@ public class AccountRedeemToken implements Serializable {
 		this.redeemToken = redeemToken;
 	}
 
+	public Timestamp getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Timestamp dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
 	public Reguser getReguser() {
 		return this.reguser;
 	}

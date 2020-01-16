@@ -10,7 +10,7 @@ import org.bgtrack.models.user.daos.UserDAO;
 public class PrepareMyAccountAction extends ShiroBaseAction {
 	private static final long serialVersionUID = 1L;
 	
-	protected static final Logger LOG = LogManager.getLogger(ShiroBaseAction.class);
+	protected static final Logger LOG = LogManager.getLogger(PrepareMyAccountAction.class);
 	
 	private List<AccountRedeemToken> createdTokens;
 	

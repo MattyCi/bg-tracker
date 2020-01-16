@@ -9,6 +9,11 @@
 
 	<div class="collapse navbar-collapse" id="navbarColor01">
 		<ul class="navbar-nav mr-auto">
+			<shiro:notAuthenticated>
+				<li class="nav-item">
+					<a class="nav-link" href="/accountRedeem">Redeem an Account</a>
+				</li>
+			</shiro:notAuthenticated>
 			<shiro:authenticated>
 				<li class="nav-item">
 					<a class="nav-link" href="/viewSeasonList?view=usersSeasonsList">Your Seasons</a>
