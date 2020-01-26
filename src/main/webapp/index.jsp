@@ -94,12 +94,12 @@
 				
 			</div>
 		
-			<div class="row">
+			<div class="row pb-4">
 	
 				<div class="col-md-6">
 					<form id="loginForm" action="/userLogIn" method="POST">
 						<h1 class="h3 mb-3 font-weight-normal text-center">Please sign in.</h1>
-						<input name="username" type="email" class="form-control my-2" id="login-username" aria-describedby="emailHelp" placeholder="Enter email">
+						<input name="username" type="text" class="form-control my-2" id="login-username" placeholder="Enter Username">
 						<input name="password" type="password" class="form-control my-2" id="login-password" placeholder="Password">
 						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Log In</button>
 					</form>
@@ -108,11 +108,9 @@
 				<div class="col-md-6">
 					<form id="registerForm" action="/userRegister" method="POST">
 						<h1 class="h3 mb-3 font-weight-normal text-center">Or, register below.</h1>
-						<input name="username" type="email" class="form-control  my-2" id=register-username aria-describedby="emailHelp" placeholder="Enter email">
+						<input name="username" type="text" class="form-control  my-2" id="register-username" placeholder="Enter Username">
 						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password" autocomplete="new-password">
 						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Verify Password">
-						<input name="firstName" type="text" class="form-control  my-2" id="register-first-name" placeholder="First Name">
-						<input name="lastName" type="text" class="form-control  my-2" id="register-last-name" placeholder="Last Name">
 						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Register</button>
 					</form>
 				</div>

@@ -1,19 +1,14 @@
 package org.bgtrack.actions.season.ajax;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bgtrack.auth.JsonAction;
-import org.bgtrack.auth.ShiroDeleteAction;
 import org.bgtrack.auth.UserBuilder;
 import org.bgtrack.auth.UserBuilder.UserBuilderException;
 import org.bgtrack.models.user.Reguser;
-import org.bgtrack.models.user.daos.UserDAO;
-import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
 
 public class GuestPlayerCreate extends JsonAction {
@@ -21,12 +16,11 @@ public class GuestPlayerCreate extends JsonAction {
 	
 	private static final Logger LOG = LogManager.getLogger(GuestPlayerCreate.class);
 
-	private String firstName;
-	private String lastName;
+	private String username;
 		
 	GuestPlayerCreateResponse guestPlayerCreateResponse = null;
 
-	private static final String PLAYER_CREATE_PARAM_MISSING = "Please provide a first and last name for the new player."; 
+	private static final String PLAYER_CREATE_PARAM_MISSING = "Please provide a username for the new player."; 
 
 	@Override
 	public boolean isAuthenticationRequired() {
@@ -46,14 +40,11 @@ public class GuestPlayerCreate extends JsonAction {
 		if (this.hasActionErrors())
 			return;
 		
-		if (this.firstName == null || this.lastName == null) {
+		if (this.username == null || this.username.isEmpty()) {
 			createValidationErrorResponse();
 			return;
 		}
-			
-		if (this.firstName.isEmpty() || this.lastName.isEmpty())
-			createValidationErrorResponse();
-		
+
 	}
 
 	private void createValidationErrorResponse() {
@@ -70,17 +61,9 @@ public class GuestPlayerCreate extends JsonAction {
 		
 		try {
 			
-			userBuilder.buildFirstName(firstName);
-			
-			userBuilder.buildLastName(lastName);
+			userBuilder.buildUsername(username);
 			
 			userBuilder.buildPassword(randomPass, randomPass);
-			
-			String currentTimestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			
-			String guestUsername = currentTimestamp + "@seasongg.com";
-			
-			userBuilder.buildUsername(guestUsername);
 			
 			userBuilder.createGuestAccountRedeemToken();
 			
@@ -118,20 +101,12 @@ public class GuestPlayerCreate extends JsonAction {
 		
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public GuestPlayerCreateResponse getGuestPlayerCreateResponse() {
@@ -144,32 +119,22 @@ public class GuestPlayerCreate extends JsonAction {
 
 	public class GuestPlayerCreateResponse {
 		
-		private String firstName;
-		private String lastName;
+		private String username;
 		private String userId;
 		private String accountRedeemToken;
 		private int statusCode = 0;
 		
 		public GuestPlayerCreateResponse(Reguser reguser) {
-			this.setFirstName(reguser.getFirstName());
-			this.setLastName(reguser.getLastName());
+			this.setUsername(reguser.getUsername());
 			this.setUserId(reguser.getUserId());
 			this.setAccountRedeemToken(reguser.getAccountRedeemToken().getRedeemToken());
 		}
 		
-		public String getFirstName() {
-			return firstName;
+		public String getUsername() {
+			return username;
 		}
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 
 		public String getUserId() {

@@ -2,27 +2,20 @@ package org.bgtrack.auth;
 
 import java.sql.Timestamp;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.bgtrack.utils.BGTConstants;
-import org.bgtrack.utils.UserUtils;
-import org.passay.PasswordData;
-import org.passay.PasswordValidator;
-import org.passay.RuleResult;
 
 import org.bgtrack.utils.HibernateUtil;
+import org.bgtrack.auth.UserBuilder.UserBuilderException;
 import org.bgtrack.models.user.Reguser;
-import org.bgtrack.models.user.daos.UserDAO;
 
 public class ShiroRegisterAction extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
 	private String username;
 	private String password;
 	private String passwordVerify;
-	private String firstName;
-	private String lastName;
 	
 	private boolean errorsOccured = false;
 	
@@ -39,46 +32,32 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 			return BGTConstants.ERROR;
 		}
 		
-		// validate email is valid
-		EmailValidator emailValidator = EmailValidator.getInstance();
+		this.regUser = new Reguser();
 		
-		// isValid will also protect against null strings (no null checks needed)
-		if (!emailValidator.isValid(username)) {
-			addActionError(BGTConstants.INVALID_EMAIL);
-			return BGTConstants.ERROR;
-		}
-		
-		username = username.trim();
-		username = username.toLowerCase();
-		
-		if (!password.equals(passwordVerify)) {
-			addActionError(BGTConstants.PASSWORD_MISMATCH);
-			return BGTConstants.ERROR;
-		}
-		
-		// validate password strength
-		PasswordValidator validator = UserUtils.createPasswordValidator();
-		RuleResult result = validator.validate(new PasswordData(password));
-		
-		if (!result.isValid()) {
-			addActionError(validator.getMessages(result).get(0));
-			return BGTConstants.ERROR;
+		try {
+			
+			UserBuilder userBuilder = new UserBuilder(this.regUser);
+			
+			userBuilder.buildUsername(username);
+			
+			userBuilder.buildPassword(password, passwordVerify);
+			
+		} catch (UserBuilderException e) {
+			
+			LOG.info("Error when user tried creating account with username: {}. Error is: {}", username, e.getMessage());
+			addActionError(e.getMessage());
+			return ERROR;
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error when user tried creating account with username: {}. "
+					+ "Error is: {}", username, e.getMessage());
+			addActionError(GENERIC_ERROR);
+			return ERROR;
+			
 		}
 
-		// ensure user does not already exist
-		if(UserDAO.getUserByEmail(username) != null) {
-			addActionError(BGTConstants.GENERIC_ERROR);
-			return BGTConstants.ERROR;
-		}
-		
-		if (firstName.isEmpty() || lastName.isEmpty() || firstName.length() == 0 || lastName.length() == 0) {
-			addActionError(BGTConstants.EMPTY_NAME);
-			return BGTConstants.ERROR;
-		}
-		
-		username = username.toLowerCase();
-		
-		registerUser(username, password, firstName, lastName);
+		registerUser();
 				
 		if (errorsOccured) {
 			addActionError(BGTConstants.GENERIC_ERROR);
@@ -89,16 +68,9 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 		return BGTConstants.SUCCESS;
 	}
 
-	public void registerUser(String email, String plainTextPassword, String firstName, String lastName) {
+	public void registerUser() {
 		Timestamp registrationTime = new Timestamp(System.currentTimeMillis());
-		
-		this.regUser = new Reguser();
-		this.regUser.setEmail(email);
-		
-		UserUtils.generatePassword(this.regUser, plainTextPassword);
-		
-		this.regUser.setFirstName(firstName);
-		this.regUser.setLastName(lastName);
+				
 		this.regUser.setRegistrationTime(registrationTime);
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -110,7 +82,7 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();
-			System.err.println("Hibernate error occured while registering user: "+e);
+			LOG.error("Hibernate error occured while registering user: "+e);
 			errorsOccured = true;
 			throw e;
 		} finally {
@@ -132,22 +104,6 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 	
 	public String getPasswordVerify() {

@@ -147,7 +147,7 @@
 					<h4>Total Rounds Played: ${season.rounds.size()}</h4>
 					<h4>Total Players: ${usersInSeason.size()}</h4>
 					<h4>
-						Season Creator: <e:forHtml value="${season.creator.firstName}" /> <e:forHtml value="${season.creator.lastName}" />
+						Season Creator: <e:forHtml value="${season.creator.username}" />
 					</h4>
 					<h4>
 						${scoringTypeFullText} Scoring
@@ -208,7 +208,7 @@
 											
 											<option value="default-text" selected disabled hidden>Search to Add More Players Below</option>
 											<option value="${season.creator.userId}">
-												<e:forHtml value="${season.creator.firstName}" /> <e:forHtml value="${season.creator.lastName}" />
+												<e:forHtml value="${season.creator.username}" />
 											</option>
 										
 										</c:when>
@@ -217,7 +217,7 @@
 											<option value="default-text" selected disabled hidden>Choose from Recent Players</option>
 											<c:forEach items="${usersInSeason}" var="user">
 												<option value="${user.getUserId()}">
-													<e:forHtml value="${user.firstName}" /> <e:forHtml value="${user.lastName}" />
+													<e:forHtml value="${user.username}" />
 												</option>
 											</c:forEach>
 											
@@ -343,10 +343,8 @@
 							<form id="create-guest-player-form" action="/createGuestPlayer" method="POST">
 								<p>Enter the new player's information below:</p>
 								<p id="player-create-err-msg" class="d-none text-danger"></p>
-								<input name="firstName" type="text" class="form-control  my-2"
-									id="player-create-first-name" placeholder="First Name">
-								<input name="lastName" type="text" class="form-control  my-2"
-									id="player-create-last-name" placeholder="Last Name">
+								<input name="username" type="text" class="form-control  my-2"
+									id="player-create-username" placeholder="Username">
 								<button id="create-player-btn" type="button" class="btn btn-primary">Create Player</button>
 							</form>
 							
@@ -405,8 +403,7 @@
 						<table id="player-search-results-list-table" class="table table-striped table-hover">
 							<thead>
 								<tr class="table-primary">
-									<th scope="col">First Name</th>
-									<th scope="col">Last Name</th>
+									<th scope="col">Username</th>
 								</tr>
 							</thead>
 							<tbody id="player-search-results-list-table-body">

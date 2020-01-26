@@ -43,7 +43,7 @@ public class BGTrackRealm extends JdbcRealm {
 		final String username = userPassToken.getUsername();
 
 		if (username != null) {
-			final Reguser user = UserDAO.getUserByEmail(username);
+			final Reguser user = UserDAO.getUserByUsername(username);
 
 			if (user == null) {
 				System.out.println(username + " does not exist in the databse!");
@@ -70,7 +70,7 @@ public class BGTrackRealm extends JdbcRealm {
 
         String username = (String) getAvailablePrincipal(principals);
         
-        String userId = UserDAO.getUserByEmail(username).getUserId();
+        String userId = UserDAO.getUserByUsername(username).getUserId();
 
         Connection conn = null;
         Set<String> roleNames = null;

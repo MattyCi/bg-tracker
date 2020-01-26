@@ -52,12 +52,9 @@ public class ShiroDeleteAction extends ShiroBaseAction {
 			
 			UserBuilder userBuilder = new UserBuilder(regUser);
 			
-			userBuilder.buildFirstName("DELETED");
-			userBuilder.buildLastName("ACCOUNT");
-			
 			String currentTimestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			
-			String deletedUsername = currentTimestamp + "@deleted.com";
+			String deletedUsername = "DELETED" + currentTimestamp;
 			
 			userBuilder.buildUsername(deletedUsername);
 			
@@ -97,7 +94,7 @@ public class ShiroDeleteAction extends ShiroBaseAction {
 		} catch (AuthenticationException ae) {
 			
 			LOG.info("User {} is trying to update their account but password verification failed with the following error: {}",
-					regUser.getEmail(), ae.getMessage());
+					regUser.getUsername(), ae.getMessage());
 			
 			throw ae;
 			

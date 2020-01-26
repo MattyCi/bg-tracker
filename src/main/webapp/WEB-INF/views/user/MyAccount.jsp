@@ -22,22 +22,18 @@
 		<%@ include file="../../snippets/PopupMessage.jspf" %>
 		
 		<shiro:authenticated>
-			<div class="row">
+			<div class="row mt-4">
 				
-				<div class="col-md-6 mt-4 text-center">
+				<div class="col-md-6 mt-4 mx-auto text-center my-4">
 					<h2>My Account</h2>
 					<img src="/resources/img/user.png" alt="User" width="140" height="140">
-				</div>
-				
-				<div class="col-md-6 mt-4 text-center">
-					<h1 class="h3 mb-3 font-weight-normal text-center">Current Account Info</h1>
 
 					<c:if test="${!empty popupMessage && fn:startsWith(popupMessage, 'Welcome')}">
 						<c:set var="isAccountRedeemed" value="true" />
 					</c:if>
 
 					<c:if test="${isAccountRedeemed}">
-						<div class="alert alert-dismissible alert-warning text-black">
+						<div class="alert alert-info text-black mt-4">
 							<p class="lead">
 								<strong>Your username is: <e:forHtml value="${shiroUser.principal}" /></strong>
 							</p>
@@ -51,14 +47,9 @@
 						</div>
 					</c:if>
 
-					<h5>
-						<e:forHtml value="${regUser.firstName}" /> <e:forHtml value="${regUser.lastName}" />
-					</h5>
-					<c:if test="${!isAccountRedeemed}">
-						<h5>
-							<e:forHtml value="${shiroUser.principal}" />
-						</h5>
-					</c:if>
+					<h4 class="my-2">
+						<e:forHtml value="${shiroUser.principal}" />
+					</h4>
 					<button id="account-delete-button" type="button" data-toggle="modal"
 						class="btn btn-danger my-2" data-target="#delete-account-modal">
 						Delete Account
@@ -92,7 +83,7 @@
 					</div>
 				</div>
 				
-				<div class="col-12">
+ 				<div class="col-12 d-md-none">
 					<hr class="my-4">
 				</div>
 				
@@ -100,17 +91,15 @@
 				<div class="col-md-6 mx-auto">
 					<form id="account-update-form" action="/userUpdate" method="POST" autocomplete="off">
 						
-						<h1 class="h3 mb-3 font-weight-normal text-center">Update Account Below</h1>
+						<h1 class="h3 mb-3 font-weight-normal text-center">Update Account</h1>
 						<p>
 							<i class="fas fa-exclamation-circle text-warning"></i> Any field below left blank will NOT be updated.
 						</p>
 						
 						<input name="csrfToken" type="hidden" value="${csrfToken}">
-						<input name="username" type="email" class="form-control  my-2" id=register-username aria-describedby="emailHelp" placeholder="Enter New Email">
+						<input name="username" type="text" class="form-control  my-2" id="register-username" placeholder="Enter New Username">
 						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="New Password" autocomplete="new-password">
 						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="New Password Verify" autocomplete="new-password">
-						<input name="firstName" type="text" class="form-control  my-2" id="register-first-name" placeholder="New First Name">
-						<input name="lastName" type="text" class="form-control  my-2" id="register-last-name" placeholder="New Last Name">
 						
 						<hr class="my-4">
 						
@@ -123,11 +112,11 @@
 				
 				<c:if test="${not empty createdTokens}">
 					
-					<div class="col-12 d-md-none .d-lg-block">
+					<div class="col-12">
 						<hr class="my-4">
 					</div>
 					
-					<div class="col-md-6 mx-auto">
+					<div class="col-lg-8 mx-auto">
 						
 						<h1 class="h3 mb-3 font-weight-normal text-center">Accounts You've Created</h1>
 						<p>
@@ -140,7 +129,7 @@
 						<c:forEach items="${createdTokens}" var="tokenEntity">
 							
 							<h5 class="text-white text-center bg-primary word-wrap mb-0 py-2">
-								<e:forHtml value="${tokenEntity.reguser.firstName}" /> <e:forHtml value="${tokenEntity.reguser.lastName}" />
+								<e:forHtml value="${tokenEntity.reguser.username}" />
 							</h5>
 							<h6 class="bg-light text-center word-wrap p-2">${tokenEntity.redeemToken}</h6>
 						

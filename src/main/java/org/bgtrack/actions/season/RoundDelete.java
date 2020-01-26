@@ -90,7 +90,7 @@ public class RoundDelete extends ShiroBaseAction {
 			
 			if (userNoLongerInSeason(deletedRoundResult.getReguser())) {
 				
-				LOG.debug("user " + deletedRoundResult.getReguser().getEmail() + " is no longer allowed to have round "
+				LOG.debug("user " + deletedRoundResult.getReguser().getUsername() + " is no longer allowed to have round "
 						+ "delete permissions for season: "+ seasonId + ". removing permissions");
 				
 				deleteSeasonPermission(deletedRoundResult.getReguser());

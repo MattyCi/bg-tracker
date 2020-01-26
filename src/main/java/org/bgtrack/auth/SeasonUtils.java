@@ -24,7 +24,7 @@ public class SeasonUtils {
 				
 				while(iterator.hasNext()) {
 					Reguser tempRegUser = iterator.next();
-					tiedVictors.append(tempRegUser.getFirstName()+" "+tempRegUser.getLastName()+" ");
+					tiedVictors.append(tempRegUser.getUsername()+" ");
 					if (iterator.hasNext()) {
 						tiedVictors.append("AND ");
 					}
@@ -33,7 +33,7 @@ public class SeasonUtils {
 				tiedVictors.append("(TIE)");
 				listofVictors.add(tiedVictors.toString());
 			} else {
-				listofVictors.add(victors.get(0).getFirstName()+" "+victors.get(0).getLastName());
+				listofVictors.add(victors.get(0).getUsername());
 			}
 		}
 		

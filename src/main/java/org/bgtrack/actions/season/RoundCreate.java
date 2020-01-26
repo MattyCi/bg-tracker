@@ -252,13 +252,13 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 		if (isSeasonScoringTypeHandicapped()) {
 			
 			LOG.debug("season has handicap scoring, adding handicap points for player: " + 
-					roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName());
+					roundResult.getReguser().getUsername());
 			
 			roundResult.setHandicapPoints(determineModifier(roundResult));
 			
 		}
 		
-		LOG.debug("player: " + roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName()
+		LOG.debug("player: " + roundResult.getReguser().getUsername()
 				+ " has earned " + roundResult.getPoints() + roundResult.getHandicapPoints() + " points" );
 		
 	}
@@ -311,7 +311,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			}
 		}
 		
-		LOG.debug("player: " + roundResult.getReguser().getFirstName() + roundResult.getReguser().getLastName()
+		LOG.debug("player: " + roundResult.getReguser().getUsername()
 				+ " has placed in " + roundResult.getPlace() + occurances + " times" );
 		
 		return occurances;
@@ -381,26 +381,26 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	
 	private boolean playerHasRoundCreatePermission(Reguser roundUser) {
 		
-		String principal = roundUser.getEmail();
+		String principal = roundUser.getUsername();
 		String realmName = "jdbcRealm";
 		PrincipalCollection principals = new SimplePrincipalCollection(principal, realmName);
 		Subject roundPlayerSubject = new Subject.Builder().principals(principals).buildSubject();
 		
 		if (roundPlayerSubject.isPermitted(createRoundPermissionValue)) {
 			
-			LOG.debug("player " + roundUser.getFirstName() + roundUser.getLastName() + " already has round create permission");
+			LOG.debug("player " + roundUser.getUsername() + " already has round create permission");
 			
 			return true;
 		}
 		
-		LOG.debug("player " + roundUser.getFirstName() + roundUser.getLastName() + " missing round create permission");
+		LOG.debug("player " + roundUser.getUsername() + " missing round create permission");
 		
 		return false;
 	}
 	
 	private void grantPlayerRoundCreatePermission(Reguser roundUser) {
 		
-		LOG.debug("granting player " + roundUser.getFirstName() + roundUser.getLastName() + " round create permission");
+		LOG.debug("granting player " + roundUser.getUsername() + " round create permission");
 		
 		Permission permission = AuthorizationDAO.getPermissionByValue(createRoundPermissionValue);
 		

@@ -64,15 +64,15 @@ public class RedeemAccountAction extends ShiroBaseAction {
 			HibernateUtil.updateObject(redeemedUser);
 			
 		} catch (UserBuilderException e) {
-			LOG.info("Error when user {} tried redeeming their account. Error is: {}", redeemedUser.getEmail(), e.getMessage());
+			LOG.info("Error when user {} tried redeeming their account. Error is: {}", redeemedUser.getUsername(), e.getMessage());
 			addActionError(e.getMessage());
 			return ERROR;
 		} catch (Exception e) {
-			LOG.error("Unexpected error when user {} tried redeeming their account. Error is: {}", redeemedUser.getEmail(), e.getMessage());
+			LOG.error("Unexpected error when user {} tried redeeming their account. Error is: {}", redeemedUser.getUsername(), e.getMessage());
 			throw e;
 		}
 		
-		this.setUsername(redeemedUser.getEmail());
+		this.setUsername(redeemedUser.getUsername());
 		this.setPopupMessage(SUCCESS_TEXT);
 		
 		HibernateUtil.deleteEntity(acctRedeemToken);

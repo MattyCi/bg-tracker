@@ -83,7 +83,7 @@ public class SeasonView extends ShiroBaseAction {
 				
 				while(iterator.hasNext()) {
 					Reguser tempRegUser = iterator.next();
-					tiedVictors.append(tempRegUser.getFirstName()+" "+tempRegUser.getLastName()+" ");
+					tiedVictors.append(tempRegUser.getUsername()+" ");
 					if (iterator.hasNext()) {
 						tiedVictors.append("AND ");
 					}
@@ -99,7 +99,7 @@ public class SeasonView extends ShiroBaseAction {
 				
 				LOG.debug("user {} is victor for roundId {}", round.getRoundId());
 				
-				this.getListofVictors().add(victors.get(0).getFirstName()+" "+victors.get(0).getLastName());
+				this.getListofVictors().add(victors.get(0).getUsername());
 				
 			}
 		}

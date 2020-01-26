@@ -3,7 +3,7 @@
 	<c:when test="${not empty UserSeasonStats}">
 		<c:set var="isSeasonStatPage" value="${true}"/>
 		<c:set var="seasonStandingList" value="${UserSeasonStats.seasonStandingList}" />
-		<c:set var="playerName" value="${e:forHtml(seasonStandingList.get(0).reguser.firstName)} ${e:forHtml(seasonStandingList.get(0).reguser.lastName)}" />
+		<c:set var="playerName" value="${e:forHtml(seasonStandingList.get(0).reguser.username)}" />
 		<c:set var="tableTitle" value="${playerName}'s Season Stats"/>
 	</c:when>
 	<c:otherwise>
@@ -49,7 +49,7 @@
 				<th scope="row">
 					<c:choose>
 						<c:when test="${isVictor eq true}">
-							<i class="fas fa-crown d-none d-sm-inline"></i> VICTOR <i class="fas fa-crown d-none d-sm-inline"></i>
+							<i class="fas fa-crown d-none d-sm-inline"></i> VICTOR
 						</c:when>
 						<c:otherwise>
 							${finalPlayerPlace}
@@ -61,11 +61,11 @@
 						<c:when test="${isSeasonStatPage eq false}">
 							<a class="user-stat-breakdown-link ${linkClass}"
 								href="/viewPlayerSeasonStats?selectedSeasonId=${season.getSeasonId()}&selectedUserId=${seasonStanding.getReguser().getUserId()}">
-								<e:forHtml value="${seasonStanding.reguser.firstName}" /> <e:forHtml value="${seasonStanding.reguser.lastName}" />
+								<e:forHtml value="${seasonStanding.reguser.username}" />
 							</a>
 						</c:when>
 						<c:otherwise>
-							<e:forHtml value="${seasonStanding.reguser.firstName}" /> <e:forHtml value="${seasonStanding.reguser.lastName}" />
+							<e:forHtml value="${seasonStanding.reguser.username}" />
 						</c:otherwise>
 					</c:choose>
 				</td>

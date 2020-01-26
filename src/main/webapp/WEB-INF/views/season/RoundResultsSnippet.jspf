@@ -77,7 +77,7 @@
 						<td>
 							<a class="${userStatLinkClass}"
 								href="/viewPlayerSeasonStats?selectedSeasonId=${round.season.getSeasonId()}&selectedUserId=${roundResult.getReguser().getUserId()}">
-								<e:forHtml value="${roundResult.reguser.firstName}" /> <e:forHtml value="${roundResult.reguser.lastName}" />
+								<e:forHtml value="${roundResult.reguser.username}" />
 							</a>
 						</td>
 					</tr>
@@ -89,7 +89,7 @@
 			</tbody>
 		</table>
 		<small id="round-creator-name-${loop.index}" class="form-text text-muted">
-			Round created by: <e:forHtml value="${round.creator.firstName}" /> <e:forHtml value="${round.creator.lastName}" />
+			Round created by: <e:forHtml value="${round.creator.username}" />
 		</small>
 	</div>
 

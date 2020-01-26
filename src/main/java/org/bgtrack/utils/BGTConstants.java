@@ -11,13 +11,12 @@ public final class BGTConstants {
 
 	// error messages
 	public static final String GENERIC_ERROR = "Sorry, we could not process your request.";
-	public static final String INVALID_EMAIL = "The email entered is invalid!";
+	public static final String INVALID_USERNAME = "The username entered is invalid!";
 	public static final String PASSWORD_MISMATCH = "The passwords provided do not match!";
 	public static final String NO_ACCOUNT = "Sorry... we could not log you in. Please check your "
 			+ "credentials and try again.";
 	public static final String ALREADY_LOGGED_IN = "It seems you are already logged in as a user. "
 			+ "Please log out and try to register again.";
-	public static String EMPTY_NAME = "Either the first name or last name was not provided.";
 	public static String CHECK_FIELDS = "Please check the data submitted and try again.";
 	public static final String AUTHENTICATION_ERROR = "User not authenticated, please log in once more.";
 	public static final String AUTHORIZATION_ERROR = "User not authorized to run this command.";
@@ -26,9 +25,5 @@ public final class BGTConstants {
 	public static final String SEASON_ID_ERROR = "The season ID was incorrect.";
 	public static final String SEASON_INACTIVE_ERROR = "This season has ended, so rounds cannot be created for it.";
 	public static final String SCORING_TYPE_EMPTY = "Please provide a season scoring type.";
-	
-	// search
-	public static final String PLAYER_SEARCH_PARAM_MISSING = "To search for a player, you must either specify a first or "
-			+ "a last name.";
 	
 }

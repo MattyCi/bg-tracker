@@ -15,8 +15,6 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 	private String username;
 	private String password;
 	private String passwordVerify;
-	private String firstName;
-	private String lastName;
 	private String currentPassword;
 
 	private boolean passwordChanged = false;
@@ -66,16 +64,6 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 				changesMade = true;
 				passwordChanged  = true;
 			}
-			
-			if (firstName != null && !firstName.trim().isEmpty()) {
-				userBuilder.buildFirstName(firstName);
-				changesMade = true;
-			}
-			
-			if (lastName != null && !lastName.trim().isEmpty()) {
-				userBuilder.buildLastName(lastName);
-				changesMade = true;
-			}
 				
 		} catch (UserBuilderException e) {
 			LOG.info("Error when user {} tried updating their account. Error is: {}", shiroUser.getPrincipal(), e.getMessage());
@@ -84,7 +72,7 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 		}
 		
 		if (!changesMade) {
-			LOG.info("Error when user {} tried updating their account. User provided no values to update.", regUser.getEmail());
+			LOG.info("Error when user {} tried updating their account. User provided no values to update.", regUser.getUsername());
 			addActionError(NO_INPUT_ERROR_TEXT);
 			return ERROR;
 		}
@@ -115,7 +103,7 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 		} catch (AuthenticationException ae) {
 			
 			LOG.info("User {} is trying to update their account but password verification failed with the following error: {}",
-					regUser.getEmail(), ae.getMessage());
+					regUser.getUsername(), ae.getMessage());
 			
 			throw ae;
 			
@@ -128,9 +116,9 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 		UsernamePasswordToken shiroLoginToken;
 		
 		if (passwordChanged) {
-			shiroLoginToken = new UsernamePasswordToken(regUser.getEmail(), this.password);
+			shiroLoginToken = new UsernamePasswordToken(regUser.getUsername(), this.password);
 		} else {
-			shiroLoginToken = new UsernamePasswordToken(regUser.getEmail(), this.currentPassword);
+			shiroLoginToken = new UsernamePasswordToken(regUser.getUsername(), this.currentPassword);
 		}
 		
 		shiroLoginToken.setRememberMe(true);
@@ -155,22 +143,6 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 	
 	public String getPasswordVerify() {

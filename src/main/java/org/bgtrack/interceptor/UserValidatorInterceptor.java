@@ -39,9 +39,9 @@ public class UserValidatorInterceptor implements Interceptor {
 			if (shiroUser.getPrincipal() == null) {
 				LOG.debug("Guest user is running command.");
 			} else {
-				Reguser regUser = UserDAO.getUserByEmail(shiroUser.getPrincipal().toString());
+				Reguser regUser = UserDAO.getUserByUsername(shiroUser.getPrincipal().toString());
 				
-				LOG.debug("Registered user {} is running command.", regUser.getEmail());
+				LOG.debug("Registered user {} is running command.", regUser.getUsername());
 				
 				actionInvocation.getStack().setValue("regUser", regUser);
 			}

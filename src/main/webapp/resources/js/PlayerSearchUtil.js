@@ -89,33 +89,13 @@ var PlayerSearchUtil = {
 
 	buildPlayerSearchParams : function(playerSearchParameter) {
 
-		var fullname = playerSearchParameter.split(' ');
-			firstName = fullname[0];
-			lastName = this.buildLastName(fullname);
+		var username = playerSearchParameter;
 
 		playerSearchParams = {
-			"firstName" : firstName,
-			"lastName"  : lastName
+			"username" : username
 		}
 
 		return playerSearchParams;
-
-	},
-
-	buildLastName : function(fullname) {
-
-		var lastName = "";
-
-		for (var i = 1; i < fullname.length; i++) {
-			lastName += fullname[i];
-
-			if (fullname[i+1] != null) {
-				lastName += ' ';
-			}
-
-		}
-
-		return lastName;
 
 	},
 
@@ -216,11 +196,9 @@ var PlayerSearchUtil = {
 	addPlayerSearchResultToTable : function(playerSearchResults) {
 		var playerSearchResultsTable = document.getElementById("player-search-results-list-table-body"),
 			newRow = playerSearchResultsTable.insertRow(-1),
-			playerFirstNameCell = newRow.insertCell(0),
-			playerLastNameCell = newRow.insertCell(1);
+			playerUsernameCell = newRow.insertCell(0);
 
-		playerFirstNameCell.textContent = playerSearchResults.firstName;
-		playerLastNameCell.textContent = playerSearchResults.lastName;
+		playerUsernameCell.textContent = playerSearchResults.username;
 
 		newRow.classList.add('py-2', 'clickable');
 
@@ -268,7 +246,7 @@ var PlayerSearchUtil = {
 
 		var playerSelectOption = document.createElement("option");
 
-		playerSelectOption.text = playerSearchResults.firstName + ' ' + playerSearchResults.lastName;
+		playerSelectOption.text = playerSearchResults.username;
 
 		playerSelectOption.value = playerSearchResults.userId;
 

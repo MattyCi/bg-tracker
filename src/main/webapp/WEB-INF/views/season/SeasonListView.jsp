@@ -30,14 +30,14 @@
 					<c:set var="seasonListLinkText" value="View All Seasons" />
 					<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
 					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
-					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet. Start your own by completing the form below." />
+					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet." />
 				</c:when>
 				<c:otherwise>
 					<c:set var="seasonListHeaderText" value="All Seasons" />
 					<c:set var="seasonListLinkText" value="View Your Seasons Only" />
 					<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
 					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasons()}" />
-					<c:set var="noSeasonsText" value="No seasons have been created yet, start your own by completing the form below." />
+					<c:set var="noSeasonsText" value="No seasons have been created yet." />
 				</c:otherwise>
 			</c:choose>
 			
@@ -53,7 +53,7 @@
 					<c:when test="${empty seasonsList}">
 						<div class="col-12 col-md-6 mx-auto pt-2">
 							<div class="alert alert-danger">
-							  	<p><strong>Uh oh!</strong> ${noSeasonsText}</p>
+							  	<p><strong>Uh oh!</strong> ${noSeasonsText} Start your own by clicking <a href="/">here</a>.</p>
 							</div>
 						</div>
 					</c:when>

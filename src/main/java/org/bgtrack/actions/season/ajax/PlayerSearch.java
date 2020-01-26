@@ -6,29 +6,25 @@ import java.util.List;
 import org.bgtrack.auth.JsonAction;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.models.user.daos.UserDAO;
-import org.bgtrack.utils.BGTConstants;
 
 public class PlayerSearch extends JsonAction {
 	private static final long serialVersionUID = 1L;
 
-	private String firstName;
-	private String lastName;
+	private String username;
 		
 	private List<PersonSearchResponse> personSearchResponses;
 
+	public static final String PLAYER_SEARCH_PARAM_MISSING = "To search for a player, you must specify a username.";
+	
 	@Override
 	public void validate() {
 		
 		super.validate();
 		
-		if (this.firstName == null && this.lastName == null) {
+		if (this.username == null || this.username.isEmpty()) {
 			createErrorResponse();
-			return;
 		}
-			
-		if (this.firstName.isEmpty() && this.lastName.isEmpty())
-			createErrorResponse();
-		
+
 	}
 	
 	@Override
@@ -37,19 +33,14 @@ public class PlayerSearch extends JsonAction {
 	}
 
 	private void createErrorResponse() {
-		this.setJsonErrorObject(new JsonError(1, BGTConstants.PLAYER_SEARCH_PARAM_MISSING));
-		this.addActionError(BGTConstants.PLAYER_SEARCH_PARAM_MISSING);
+		this.setJsonErrorObject(new JsonError(1, PLAYER_SEARCH_PARAM_MISSING));
+		this.addActionError(PLAYER_SEARCH_PARAM_MISSING);
 	}
 	
 	@Override
 	public String execute() throws Exception {
 		
-		List<Reguser> matchedUsers = UserDAO.getUserByFirstAndLastName(this.firstName, this.lastName);
-		
-		if (matchedUsers.isEmpty()) {
-			// its possible the user put the last name only in the input field
-			matchedUsers = UserDAO.getUserByLastName(this.firstName);
-		}
+		List<Reguser> matchedUsers = UserDAO.getUsersByUsername(this.username);
 		
 		this.personSearchResponses = createListOfPersonSearchResponses(matchedUsers);
 		
@@ -73,20 +64,12 @@ public class PlayerSearch extends JsonAction {
 		
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public List<PersonSearchResponse> getPersonSearchResponses() {
@@ -99,29 +82,19 @@ public class PlayerSearch extends JsonAction {
 
 	public class PersonSearchResponse {
 		
-		private String firstName;
-		private String lastName;
+		private String username;
 		private String userId;
 		
 		public PersonSearchResponse(Reguser reguser) {
-			this.setFirstName(reguser.getFirstName());
-			this.setLastName(reguser.getLastName());
+			this.setUsername(reguser.getUsername());
 			this.setUserId(reguser.getUserId());
 		}
 		
-		public String getFirstName() {
-			return firstName;
+		public String getUsername() {
+			return username;
 		}
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
+		public void setUsername(String username) {
+			this.username = username;
 		}
 
 		public String getUserId() {

@@ -25,13 +25,7 @@ public class Reguser implements Serializable {
 	@Column(name="USER_ID")
 	private String userId;
 
-	private String email;
-
-	@Column(name="FIRST_NAME")
-	private String firstName;
-
-	@Column(name="LAST_NAME")
-	private String lastName;
+	private String username;
 
 	private String password;
 
@@ -63,28 +57,12 @@ public class Reguser implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getEmail() {
-		return this.email;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getFirstName() {
-		return this.firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

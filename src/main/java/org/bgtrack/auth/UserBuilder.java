@@ -4,9 +4,10 @@ import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.bgtrack.models.user.AccountRedeemToken;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.models.user.daos.UserDAO;
@@ -21,19 +22,14 @@ public class UserBuilder {
 	
 	private static final String NULL_REGUSER_ERROR_TEXT = "The regUser model object provided was null.";
 	
-	private static final String EMPTY_EMAIL_ERROR_TEXT = "No email was provided.";
-	private static final String INVALID_EMAIL_ERROR_TEXT = "The email entered is invalid.";
-	private static final String EMAIL_ALREADY_EXISTS_ERROR_TEXT = "The email provided is already in use.";
+	private static final String EMPTY_USERNAME_ERROR_TEXT = "No username was provided.";
+	private static final String INVALID_USERNAME_ERROR_TEXT = "Your username can only contain alphanumeric characters.";
+	private static final String USERNAME_TOO_LONG_ERROR_TEXT = "The username provided was too long.";
+	private static final String USERNAME_ALREADY_EXISTS_ERROR_TEXT = "The username provided is already in use.";
 	
 	public static final String EMPTY_PASSWORD_ERROR_TEXT = "One of the passwords provided was empty.";
 	public static final String PASSWORD_MISMATCH_ERROR_TEXT = "The passwords provided do not match.";
 	
-	private static final String EMPTY_FIRST_NAME_ERROR_TEXT = "No first name was provided.";
-	private static final String INVALID_FIRST_NAME_ERROR_TEXT = "The first name provided was invalid.";
-	
-	private static final String EMPTY_LAST_NAME_ERROR_TEXT = "No last name was provided.";
-	private static final String INVALID_LAST_NAME_ERROR_TEXT = "The last name provided was invalid.";
-
 	private static final String TOKEN_CREATE_ERROR = "Unable to create account redemption token.";
 	
 	public UserBuilder(Reguser regUser) throws UserBuilderException {
@@ -58,23 +54,26 @@ public class UserBuilder {
 	public void buildUsername(String username) throws UserBuilderException {
 		
 		if (username == null || username.trim().isEmpty())
-			throw new UserBuilderException(EMPTY_EMAIL_ERROR_TEXT);
+			throw new UserBuilderException(EMPTY_USERNAME_ERROR_TEXT);
 		
-		EmailValidator emailValidator = EmailValidator.getInstance();
+		if (username.length() > 35)
+			throw new UserBuilderException(USERNAME_TOO_LONG_ERROR_TEXT);
 		
-		if (!emailValidator.isValid(username)) {
-			throw new UserBuilderException(INVALID_EMAIL_ERROR_TEXT);
+		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9]");
+		
+		Matcher specialCharMatcher = specialCharRegex.matcher(username);
+		
+		if (specialCharMatcher.find()) {
+			throw new UserBuilderException(INVALID_USERNAME_ERROR_TEXT);
 		}
 		
-		if(UserDAO.getUserByEmail(username) != null) {
-			throw new UserBuilderException(EMAIL_ALREADY_EXISTS_ERROR_TEXT);
+		if(UserDAO.getUserByUsername(username) != null) {
+			throw new UserBuilderException(USERNAME_ALREADY_EXISTS_ERROR_TEXT);
 		}
 		
 		username = username.trim();
-		
-		username = username.toLowerCase();
-		
-		this.regUser.setEmail(username);
+				
+		this.regUser.setUsername(username);
 		
 	}
 	
@@ -94,30 +93,6 @@ public class UserBuilder {
 		}
 		
 		UserUtils.generatePassword(this.regUser, password);
-		
-	}
-		
-	public void buildFirstName(String firstName) throws UserBuilderException {
-		
-		if (firstName == null || firstName.trim().isEmpty())
-			throw new UserBuilderException(EMPTY_FIRST_NAME_ERROR_TEXT);
-		
-		if (firstName.matches(".*\\d.*"))
-			throw new UserBuilderException(INVALID_FIRST_NAME_ERROR_TEXT);
-		
-		this.regUser.setFirstName(firstName);
-		
-	}
-	
-	public void buildLastName(String lastName) throws UserBuilderException {
-		
-		if (lastName == null || lastName.trim().isEmpty())
-			throw new UserBuilderException(EMPTY_LAST_NAME_ERROR_TEXT);
-		
-		if (lastName.matches(".*\\d.*"))
-			throw new UserBuilderException(INVALID_LAST_NAME_ERROR_TEXT);
-		
-		this.regUser.setLastName(lastName);
 		
 	}
 	

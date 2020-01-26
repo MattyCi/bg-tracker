@@ -53,8 +53,8 @@ public class UserUtils {
 	public static String getCurrentUserId() {
 		Subject currentShiroSubject = SecurityUtils.getSubject();
 		
-		String email = currentShiroSubject.getPrincipal().toString();
-		Reguser currentUser = UserDAO.getUserByEmail(email);
+		String username = currentShiroSubject.getPrincipal().toString();
+		Reguser currentUser = UserDAO.getUserByUsername(username);
 		
 		return currentUser.getUserId();
 	}

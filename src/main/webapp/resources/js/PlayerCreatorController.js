@@ -36,13 +36,11 @@ var PlayerCreatorController = {
 
 	buildPlayerCreateParams : function() {
 		
-		let firstName = $("#player-create-first-name").val(),
-			lastName = $("#player-create-last-name").val(),
+		let username = $("#player-create-username").val(),
 			csrfToken = $("#csrf-token").val();
 			
 		return {
-				"firstName" : firstName,
-				"lastName"  : lastName,
+				"username" : username,
 				"csrfToken"  : csrfToken
 			}
 		
@@ -103,10 +101,9 @@ var PlayerCreatorController = {
 		
 		this.addNewPlayerToSelectElements(playerCreateResponse);
 		
-		let createdPlayerNameElement = $("#player-create-name");
+		let createdPlayerUsernameElement = $("#player-create-username");
 		
-		createdPlayerNameElement.text(playerCreateResponse.firstName + " " + playerCreateResponse.lastName
-				+ "'s account redeem code:");
+		createdPlayerUsernameElement.text(playerCreateResponse.username + "'s account redeem code:");
 		
 	},
 	
@@ -121,7 +118,7 @@ var PlayerCreatorController = {
 		playerSelectElement.append(
 			$("<option></option>")
 				.attr("value",playerCreateResponse.userId)
-				.text(playerCreateResponse.firstName + " " + playerCreateResponse.lastName)
+				.text(playerCreateResponse.username)
 				.prop("selected", true)
 			);
 
