@@ -2,17 +2,18 @@ package org.bgtrack.auth;
 
 import java.security.SecureRandom;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.bgtrack.models.user.AccountRedeemToken;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.models.user.daos.UserDAO;
 import org.bgtrack.utils.UserUtils;
+import org.passay.CharacterRule;
 import org.passay.PasswordData;
+import org.passay.PasswordGenerator;
 import org.passay.PasswordValidator;
 import org.passay.RuleResult;
 
@@ -98,11 +99,11 @@ public class UserBuilder {
 	
 	public String generateRandomPassword() {
 		
-		String newDeletedPassword = RandomStringUtils.randomAlphabetic(12);
+		PasswordGenerator pwGenerator = new PasswordGenerator();
 		
-		Random rand = new Random();
-		newDeletedPassword += rand.nextInt();
-		newDeletedPassword += rand.nextInt();
+		ArrayList<CharacterRule> charRules = UserUtils.getPwCharacterRules();
+		
+		String newDeletedPassword = pwGenerator.generatePassword(UserUtils.pwMax, charRules);
 		
 		return newDeletedPassword;
 		
