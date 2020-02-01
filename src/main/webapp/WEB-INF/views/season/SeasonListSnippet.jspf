@@ -1,3 +1,4 @@
+<%@ page import="org.bgtrack.models.SeasonStatus" %>
 
 <table class="table">
   <thead class="thead-light">
@@ -22,6 +23,7 @@
 	    		<a class="pr-2" href="/viewSeason?seasonId=${season.getSeasonId()}">
 	    			<e:forHtml value="${season.name}" />
     			</a>
+    			
 	    		<c:if test="${season.status == SeasonStatus.INACTIVE.toString()}"> 
 					<span class="badge badge-danger">Season Ended</span>
 				</c:if>
