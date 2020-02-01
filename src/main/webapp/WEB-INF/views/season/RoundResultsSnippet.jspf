@@ -30,10 +30,23 @@
 			<div class="row mt-2">
 				<div class="col-6 pt-4 float-right">
 					
-					<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger" 
-						data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal">
-						Delete Round
-					</button>
+					<shiro:hasPermission name="season:deleteround:${season.seasonId}">
+					
+						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger" 
+							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal">
+							Delete Round
+						</button>
+					
+					</shiro:hasPermission>
+					
+					<shiro:lacksPermission name="season:deleteround:${season.seasonId}">
+						
+						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger disabled" 
+							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal" disabled="">
+							Delete Round
+						</button>
+						<p class="text-muted small pt-2">Only season creators can delete rounds.</p>
+					</shiro:lacksPermission>
 					
 					<script>
 					

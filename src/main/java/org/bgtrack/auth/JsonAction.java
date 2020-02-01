@@ -14,7 +14,7 @@ public class JsonAction extends ShiroBaseAction {
 			
 			this.setJsonErrorObject(new JsonError(2, BGTConstants.LOG_IN_PROMPT));
 			this.addActionError(BGTConstants.LOG_IN_PROMPT);
-			
+			return;
 		}
 		
 		if (isCsrfProtected() && isCsrfDetected()) {

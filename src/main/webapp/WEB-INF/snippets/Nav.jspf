@@ -14,12 +14,12 @@
 					<a class="nav-link" href="/accountRedeem">Redeem an Account</a>
 				</li>
 			</shiro:notAuthenticated>
+			<li class="nav-item">
+				<a class="nav-link" href="/viewSeasonList?view=allSeasonsList">All Seasons</a>
+			</li>
 			<shiro:authenticated>
 				<li class="nav-item">
 					<a class="nav-link" href="/viewSeasonList?view=usersSeasonsList">Your Seasons</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/viewSeasonList?view=allSeasonsList">All Seasons</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/viewMyAccount">My Account</a>

@@ -7,7 +7,6 @@ import org.bgtrack.models.Round;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.SeasonStanding;
 import org.bgtrack.models.user.Reguser;
-import org.bgtrack.models.user.daos.UserDAO;
 import org.bgtrack.utils.HibernateUtil;
 import org.bgtrack.utils.UserUtils;
 import org.hibernate.Hibernate;

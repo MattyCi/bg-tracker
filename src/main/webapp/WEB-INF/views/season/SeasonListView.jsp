@@ -5,6 +5,8 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 
+<%@ page import="org.bgtrack.models.daos.SeasonDAO" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,58 +14,53 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="/WEB-INF/snippets/CommonIncludes.jspf" />
-	<shiro:notAuthenticated>
-		<meta http-equiv="Refresh" content="0; url=/">
-	</shiro:notAuthenticated>
 </head>
 <body>
 	<%@ include file="/WEB-INF/snippets/Nav.jspf" %>
 	
 	<div class="container content">
 		<%@ include file="/WEB-INF/snippets/Header.jspf" %>
+			
+		<c:choose>
+			<c:when test="${param.view eq 'usersSeasonsList'}">
+				<c:set var="seasonListHeaderText" value="Your Seasons" />
+				<c:set var="seasonListLinkText" value="View All Seasons" />
+				<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
+				<c:set var="seasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
+				<c:set var="noSeasonsText" value="You aren't apart of any seasons yet." />
+			</c:when>
+			<c:otherwise>
+				<c:set var="seasonListHeaderText" value="All Seasons" />
+				<c:set var="seasonListLinkText" value="View Your Seasons Only" />
+				<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
+				<c:set var="seasonsList" value="${SeasonDAO.getAllSeasons()}" />
+				<c:set var="noSeasonsText" value="No seasons have been created yet." />
+			</c:otherwise>
+		</c:choose>
 		
-		<shiro:authenticated>
-			
-			<c:choose>
-				<c:when test="${param.view eq 'usersSeasonsList'}">
-					<c:set var="seasonListHeaderText" value="Your Seasons" />
-					<c:set var="seasonListLinkText" value="View All Seasons" />
-					<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
-					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
-					<c:set var="noSeasonsText" value="You aren't apart of any seasons yet." />
-				</c:when>
-				<c:otherwise>
-					<c:set var="seasonListHeaderText" value="All Seasons" />
-					<c:set var="seasonListLinkText" value="View Your Seasons Only" />
-					<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
-					<c:set var="seasonsList" value="${SeasonDAO.getAllSeasons()}" />
-					<c:set var="noSeasonsText" value="No seasons have been created yet." />
-				</c:otherwise>
-			</c:choose>
-			
-			<div id="your-seasons" class="row pt-4">
-				<div class="col-12 text-center">
-					<h1 class="display-4">${seasonListHeaderText}</h1>
-				</div>
+		<div id="your-seasons" class="row pt-4">
+			<div class="col-12 text-center">
+				<h1 class="display-4">${seasonListHeaderText}</h1>
+			</div>
+			<shiro:authenticated>
 				<div class="col-12 text-right">
 					<a href="${seasonListLink}" class="text-secondary">${seasonListLinkText}</a>
 				</div>
-			
-				<c:choose>
-					<c:when test="${empty seasonsList}">
-						<div class="col-12 col-md-6 mx-auto pt-2">
-							<div class="alert alert-danger">
-							  	<p><strong>Uh oh!</strong> ${noSeasonsText} Start your own by clicking <a href="/">here</a>.</p>
-							</div>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<%@ include file="../season/SeasonListSnippet.jspf" %>
-					</c:otherwise>
-				</c:choose>
-			</div>
-					
 			</shiro:authenticated>
+		
+			<c:choose>
+				<c:when test="${empty seasonsList}">
+					<div class="col-12 col-md-6 mx-auto pt-2">
+						<div class="alert alert-danger">
+						  	<p><strong>Uh oh!</strong> ${noSeasonsText} Start your own by clicking <a href="/">here</a>.</p>
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<%@ include file="../season/SeasonListSnippet.jspf" %>
+				</c:otherwise>
+			</c:choose>
+		</div>
 		
 	</div>
 	

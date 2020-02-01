@@ -35,12 +35,12 @@ public class SeasonView extends ShiroBaseAction {
 	@SuppressWarnings("unused")
 	private boolean seasonStatus;
 	
+	@Override
+	public boolean isAuthenticationRequired() {
+		return false;
+	}
+	
 	public String execute() {
-		
-		if (!this.shiroUser.isAuthenticated()) {
-			addActionError(BGTConstants.AUTHENTICATION_ERROR);
-			return BGTConstants.ERROR;
-		}
 		
 		if (seasonId.isEmpty() || seasonId.length() == 0) {
 			addActionError(BGTConstants.SEASON_ID_ERROR);
