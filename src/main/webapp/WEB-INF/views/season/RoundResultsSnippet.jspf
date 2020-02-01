@@ -109,6 +109,7 @@
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				<form id="round-delete-form" action="/deleteRound" method="POST">
 					<input id="round-delete-id" type="hidden" name="roundId">
+					<input id="csrf-token" name="csrfToken" type="hidden" value="${csrfToken}">
 					<button type="submit" class="btn btn-danger">Delete Round</button>
 				</form>
 			</div>
