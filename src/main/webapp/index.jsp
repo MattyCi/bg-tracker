@@ -24,7 +24,7 @@
 		<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img class="d-block w-100" src="/resources/img/dice-catch.jpg" alt="Playing with Dice">
+					<img class="d-block img-fluid mx-auto" src="/resources/img/dice-catch.jpg" alt="Playing with Dice">
 					<div class="carousel-caption d-none d-md-block text-left">
 						<h1>Season GG</h1>
 						<p class="lead">Become the board game champion amongst your friends</p>
