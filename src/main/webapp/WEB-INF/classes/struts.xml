@@ -117,7 +117,7 @@
     		<param name="seasonId">${seasonId}</param>
     		<param name="popupMessage">${popupMessage}</param>
     	</result>
-		<result name="error">/index.jsp</result>
+		<result name="error, input">/WEB-INF/views/season/SingleSeasonView.jsp</result>
    	</action>
    	
 	 <action name="deleteSeason" class="org.bgtrack.actions.season.SeasonDelete">

@@ -2,11 +2,17 @@ package org.bgtrack.actions.season;
 
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.persistence.PersistenceException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +27,7 @@ public class SeasonEdit extends ShiroBaseAction {
 	
 	private String seasonId;
 	private String seasonEndDate;
+	private String seasonName;
 	
 	Season season;
 	
@@ -32,6 +39,8 @@ public class SeasonEdit extends ShiroBaseAction {
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided is earlier than the season start date, please choose a valid date and try again.";
 	private static final String GENERIC_SEASON_UPDATE_ERROR_TEXT = "Sorry... something went wrong and we were unable to update the season data.";
 	private static final String SEASON_EDIT_CONFIRMATION_TEXT = "Done! Season edited successfully.";
+	
+	private static final String SEASON_NAME_EXISTS_ERROR_TEXT = "Sorry, but the season name you provided already exists.";
 	
 	@Override
 	public Boolean isCsrfProtected() {
@@ -83,14 +92,14 @@ public class SeasonEdit extends ShiroBaseAction {
 	public String execute() {
 
 		try {
-			
-			if (seasonEndDate != null) {
+						
+			if (seasonEndDate != null && !seasonEndDate.isEmpty()) {
 				changeSeasonEndDate();
 			}
 			
 		} catch (ParseException e) {
 			
-			LOG.info("user {} trying to edit season but gave invalid date of {}: " + shiroUser.getPrincipal(), seasonEndDate);
+			LOG.info("user {} trying to edit season but gave invalid date of {}: ", shiroUser.getPrincipal(), seasonEndDate);
 			
 			addActionError(BGTConstants.DATE_ERROR);
 			return ERROR;
@@ -101,6 +110,10 @@ public class SeasonEdit extends ShiroBaseAction {
 			addActionError(GENERIC_SEASON_UPDATE_ERROR_TEXT);
 			return ERROR;
 			
+		}
+		
+		if (seasonName != null && !seasonName.isEmpty()) {
+			changeSeasonName();
 		}
 		
 		if (errorsOccurred)
@@ -141,6 +154,38 @@ public class SeasonEdit extends ShiroBaseAction {
 		HibernateUtil.updateObject(season);
 		
 	}
+	
+	private void changeSeasonName() {
+		
+		this.season.setName(seasonName);
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+
+		try {
+			tx = session.beginTransaction();
+			session.update(season);
+			tx.commit();
+		} catch (PersistenceException e) {
+			
+			if (e.getCause() instanceof ConstraintViolationException) {
+				
+				LOG.info("User {} tried creating a season with name {}, but name already exists. {}", shiroUser.getPrincipal(), season.getName(), e.getMessage());
+				addActionError(SEASON_NAME_EXISTS_ERROR_TEXT);
+				
+			}
+			
+			tx.rollback();
+
+			errorsOccurred = true;
+			
+			throw e;
+			
+		} finally {
+			session.close();
+		}
+		
+	}
 
 	public String getSeasonId() {
 		return seasonId;
@@ -164,6 +209,14 @@ public class SeasonEdit extends ShiroBaseAction {
 
 	public void setSeasonEndDate(String seasonEndDate) {
 		this.seasonEndDate = seasonEndDate;
+	}
+
+	public String getSeasonName() {
+		return seasonName;
+	}
+
+	public void setSeasonName(String seasonName) {
+		this.seasonName = seasonName;
 	}
 
 }

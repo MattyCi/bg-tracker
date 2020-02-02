@@ -79,6 +79,8 @@
 									Note that your current season end date cannot be before 
 									this season's start date of <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" />.
 								</small>
+								<label for="new-season-name" class="mt-2">New Season Name</label>
+								<input name="seasonName" type="text" class="form-control my-2" id="new-season-name" placeholder="New Season Name" autocomplete="off">
 							</form>
 						</div>
 						<div class="modal-footer">
