@@ -11,7 +11,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<mysql.version>8.0.12</mysql.version>
+		<mysql.version>8.0.16</mysql.version>
 	</properties>
 
 	<dependencies>
