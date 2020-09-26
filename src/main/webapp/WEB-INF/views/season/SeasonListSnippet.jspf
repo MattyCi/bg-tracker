@@ -48,23 +48,38 @@
 
 <fmt:formatNumber var="numPages" 
 	value="${numPagesDecimal + (numPagesDecimal % 1 == 0 ? 0 : 0.5)}" maxFractionDigits="0" />
-	
-<div class="mx-auto mt-3">
-	<ul class="pagination">
-	
-		<li class="page-item <c:if test="${seasonPage == 0}">disabled</c:if>">
-			<a class="page-link" href="${seasonListLink}&seasonPage=${seasonPage - 1}">&laquo;</a>
-		</li>
-		 
-		<c:forEach var="pageNumber" begin="1" end="${numPages}">
-			<li class="page-item <c:if test="${pageNumber == (seasonPage + 1)}">active</c:if>">
-				<a class="page-link" href="${seasonListLink}&seasonPage=${pageNumber - 1}">${pageNumber}</a>
+
+<c:if test="${numPages > 1}">
+	<div class="mx-auto mt-3">
+		<ul class="pagination">
+		
+			<li class="page-item <c:if test="${seasonPage == 0}">disabled</c:if>">
+				<a class="page-link" href="${seasonListLink}&seasonPage=${seasonPage - 1}">&laquo;</a>
 			</li>
-		</c:forEach>
-		
-		<li class="page-item <c:if test="${(seasonPage + 1) == numPages}">disabled</c:if>">
-			<a class="page-link" href="${seasonListLink}&seasonPage=${seasonPage + 1}">&raquo;</a>
-		</li>
-		
-	</ul>
-</div>
+			
+			<c:set var="counter" value="0" scope="page" />
+			<c:set var="beginPage" value="1" scope="page" />
+			
+			<c:if test="${seasonPage > 4}">
+				<c:set var="beginPage" value="${seasonPage - 3}" scope="page" />
+			</c:if>
+			
+			<c:forEach var="pageNumber" begin="${beginPage}" end="${numPages}">
+				<c:if test="${counter < 9}"> 
+					
+					<li class="page-item <c:if test="${pageNumber == (seasonPage + 1)}">active</c:if>">
+						<a class="page-link" href="${seasonListLink}&seasonPage=${pageNumber - 1}">${pageNumber}</a>
+					</li>
+					
+					<c:set var="counter" value="${counter + 1}" scope="page"/>
+					
+				</c:if>
+			</c:forEach>
+			
+			<li class="page-item <c:if test="${(seasonPage + 1) == numPages}">disabled</c:if>">
+				<a class="page-link" href="${seasonListLink}&seasonPage=${seasonPage + 1}">&raquo;</a>
+			</li>
+			
+		</ul>
+	</div>
+</c:if>
