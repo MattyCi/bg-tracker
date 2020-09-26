@@ -195,10 +195,6 @@ public class SeasonDAO {
 		
 		 List<Season> listOfSeasons = (List<Season>) finalQuery.list();
 		
-		for (Season season : listOfSeasons) {
-			System.out.println("season is: " + season.getSeasonId());
-		}
-		
 		session.getTransaction().commit();
 
 		return listOfSeasons;

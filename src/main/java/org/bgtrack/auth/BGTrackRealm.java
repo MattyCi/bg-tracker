@@ -46,7 +46,7 @@ public class BGTrackRealm extends JdbcRealm {
 			final Reguser user = UserDAO.getUserByUsername(username);
 
 			if (user == null) {
-				System.out.println(username + " does not exist in the databse!");
+				LOG.info(username + " does not exist in the databse!");
 				return null;
 			}
 
