@@ -39,3 +39,32 @@
     </c:forEach>
   </tbody>
 </table>
+
+<fmt:bundle basename="season">
+	<fmt:message var="numSeasonsPerPage" key="NUM_SEASONS_PER_PAGE" />
+</fmt:bundle>
+
+<c:set var="numPagesDecimal" value="${(numSeasons / numSeasonsPerPage)}" />
+
+<fmt:formatNumber var="numPages" 
+	value="${numPagesDecimal + (numPagesDecimal % 1 == 0 ? 0 : 0.5)}" maxFractionDigits="0" />
+	
+<div class="mx-auto mt-3">
+	<ul class="pagination">
+	
+		<li class="page-item <c:if test="${seasonPage == 0}">disabled</c:if>">
+			<a class="page-link" href="${seasonListLink}&seasonPage=${seasonPage - 1}">&laquo;</a>
+		</li>
+		 
+		<c:forEach var="pageNumber" begin="1" end="${numPages}">
+			<li class="page-item <c:if test="${pageNumber == (seasonPage + 1)}">active</c:if>">
+				<a class="page-link" href="${seasonListLink}&seasonPage=${pageNumber - 1}">${pageNumber}</a>
+			</li>
+		</c:forEach>
+		
+		<li class="page-item <c:if test="${(seasonPage + 1) == numPages}">disabled</c:if>">
+			<a class="page-link" href="${seasonListLink}&seasonPage=${seasonPage + 1}">&raquo;</a>
+		</li>
+		
+	</ul>
+</div>

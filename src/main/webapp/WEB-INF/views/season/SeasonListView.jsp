@@ -20,21 +20,34 @@
 	
 	<div class="container content">
 		<%@ include file="/WEB-INF/snippets/Header.jspf" %>
-			
+		
+		<c:choose>
+			<c:when test="${empty param.seasonPage}">
+				<c:set var="seasonPage" value="0" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="seasonPage" value="${param.seasonPage}" />
+			</c:otherwise>
+		</c:choose>
+
 		<c:choose>
 			<c:when test="${param.view eq 'usersSeasonsList'}">
 				<c:set var="seasonListHeaderText" value="Your Seasons" />
 				<c:set var="seasonListLinkText" value="View All Seasons" />
 				<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
-				<c:set var="seasonsList" value="${SeasonDAO.getAllSeasonsUserIsIn()}" />
+				<c:set var="seasonsList" value="${SeasonDAO.getPaginatedSeasonList(seasonPage, true)}" />
+				<c:set var="numSeasons" value="${SeasonDAO.getCountOfAllSeasonsUserIsIn()}" />
 				<c:set var="noSeasonsText" value="You aren't apart of any seasons yet." />
+				<c:set var="viewParam" value="usersSeasonsList" />
 			</c:when>
 			<c:otherwise>
 				<c:set var="seasonListHeaderText" value="All Seasons" />
 				<c:set var="seasonListLinkText" value="View Your Seasons Only" />
 				<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
-				<c:set var="seasonsList" value="${SeasonDAO.getAllSeasons()}" />
+				<c:set var="seasonsList" value="${SeasonDAO.getPaginatedSeasonList(seasonPage, false)}" />
+				<c:set var="numSeasons" value="${SeasonDAO.getCountOfAllSeasons()}" />
 				<c:set var="noSeasonsText" value="No seasons have been created yet." />
+				<c:set var="viewParam" value="allSeasonsList" />
 			</c:otherwise>
 		</c:choose>
 		

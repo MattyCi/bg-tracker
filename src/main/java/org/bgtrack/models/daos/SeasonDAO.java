@@ -1,5 +1,6 @@
 package org.bgtrack.models.daos;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.bgtrack.models.Season;
 import org.bgtrack.models.SeasonStanding;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
+import org.bgtrack.utils.PropertiesLoader;
 import org.bgtrack.utils.UserUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -30,6 +32,19 @@ public class SeasonDAO {
 		return listOfSeasons;
 	}
 	
+	public static Long getCountOfAllSeasons() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+			
+		Query query = session.createQuery(
+		        "select count(*) from Season");
+		Long count = (Long)query.uniqueResult();
+		
+		session.getTransaction().commit();
+
+		return count;
+	}
+	
 	public static List<Season> getAllSeasonsUserIsIn() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -45,6 +60,24 @@ public class SeasonDAO {
 		session.getTransaction().commit();
 
 		return listOfSeasons;
+	}
+	
+	public static Long getCountOfAllSeasonsUserIsIn() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String currentUserId = UserUtils.getCurrentUserId();
+		
+		Query query = session.createQuery(
+		        "select count(*) from Season as season where season.seasonId in "
+		        + "(select ss.season.seasonId from SeasonStanding as ss where ss.reguser.userId=:currentUserId) "
+		        + "or season.creator.userId=:currentUserId");
+		query.setString("currentUserId", currentUserId);
+		Long count = (Long)query.uniqueResult();
+
+		session.getTransaction().commit();
+		
+		return count;
 	}
 
 	/**
@@ -131,6 +164,44 @@ public class SeasonDAO {
 		seasonToDeactivate.setStatus("I");
 		
 		HibernateUtil.updateObject(seasonToDeactivate);
+		
+	}
+	
+	public static List<Season> getPaginatedSeasonList(int page, boolean isUserSeasonsOnly) throws NumberFormatException, IOException {
+		
+		int resultsPerPage = Integer.parseInt(PropertiesLoader.getPropertyValue("NUM_SEASONS_PER_PAGE"));
+		int offset = page * resultsPerPage;
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query;
+		String currentUserId = UserUtils.getCurrentUserId();
+		
+		if (isUserSeasonsOnly) {
+			query = "from Season as season where season.seasonId in "
+				+ "(select ss.season.seasonId from SeasonStanding as ss where ss.reguser.userId=:currentUserId) "
+				+ "or season.creator.userId=:currentUserId "
+				+ "order by NAME ASC";
+		} else {
+			query = "from Season order by START_DATE DESC";
+		}
+		
+		@SuppressWarnings("unchecked")
+		 Query finalQuery = session.createQuery(query).setFirstResult(offset).setMaxResults(resultsPerPage);
+		
+		if (isUserSeasonsOnly)
+			finalQuery.setParameter("currentUserId", currentUserId);
+		
+		 List<Season> listOfSeasons = (List<Season>) finalQuery.list();
+		
+		for (Season season : listOfSeasons) {
+			System.out.println("season is: " + season.getSeasonId());
+		}
+		
+		session.getTransaction().commit();
+
+		return listOfSeasons;
 		
 	}
 
