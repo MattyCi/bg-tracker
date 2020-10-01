@@ -34,7 +34,7 @@
 			<c:when test="${param.view eq 'usersSeasonsList'}">
 				<c:set var="seasonListHeaderText" value="Your Seasons" />
 				<c:set var="seasonListLinkText" value="View All Seasons" />
-				<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList" />
+				<c:set var="seasonListLink" value="/viewSeasonList?view=usersSeasonsList&seasonPage=" />
 				<c:set var="seasonsList" value="${SeasonDAO.getPaginatedSeasonList(seasonPage, true)}" />
 				<c:set var="numSeasons" value="${SeasonDAO.getCountOfAllSeasonsUserIsIn()}" />
 				<c:set var="noSeasonsText" value="You aren't apart of any seasons yet." />
@@ -43,7 +43,7 @@
 			<c:otherwise>
 				<c:set var="seasonListHeaderText" value="All Seasons" />
 				<c:set var="seasonListLinkText" value="View Your Seasons Only" />
-				<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList" />
+				<c:set var="seasonListLink" value="/viewSeasonList?view=allSeasonsList&seasonPage=" />
 				<c:set var="seasonsList" value="${SeasonDAO.getPaginatedSeasonList(seasonPage, false)}" />
 				<c:set var="numSeasons" value="${SeasonDAO.getCountOfAllSeasons()}" />
 				<c:set var="noSeasonsText" value="No seasons have been created yet." />
