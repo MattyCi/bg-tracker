@@ -6,6 +6,7 @@
 
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 <jsp:useBean id="SeasonDAO" class="org.bgtrack.models.daos.SeasonDAO" scope="session"/>
+<%@ page import="org.bgtrack.models.daos.RoundDAO" %>
 
 <%@ page import="org.bgtrack.models.SeasonStatus" %>
 
@@ -403,13 +404,37 @@
 		</div>
 		
 		<div class="row mb-5">
-			<c:set var="snippetListOfRounds" value="${season.rounds}" />
+			<c:choose>
+				<c:when test="${empty param.roundPage}">
+					<c:set var="roundPage" value="0" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="roundPage" value="${param.roundPage}" />
+				</c:otherwise>
+			</c:choose>
+		
+			<c:set var="snippetListOfRounds" value="${RoundDAO.getPaginatedRoundsList(roundPage, season.seasonId)}" />
 			<c:set var="snippetListofVictors" value="${listofVictors}" />
 			<c:set var="snippetSelectedUser" value="${regUser}" />
 			<c:set var="pageName" value="SeasonView" />
 			<%@ include file="./RoundResultsSnippet.jspf" %>
+			
+			<fmt:bundle basename="round">
+				<fmt:message var="numElementsPerPage" key="NUM_ROUNDS_PER_PAGE" />
+			</fmt:bundle>
+						
+			<c:set var="singleSeasonListLink" value="/viewSeason?seasonId=${season.seasonId}&roundPage=" />
 		</div>
-
+		
+		<div class="row mb-5">
+			<c:import url="../../snippets/PaginationSnippet.jsp">
+				<c:param name="numElements" value="${season.rounds.size()}"/>
+				<c:param name="numElementsPerPage" value="${numElementsPerPage}"/>
+				<c:param name="currentPage" value="${roundPage}"/>
+				<c:param name="pageNumberLink" value="${singleSeasonListLink}"/>
+			</c:import>
+		</div>	
+			
 		<div id="player-search-results-popup" class="popup d-none">
 
 			<div class="popup-content">

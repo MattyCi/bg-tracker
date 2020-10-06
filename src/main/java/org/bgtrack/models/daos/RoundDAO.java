@@ -1,6 +1,8 @@
 package org.bgtrack.models.daos;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bgtrack.models.Round;
@@ -8,8 +10,13 @@ import org.bgtrack.models.RoundResult;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
+import org.bgtrack.utils.PropertiesLoader;
+import org.bgtrack.utils.UserUtils;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
+
+import PropertiesSelection.PropertiesSelector;
 
 /**
  * This DAO contains methods for performing CRUD operations on rounds.
@@ -99,6 +106,31 @@ public class RoundDAO {
 		session.getTransaction().commit();
 		
 		return round;
+	}
+	
+	public static List<Round> getPaginatedRoundsList(int page, String seasonId) throws NumberFormatException, IOException {
+		
+		int resultsPerPage = Integer.parseInt(PropertiesLoader.getPropertyValue("NUM_ROUNDS_PER_PAGE", PropertiesSelector.ROUND));
+		int offset = page * resultsPerPage;
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE asc";
+		
+		@SuppressWarnings("unchecked")
+		 Query finalQuery = session.createQuery(query).setParameter("seasonId", seasonId).setFirstResult(offset).setMaxResults(resultsPerPage);
+		
+		 List<Round> listOfRounds = (List<Round>) finalQuery.list();
+		 
+		 for (Round round : listOfRounds) {
+			 Hibernate.initialize(round.getRoundResults());
+		}
+		
+		session.getTransaction().commit();
+
+		return listOfRounds;
+		
 	}
 	
 }

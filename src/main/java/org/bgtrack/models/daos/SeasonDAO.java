@@ -15,6 +15,8 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import PropertiesSelection.PropertiesSelector;
+
 /**
  * This DAO contains methods for performing CRUD operations on seasons.
  * @author Matt
@@ -169,7 +171,7 @@ public class SeasonDAO {
 	
 	public static List<Season> getPaginatedSeasonList(int page, boolean isUserSeasonsOnly) throws NumberFormatException, IOException {
 		
-		int resultsPerPage = Integer.parseInt(PropertiesLoader.getPropertyValue("NUM_SEASONS_PER_PAGE"));
+		int resultsPerPage = Integer.parseInt(PropertiesLoader.getPropertyValue("NUM_SEASONS_PER_PAGE", PropertiesSelector.SEASON));
 		int offset = page * resultsPerPage;
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
