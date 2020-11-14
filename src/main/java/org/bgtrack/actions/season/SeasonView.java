@@ -97,7 +97,7 @@ public class SeasonView extends ShiroBaseAction {
 			
 			} else {
 				
-				LOG.debug("user {} is victor for roundId {}", round.getRoundId());
+				LOG.debug("user {} is victor for roundId {}", shiroUser.getPrincipal(), round.getRoundId());
 				
 				this.getListofVictors().add(victors.get(0).getUsername());
 				
