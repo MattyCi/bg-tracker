@@ -499,7 +499,6 @@
 
 	</div>
 
-	<script src="pikaday.js"></script>
 	<script>
 		var picker = new Pikaday({
 			field : document.getElementById('new-season-end-date')

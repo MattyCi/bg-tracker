@@ -259,21 +259,33 @@ var SeasonController = {
 
 window.onload = function(){
 	
-    var roundCreateConfirmPopup = document.getElementById("round-create-confirm-popup");
-    var playerSearchResultsPopup = document.getElementById("player-search-results-popup");
+    var roundCreateConfirmPopup = document.getElementById("round-create-confirm-popup"),
+    	playerSearchResultsPopup = document.getElementById("player-search-results-popup"),
+    	roundCreateButton = document.getElementById("round-create-btn"),
+    	roundCreateConfirmButton = document.getElementById("round-create-confirm-btn"),
+    	roundCancelButton = document.getElementById("round-create-cancel-btn"),
+    	initialPlayerSearchButton = document.getElementById("player-search-btn-0"),
+    	playerSearchResultsPopupCloseButton = document.getElementById("player-search-results-popup-close-btn");
 	
-    document.getElementById('round-create-btn').onclick = function(){
-    	SeasonController.confirmAddRound(document.getElementById('round-create-form'));
-    };
     
-    document.getElementById('round-create-confirm-btn').onclick = function(){
-    	document.getElementById('round-create-form').submit();
-    };
+    if(typeof roundCreateButton !== 'undefined' && roundCreateButton !== null) {
+        roundCreateButton.onclick = function(){
+        	SeasonController.confirmAddRound(document.getElementById('round-create-form'));
+        };
+    }
     
-    document.getElementById('round-create-cancel-btn').onclick = function(){
-    	roundCreateConfirmPopup.classList.add("d-none");
-    	SeasonController.clearRoundConfirmTable();
-    };
+    if(typeof roundCreateConfirmButton !== 'undefined' && roundCreateConfirmButton !== null) {
+    	roundCreateConfirmButton.onclick = function(){
+        	document.getElementById('round-create-form').submit();
+        };
+    }
+    
+    if(typeof roundCancelButton !== 'undefined' && roundCancelButton !== null) {
+    	roundCancelButton.onclick = function(){
+    		roundCreateConfirmPopup.classList.add("d-none");
+        	SeasonController.clearRoundConfirmTable();
+        };
+    }
     
 	window.onclick = function(event) {
     	if (event.target == roundCreateConfirmPopup) {
@@ -288,12 +300,16 @@ window.onload = function(){
         }
     });
 	
-    document.getElementById('player-search-btn-0').onclick = function(){
-    	PlayerSearchUtil.playerSearch(0);
-    };
+    if(typeof initialPlayerSearchButton !== 'undefined' && initialPlayerSearchButton !== null) {
+    	initialPlayerSearchButton.onclick = function(){
+    		PlayerSearchUtil.playerSearch(0);
+        };
+    }
 	
-    document.getElementById('player-search-results-popup-close-btn').onclick = function(){
-    	playerSearchResultsPopup.classList.add("d-none");
-    };
+    if(typeof playerSearchResultsPopupCloseButton !== 'undefined' && playerSearchResultsPopupCloseButton !== null) {
+	    playerSearchResultsPopupCloseButton.onclick = function(){
+	    	playerSearchResultsPopup.classList.add("d-none");
+	    };
+    }
     
 }
