@@ -36,8 +36,21 @@
 		<div class="row mt-4">
 		
 			<div class="col-12 mx-auto text-center">
-				<p class="h1">
+				<p class="h3">
 					<e:forHtml value="${season.name}" />
+				</p>
+			</div>
+			
+			<div class="col-12 mx-auto text-center">
+				<p class="h4">
+					<c:choose>
+						<c:when test="${season.status == SeasonStatus.ACTIVE.toString()}">
+							<span class="badge badge-success">Season Active</span>
+						</c:when>
+						<c:otherwise>
+							<span class="badge badge-danger">Season Ended</span>
+						</c:otherwise>
+					</c:choose>
 				</p>
 			</div>
 
@@ -47,7 +60,7 @@
 		
 			<div class="p-2">
 				<div class="btn-group">
-					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+					<button type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">Season Options</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="/viewPlayerSeasonStats?selectedSeasonId=${season.seasonId}&selectedUserId=${regUser.userId}">View my Stats for Season</a>
@@ -120,48 +133,34 @@
 			
 			<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
 			
-			<div class="col-12 mx-auto text-center pb-3">
-				<h3>Season Info</h3>
-				<p class="h3">
-					<c:choose>
-						<c:when test="${season.status == SeasonStatus.ACTIVE.toString()}">
-							<span class="badge badge-success">Season Active</span>
-						</c:when>
-						<c:otherwise>
-							<span class="badge badge-danger">Season Ended</span>
-						</c:otherwise>
-					</c:choose>
-				</p>
-			</div>
-			
 			<div class="col-12 col-sm-6 mx-auto text-center verticle-line">
-				<h4 id="season-game-name" data-bgg-id="${season.game.gameId}">${season.game.gameName}</h4>
+				<h5 id="season-game-name" data-bgg-id="${season.game.gameId}">${season.game.gameName}</h5>
 				<img id="season-game-image" alt="season-game-${season.game.gameName}">
 			</div>
 			
 			<div class="col-12 col-sm-6 mt-4 mt-sm-0 text-center mx-auto">
-				<h4>Start Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" /></h4>
-				<h4>End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.endDate}" /></h4>
-				<h4>Total Rounds Played: ${season.rounds.size()}</h4>
-				<h4>Total Players: ${usersInSeason.size()}</h4>
-				<h4>
+				<h5>Start Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" /></h5>
+				<h5>End Date: <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.endDate}" /></h5>
+				<h5>Total Rounds Played: ${season.rounds.size()}</h5>
+				<h5>Total Players: ${usersInSeason.size()}</h5>
+				<h5>
 					Season Creator: <e:forHtml value="${season.creator.username}" />
-				</h4>
-				<h4>
+				</h5>
+				<h5>
 					${scoringTypeFullText} Scoring
 					<small>
 						<a href="javascript:void(0);" data-toggle="modal" data-target="#scoringDescriptionModal">(What is this?)</a>
 					</small>
-				</h4>
+				</h5>
 				
 				<div class="modal fade" id="scoringDescriptionModal" tabindex="-1" role="dialog"
 					aria-labelledby="scoringDescriptionModalTitle" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title text-primary">
+								<h5 class="modal-title text-primary">
 									This season is using <strong>${scoringTypeFullText}</strong> scoring
-								</h4>
+								</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -185,13 +184,13 @@
 		<div class="row">
 			
 			<c:if test="${!empty season.getRounds()}">
-				<div class="col-12 col-lg-6 mx-auto text-center mt-4">
+				<div class="col-12 col-lg-6 mx-auto text-center">
 					<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
 				</div>
 			</c:if>
 
 			<div class="col-12 col-lg-6 mx-auto text-center mt-4">
-				<h3 class="mb-3">Add a Round</h3>
+				<p class="h4">Add a Round</p>
 		
 				<form id="round-create-form" action="/createRound" method="POST" class="my-auto">
 					<input name="seasonId" type="hidden" id="season-id-input" value="${season.getSeasonId()}">
@@ -390,8 +389,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col-12 mx-auto text-center mt-4">
-				<h3>Round Results</h3>
+			<div class="col-12 mx-auto text-center">
+				<p class="h4">Round Results</p>
 				
 				<c:if test="${empty season.getRounds()}">
 					<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">

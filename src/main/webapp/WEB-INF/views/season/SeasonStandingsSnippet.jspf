@@ -13,7 +13,7 @@
 	</c:otherwise>
 </c:choose>
 
-<h3 class="text-center">${tableTitle}</h3>
+<p class="h4 text-center">${tableTitle}</p>
 <c:if test="${isSeasonStatPage eq false}">
 	<small class="text-muted">Click a player's name to view a breakdown of their stats for
 		this season.</small>

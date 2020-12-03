@@ -2,70 +2,44 @@
 <c:forEach var="round" items="${snippetListOfRounds}" varStatus="loop">
 
 	<div class="col-12">
-		<hr class="my-4">
+		<c:choose>
+			<c:when test="${loop.index == 0}">
+            	<hr class="mt-2 mb-4">
+         	</c:when>
+			<c:otherwise>
+            	<hr class="my-4">
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 	<div class="col-12 col-lg-5 mt-lg-4">
+		
 		<div class="row">
-			<div class="col-5">
-				<h4>Round Date:</h4>
-			</div>
-			<div class="col-7">
-				<h5>
-					<fmt:formatDate pattern="MM/dd/yyyy" value="${round.roundDate}" />
-				</h5>
+			<div class="col-12">
+				<table class="table table-sm table-borderless text-center">
+					<thead>
+						<tr>
+							<th scope="col">Round Date</th>
+							<th scope="col">Victor</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="w-50">
+								<fmt:formatDate pattern="MM/dd/yyyy" value="${round.roundDate}" />
+							</td>
+							<td class="w-50 text-wrap">
+								<e:forHtml value="${snippetListofVictors.get(loop.index)}" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-		<div class="row mt-2">
-			<div class="col-5">
-				<h4>Victor:</h4>
-			</div>
-			<div class="col-7">
-				<h5>
-					<e:forHtml value="${snippetListofVictors.get(loop.index)}" />
-				</h5>
-			</div>
-		</div>
-		<c:if test="${pageName == 'SeasonView'}">
-			<div class="row mt-2">
-				<div class="col-6 pt-4 float-right">
-					
-					<shiro:hasPermission name="season:deleteround:${season.seasonId}">
-					
-						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger" 
-							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal">
-							Delete Round
-						</button>
-					
-					</shiro:hasPermission>
-					
-					<shiro:lacksPermission name="season:deleteround:${season.seasonId}">
-						
-						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger disabled" 
-							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal" disabled="">
-							Delete Round
-						</button>
-						<p class="text-muted small pt-2">Only season creators can delete rounds.</p>
-					</shiro:lacksPermission>
-					
-					<script>
-					
-						$("#delete-round-modal-${loop.index}").click(function() {
-							
-							var roundId = $(this).attr("data-round-id");
-							
-							RoundController.confirmDeleteRound(roundId);
-							
-						});
-						
-					</script>
-					
-				</div>
-			</div>
-		</c:if>
+	
 	</div>
 
-	<div class="col-12 col-lg-7 mt-4 mt-lg-0 4 my-lg-auto mx-auto">
+	<div class="col-12 col-lg-7 my-lg-auto mx-auto">
 		<table class="table table-striped no-margin-bottom text-center">
 			<thead>
 				<tr class="no-top-border">
@@ -104,6 +78,45 @@
 		<small id="round-creator-name-${loop.index}" class="form-text text-muted">
 			Round created by: <e:forHtml value="${round.creator.username}" />
 		</small>
+		
+		<c:if test="${pageName == 'SeasonView'}">
+			<div class="row">
+				<div class="col-6 pt-2 float-right">
+					
+					<shiro:hasPermission name="season:deleteround:${season.seasonId}">
+					
+						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger btn-sm" 
+							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal">
+							Delete Round
+						</button>
+					
+					</shiro:hasPermission>
+					
+					<shiro:lacksPermission name="season:deleteround:${season.seasonId}">
+						
+						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger btn-sm disabled" 
+							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal" disabled="">
+							Delete Round
+						</button>
+						<p class="text-muted small pt-2">Only season creators can delete rounds.</p>
+					</shiro:lacksPermission>
+					
+					<script>
+					
+						$("#delete-round-modal-${loop.index}").click(function() {
+							
+							var roundId = $(this).attr("data-round-id");
+							
+							RoundController.confirmDeleteRound(roundId);
+							
+						});
+						
+					</script>
+					
+				</div>
+			</div>
+		</c:if>
+		
 	</div>
 
 </c:forEach>

@@ -8,6 +8,12 @@
 
 <%@ page import="org.bgtrack.models.ScoringType" %>
 
+<div class="row mt-4">
+	<div class="col-12 col-md-8 mx-auto">
+		<img class="logo-img" src="/resources/img/logo.png" alt="logo">
+	</div>
+</div>
+
 <div class="row pt-4">
 
 	<div class="col-12 col-md-10 col-lg-8 bg-primary mx-auto py-2 mb-4 text-center text-white">
