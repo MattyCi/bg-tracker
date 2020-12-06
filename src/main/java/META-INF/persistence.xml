@@ -6,6 +6,7 @@
 		<class>org.bgtrack.models.RoundResult</class>
 		<class>org.bgtrack.models.Round</class>
 		<class>org.bgtrack.models.Season</class>
+		<class>org.bgtrack.models.SeasonStanding</class>
 		<class>org.bgtrack.models.user.authorization.Permission</class>
 		<class>org.bgtrack.models.user.authorization.Role</class>
 		<class>org.bgtrack.models.user.authorization.RolesPermission</class>
