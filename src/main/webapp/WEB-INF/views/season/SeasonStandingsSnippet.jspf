@@ -18,7 +18,7 @@
 	<small class="text-muted">Click a player's name to view a breakdown of their stats for
 		this season.</small>
 </c:if>
-<table class="table table-primary text-center">
+<table class="table table-primary text-center mb-0">
 	<thead>
 		<tr>
 			<th scope="col">Place</th>

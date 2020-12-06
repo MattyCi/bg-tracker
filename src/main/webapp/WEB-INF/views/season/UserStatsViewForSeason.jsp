@@ -35,15 +35,15 @@
 					</ol>
 				</div>
 				<div class="col-12 mx-auto text-center">
-					<p class="h1">
+					<p class="h2">
 						<e:forHtml value="${UserSeasonStats.season.name}" />
 					</p>
 				</div>
-				<div class="col-12 col-lg-7 mx-auto mt-4">
+				<div class="col-12 col-lg-7 mx-auto mt-2">
 					<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
 				</div>
 				<div class="col-12 col-lg-5 mx-auto text-center mt-4">
-					<h3>Breakdown By Place</h3>
+					<p class="h4">Breakdown By Place</p>
 
 					<table class="table table-hover table-primary text-center table-sm">
 						<thead>
@@ -67,7 +67,7 @@
 
 			<div class="row mt-3">
 				<div class="col-12">
-					<h3 class="text-center">${playerName}'s Round Results</h3>
+					<p class="h4 text-center">${playerName}'s Round Results</p>
 				</div>
 				
 				<c:if test="${empty UserSeasonStats.season.getRounds()}">
@@ -79,7 +79,7 @@
 				
 			<div class="row mb-5">
 				<div class="col-12">
-					<p class="small mb-0 mt-4">
+					<p class="small mb-0">
 						<i class="fas fa-exclamation-circle text-warning"></i> Only showing round results that ${playerName} participated in for this season.
 					</p>
 				</div>
