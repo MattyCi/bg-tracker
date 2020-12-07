@@ -16,14 +16,14 @@
 
 <div class="row pt-4">
 
-	<div class="col-12 col-md-10 col-lg-8 bg-primary mx-auto py-2 mb-4 text-center text-white">
-		<h1 class="display-4">View Seasons</h1>
+	<div class="col-12 col-md-10 col-lg-8 mx-auto mb-4 text-center text-primary bg-light">
+		<p class="h3 pt-2">View Seasons</p>
 		<p class="lead">
 			View seasons which are currently in progress or have already finished.
 		</p>
 	</div>
 
-	<div class="col-12 col-md-6 py-2 mx-auto">
+	<div class="col-12 col-md-6">
 		<a href="/viewSeasonList?view=usersSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start full-height
 			bg-dark text-white">
 			<div class="d-flex w-100 justify-content-between">
@@ -32,7 +32,7 @@
 			<p class="mb-1">See the seasons which you are a part of.</p>
 		</a>
 	</div>
-	<div class="col-12 col-md-6 py-2 mx-auto">
+	<div class="col-12 col-md-6 py-2">
 		<a href="/viewSeasonList?view=allSeasonsList" class="list-group-item list-group-item-action flex-column align-items-start h-100
 			bg-light">
 			<div class="d-flex w-100 justify-content-between">
@@ -43,10 +43,10 @@
 	
 </div>
 
-<div class="row pt-4">
+<div class="row mt-3">
 	
-	<div class="col-12 col-md-10 col-lg-8 bg-primary mx-auto py-2 text-center text-white">
-		<h1 class="display-4">Start a New Season</h1>
+	<div class="col-12 col-md-10 col-lg-8 mx-auto text-center text-primary bg-light">
+		<p class="h3 pt-2">Start a New Season</p>
 		<p class="lead">
 			Create a season below to begin competing against your friends.
 		</p>
@@ -97,7 +97,7 @@
 				<input id="selected-bgg-game-id" name="seasonGameId" type="hidden">
 				<input id="selected-bgg-game-name" name="seasonGameName" type="hidden">
 			
-				<label for="datepicker" class="lead">
+				<label for="datepicker" class="lead pt-2">
 					Now, select a date for the season to end. Once the season ends, the player
 					in first place becomes the winning champion for that season.
 				</label>
@@ -110,7 +110,7 @@
 				
 				<%@ include file="../../snippets/ScoringDescriptions.jspf" %>
 				
-				<label for="season-scoring-select" class="lead">
+				<label for="season-scoring-select" class="lead pt-2">
 					Choose scoring type below.
 				</label>
 				<select name="seasonScoringType" class="form-control" id="season-scoring-select">
