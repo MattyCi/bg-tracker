@@ -71,6 +71,16 @@ footer {
 	}
 }
 
+.bg-light-mobile-only {
+	background:#ecf0f1;
+}
+
+@media (min-width: 992px) {
+	.bg-light-mobile-only {
+		background:#ffffff;
+	}
+}
+
 .full-height {
 	height: 100%;
 }
