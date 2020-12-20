@@ -22,9 +22,9 @@
 		<%@ include file="../../snippets/PopupMessage.jspf" %>
 		
 		<shiro:authenticated>
-			<div class="row mt-4">
+			<div class="row mt-2">
 				
-				<div class="col-md-6 mt-4 mx-auto text-center my-4">
+				<div class="col-md-6 mx-auto text-center">
 					<h2>My Account</h2>
 					<img src="/resources/img/user.png" alt="User" width="140" height="140">
 
@@ -88,7 +88,7 @@
 				</div>
 				
 				
-				<div class="col-md-6 mx-auto">
+				<div class="col-md-6 mx-auto mb-2">
 					<form id="account-update-form" action="/userUpdate" method="POST" autocomplete="off">
 						
 						<h1 class="h3 mb-3 font-weight-normal text-center">Update Account</h1>
@@ -106,7 +106,7 @@
 						<p>You must provide your current password below for any account changes to take effect.</p>
 						<input name="currentPassword" type="password" class="form-control  my-2" placeholder="Current Password" autocomplete="new-password">
 						
-						<button type="submit" class="btn btn-success btn-lg my-2">Update Account</button>
+						<button type="submit" class="btn btn-success my-2">Update Account</button>
 					</form>
 				</div>
 				
