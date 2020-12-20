@@ -94,18 +94,18 @@
 		
 			<div class="row py-4">
 	
-				<div class="col-md-6">
+				<div class="col-md-6 my-2 my-lg-0">
 					<form id="loginForm" action="/userLogIn" method="POST">
-						<h1 class="h3 mb-3 font-weight-normal text-center">Please sign in.</h1>
+						<h1 class="h3 font-weight-normal text-center">Please sign in.</h1>
 						<input name="username" type="text" class="form-control my-2" id="login-username" placeholder="Enter Username">
 						<input name="password" type="password" class="form-control my-2" id="login-password" placeholder="Password">
 						<button type="submit" class="btn btn-success btn-rspnsv btn-lg my-2">Log In</button>
 					</form>
 				</div>
 				
-				<div class="col-md-6">
+				<div class="col-md-6 my-2 my-lg-0">
 					<form id="registerForm" action="/userRegister" method="POST">
-						<h1 class="h3 my-3 font-weight-normal text-center">Or, register below.</h1>
+						<h1 class="h3 font-weight-normal text-center">Or, register below.</h1>
 						<input name="username" type="text" class="form-control  my-2" id="register-username" placeholder="Enter Username">
 						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password" autocomplete="new-password">
 						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Verify Password">
