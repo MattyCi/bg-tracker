@@ -50,11 +50,11 @@
 					<img class="logo-img" src="/resources/img/logo.png" alt="logo">
 				</div>
 				
-				<div class="col-lg-4">
+				<div class="col-lg-4 bg-light pt-4">
 					<img
 						src="/resources/img/trophy.png"
 						alt="Trophy" width="140" height="140">
-					<h2>Compete</h2>
+					<p class="h2 pt-1">Compete</p>
 					<p>
 						One game isn't enough to determine who is the best. A true champion can
 						only be proven throughout an entire season of games. Season GG allows you to track scores over
@@ -62,11 +62,11 @@
 					</p>
 				</div>
 				
-				<div class="col-lg-4">
+				<div class="col-lg-4 bg-light pt-4 mt-4">
 					<img class="rounded-circle"
 						src="/resources/img/question.png"
 						alt="Question Mark" width="140" height="140">
-					<h2>How does it Work?</h2>
+					<p class="h2 pt-1">How does it Work?</p>
 					<p>
 						Create a season to get started for free, determine when the season will end,
 						and choose a game to play for the duration of the competition.
@@ -81,9 +81,9 @@
 					</p>
 				</div>
 				
-				<div class="col-lg-4">
+				<div class="col-lg-4 bg-light pt-4 mt-4">
 					<img src="/resources/img/power-button.png" alt="Power Button" width="140" height="140">
-					<h2>Get Started</h2>
+					<p class="h2 pt-1">Get Started</p>
 					<p>
 						To get started, create a free account below. Once registered, you can create your 
 						first season.
@@ -92,7 +92,7 @@
 				
 			</div>
 		
-			<div class="row pb-4">
+			<div class="row py-4">
 	
 				<div class="col-md-6">
 					<form id="loginForm" action="/userLogIn" method="POST">
@@ -105,7 +105,7 @@
 				
 				<div class="col-md-6">
 					<form id="registerForm" action="/userRegister" method="POST">
-						<h1 class="h3 mb-3 font-weight-normal text-center">Or, register below.</h1>
+						<h1 class="h3 my-3 font-weight-normal text-center">Or, register below.</h1>
 						<input name="username" type="text" class="form-control  my-2" id="register-username" placeholder="Enter Username">
 						<input name="password" type="password" class="form-control  my-2" id="register-password" placeholder="Password" autocomplete="new-password">
 						<input name="passwordVerify" type="password" class="form-control  my-2" id="register-password-verify" placeholder="Verify Password">
