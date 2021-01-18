@@ -2,10 +2,12 @@
 var SeasonCreateUtil = {
 	bggSearchResultsContainer : null,
 	isNoResultsFoundMessageVisible : false,
+	spinner : null,
 	
 	populateInitialGamesList : function() {
 		
 		this.bggSearchResultsContainer = document.getElementById("bgg-search-results");
+		this.spinner = document.getElementById("bgg-spinner");
 		
 		var popularGames = boardGameGeekAPI.searchForPopularGames();
 		
@@ -88,8 +90,10 @@ var SeasonCreateUtil = {
 			
 		});
 		
-		this.bggSearchResultsContainer.appendChild(gameNameDiv);
-		this.bggSearchResultsContainer.appendChild(gameSelectDiv);
+		if(typeof this.bggSearchResultsContainer !== 'undefined' && this.bggSearchResultsContainer !== null) {
+			this.bggSearchResultsContainer.appendChild(gameNameDiv);
+			this.bggSearchResultsContainer.appendChild(gameSelectDiv);
+		}
 		
 	},
 	
@@ -156,11 +160,17 @@ var SeasonCreateUtil = {
 	},
 	
 	hideSpinner : function() {
-		document.getElementById("bgg-spinner").classList.add("d-none");
+		
+	    if(typeof this.spinner !== 'undefined' && this.spinner !== null) {
+			this.spinner.classList.add("d-none");
+		}
+		
 	},
 	
 	showSpinner : function() {
-		document.getElementById("bgg-spinner").classList.remove("d-none");
+		if(typeof this.spinner !== 'undefined' && this.spinner !== null) {
+			this.spinner.classList.remove("d-none");
+		}
 	},
 	
 	resetBGGContainer : function() {
@@ -179,7 +189,11 @@ var SeasonCreateUtil = {
 	},
 	
 	showBGGSearchResults : function() {
-		this.bggSearchResultsContainer.classList.remove("d-none");
+		
+		if(typeof this.bggSearchResultsContainer !== 'undefined' && this.bggSearchResultsContainer !== null) {
+			this.bggSearchResultsContainer.classList.remove("d-none");
+		}
+		
 	}
 	
 }
