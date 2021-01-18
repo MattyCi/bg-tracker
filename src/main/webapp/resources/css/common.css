@@ -16,9 +16,8 @@ footer {
   flex-shrink: 0;
 }
 
-.season-gg-jumbotron {
-	background-color: #ecf0f1;
-	padding: 2rem 1rem;
+.season-gg-carousel-height {
+	height: 275px;
 }
 
 .scrollable {

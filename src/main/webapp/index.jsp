@@ -13,25 +13,10 @@
 	<jsp:include page="WEB-INF/snippets/CommonIncludes.jspf" />
 	<script src="./resources/js/BGGAPIWrapper.js"></script>
 	<script src="./resources/js/SeasonCreateUtil.js"></script>
+	<script src="./resources/js/Carousel.js"></script>
 </head>
 <body>
 	<%@ include file="WEB-INF/snippets/Nav.jspf" %>
-	
-	<shiro:notAuthenticated>
-			
-		<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img class="d-block img-fluid mx-auto" src="/resources/img/dice-catch.jpg" alt="Playing with Dice">
-					<div class="carousel-caption d-none d-md-block text-left">
-						<h1>Season GG</h1>
-						<p class="lead">Become the board game champion amongst your friends</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-	</shiro:notAuthenticated>
 
 	<div class="container content">
 		<%@ include file="WEB-INF/snippets/Header.jspf" %>
@@ -43,12 +28,16 @@
 		</shiro:authenticated>
 		
 		<shiro:notAuthenticated>
-
-			<div class="row text-center mt-4">
-				
-				<div class="col d-md-none mb-4">
+			
+			<div class="row">	
+				<div class="col d-md-none my-4">
 					<img class="logo-img" src="/resources/img/logo.png" alt="logo">
 				</div>
+			</div>
+
+			<%@ include file="/WEB-INF/snippets/Carousel.jspf" %>
+
+			<div class="row text-center mt-4">
 				
 				<div class="col-lg-4 bg-light-mobile-only pt-4 mt-lg-4">
 					<img

@@ -1,0 +1,57 @@
+<div class="row season-gg-carousel-height bg-primary py-2 px-4">
+				
+	<div id="carousel-text-0" class="col-7 text-white my-auto">
+	
+		<p class="lead">Create a Season</p>
+	
+		<p class="h6">
+			Play your favorite game with your buddies and see who truly is the best.
+		</p>
+	
+	</div>
+	<div id="carousel-img-0" class="col-5 bg-primary">
+	
+		<img src="/resources/img/season-view-example.png" class="img-fluid" alt="Responsive image">
+	
+	</div>
+				
+	<div id="carousel-text-1" class="col-7 text-white my-auto" style="display: none;">
+	
+		<p class="lead">Play Competitive Rounds</p>
+	
+		<p class="h6">
+			Fight it out amongst your friends to get in first place as often as possible.
+			The better you play each round, the better your rank becomes for the overall season.
+		</p>
+	
+	</div>
+	<div id="carousel-img-1" class="col-5 bg-primary" style="display: none;">
+	
+		<img src="/resources/img/create-round-example.png" class="img-fluid" alt="Responsive image">
+	
+	</div>
+					
+	<div id="carousel-text-2" class="col-7 text-white my-auto" style="display: none;">
+	
+		<p class="lead">Season Standings</p>
+	
+		<p class="h6">
+			After the season has ended, only the best will be named champion. Could it be you?
+		</p>
+	
+	</div>
+	<div id="carousel-img-2" class="col-5 bg-primary" style="display: none;">
+	
+		<img src="/resources/img/season-standings-example.png" class="img-fluid" alt="Responsive image">
+	
+	</div>
+	
+	<div class="col-12 bg-primary">
+		<ol class="carousel-indicators mt-3 mb-0">
+			<li id="carousel-selector-0" data-slide="0" class="active"></li>
+			<li id="carousel-selector-1" data-slide="1"></li>
+			<li id="carousel-selector-2" data-slide="2"></li>
+		</ol>
+	</div>
+	
+</div>
