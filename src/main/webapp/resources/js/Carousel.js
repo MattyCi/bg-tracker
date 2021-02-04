@@ -2,6 +2,7 @@
 var CarouselUtil = {
 
 	currentSlide : 0,
+	slideCycleTime : 7500,
 	textSlides : null,
 	imgSlides : null,
 	slideSelectors : null,
@@ -45,7 +46,7 @@ var CarouselUtil = {
 
 			CarouselUtil.activateSlide(CarouselUtil.currentSlide);
 
-		}, 3000);
+		}, CarouselUtil.slideCycleTime);
 	
 	},
 	

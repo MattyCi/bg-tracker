@@ -29,8 +29,8 @@
 		
 		<shiro:notAuthenticated>
 			
-			<div class="row">	
-				<div class="col d-md-none my-4">
+			<div class="row d-md-none">	
+				<div class="col my-4">
 					<img class="logo-img" src="/resources/img/logo.png" alt="logo">
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 
 			<div class="row text-center mt-4">
 				
-				<div class="col-lg-4 bg-light-mobile-only pt-4 mt-lg-4">
+				<div class="col-lg-4 bg-light border pt-4 mt-lg-0">
 					<img
 						src="/resources/img/trophy.png"
 						alt="Trophy" width="140" height="140">
@@ -51,7 +51,7 @@
 					</p>
 				</div>
 				
-				<div class="col-lg-4 bg-light-mobile-only pt-4 mt-4">
+				<div class="col-lg-4 bg-light border pt-4 mt-4 mt-lg-0">
 					<img class="rounded-circle"
 						src="/resources/img/question.png"
 						alt="Question Mark" width="140" height="140">
@@ -70,7 +70,7 @@
 					</p>
 				</div>
 				
-				<div class="col-lg-4 bg-light-mobile-only pt-4 mt-4">
+				<div class="col-lg-4 bg-light border pt-4 mt-4 mt-lg-0">
 					<img src="/resources/img/power-button.png" alt="Power Button" width="140" height="140">
 					<p class="h2 pt-1">Get Started</p>
 					<p>

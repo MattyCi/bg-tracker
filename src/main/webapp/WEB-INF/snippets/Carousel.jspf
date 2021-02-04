@@ -1,48 +1,51 @@
-<div class="row season-gg-carousel-height bg-primary py-2 px-4">
+<div class="row season-gg-carousel-height season-gg-carousel-width bg-primary py-2 px-4 my-sm-4 mx-lg-auto">
 				
-	<div id="carousel-text-0" class="col-7 text-white my-auto">
+	<div id="carousel-text-0" class="col-7 col-sm-6 pl-sm-5 text-white my-auto">
 	
-		<p class="lead">Create a Season</p>
+		<p class="season-gg-carousel-title-text font-weight-bold">Create a Season</p>
 	
-		<p class="h6">
+		<p class="season-gg-carousel-text">
 			Play your favorite game with your buddies and see who truly is the best.
 		</p>
 	
 	</div>
-	<div id="carousel-img-0" class="col-5 bg-primary">
+	<div id="carousel-img-0" class="col-5 col-sm-6 text-center bg-primary my-auto">
 	
-		<img src="/resources/img/season-view-example.png" class="img-fluid" alt="Responsive image">
+		<img src="/resources/img/season-view-example.png" class="img-fluid season-gg-carousel-img-max-height" 
+			alt="Example of Season View Page">
 	
 	</div>
 				
-	<div id="carousel-text-1" class="col-7 text-white my-auto" style="display: none;">
+	<div id="carousel-text-1" class="col-7 col-sm-6 pl-sm-5 text-white my-auto sgg-d-none">
 	
-		<p class="lead">Play Competitive Rounds</p>
+		<p class="season-gg-carousel-title-text font-weight-bold">Play Rounds</p>
 	
-		<p class="h6">
+		<p class="season-gg-carousel-text">
 			Fight it out amongst your friends to get in first place as often as possible.
 			The better you play each round, the better your rank becomes for the overall season.
 		</p>
 	
 	</div>
-	<div id="carousel-img-1" class="col-5 bg-primary" style="display: none;">
+	<div id="carousel-img-1" class="col-5 col-sm-6 text-center bg-primary pt-2 my-auto sgg-d-none">
 	
-		<img src="/resources/img/create-round-example.png" class="img-fluid" alt="Responsive image">
+		<img src="/resources/img/create-round-example.png" class="img-fluid season-gg-carousel-img-max-height" 
+			alt="Example of Round Creation Process">
 	
 	</div>
 					
-	<div id="carousel-text-2" class="col-7 text-white my-auto" style="display: none;">
+	<div id="carousel-text-2" class="col-7 col-sm-6 pl-sm-5 text-white my-auto sgg-d-none">
 	
-		<p class="lead">Season Standings</p>
+		<p class="season-gg-carousel-title-text font-weight-bold">Season Standings</p>
 	
-		<p class="h6">
+		<p class="season-gg-carousel-text">
 			After the season has ended, only the best will be named champion. Could it be you?
 		</p>
 	
 	</div>
-	<div id="carousel-img-2" class="col-5 bg-primary" style="display: none;">
+	<div id="carousel-img-2" class="col-5 col-sm-6 text-center bg-primary pt-2 my-auto sgg-d-none">
 	
-		<img src="/resources/img/season-standings-example.png" class="img-fluid" alt="Responsive image">
+		<img src="/resources/img/season-standings-example.png" class="img-fluid season-gg-carousel-img-max-height" 
+			alt="Example of Season Standings">
 	
 	</div>
 	

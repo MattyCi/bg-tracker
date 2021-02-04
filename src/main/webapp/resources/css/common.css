@@ -16,8 +16,50 @@ footer {
   flex-shrink: 0;
 }
 
+.sgg-d-none {
+	display: none;
+}
+
+@media (max-width: 576px) {
+	.season-gg-carousel-img-max-height {
+		max-height: 250px;
+	}
+}
+
+.season-gg-carousel-title-text {
+	font-size: 1.171875rem;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.season-gg-carousel-text {
+	font-size: 0.9375rem;
+}
+
 .season-gg-carousel-height {
-	height: 275px;
+	height: 300px;
+}
+
+@media (min-width: 576px) {
+	.season-gg-carousel-height {
+		height: 325px;
+	}
+	
+	.season-gg-carousel-title-text {
+		font-size: 2rem;
+	}
+	
+	.season-gg-carousel-text {
+		font-size: 1.171875rem;
+		font-weight: 300;
+	}
+}
+
+@media (min-width: 992px) {
+	.season-gg-carousel-height {
+		width: 85%;
+	}
 }
 
 .scrollable {
@@ -67,16 +109,6 @@ footer {
 @media (min-width: 992px) {
 	.logo-img {
 		width: 75%;
-	}
-}
-
-.bg-light-mobile-only {
-	background:#ecf0f1;
-}
-
-@media (min-width: 992px) {
-	.bg-light-mobile-only {
-		background:#ffffff;
 	}
 }
 
