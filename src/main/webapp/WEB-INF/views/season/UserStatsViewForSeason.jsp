@@ -3,6 +3,9 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
+
+<%@ include file="/WEB-INF/snippets/CommonJSTLIncludes.jspf" %>
+
 <jsp:useBean id="UserDAO" class="org.bgtrack.models.user.daos.UserDAO" scope="session"/>
 
 <%@ page import="org.bgtrack.models.SeasonStatus" %>

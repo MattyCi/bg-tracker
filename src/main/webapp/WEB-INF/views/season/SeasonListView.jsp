@@ -5,6 +5,8 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 
+<%@ include file="/WEB-INF/snippets/CommonJSTLIncludes.jspf" %>
+
 <%@ page import="org.bgtrack.models.daos.SeasonDAO" %>
 
 <!DOCTYPE html>

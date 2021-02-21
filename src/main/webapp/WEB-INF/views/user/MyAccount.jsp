@@ -5,6 +5,8 @@
 <%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
+<%@ include file="/WEB-INF/snippets/CommonJSTLIncludes.jspf" %>
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,4 +1,9 @@
 
+<%@page import="org.apache.logging.log4j.Logger"%>
+<%@page import="org.apache.logging.log4j.LogManager"%>
+<%@ page isErrorPage="true" %>
+
+<%-- handle errors from struts action classes --%>
 <s:if test="hasActionErrors()">
 	<div class="row">
 		<div class="col-12 col-md-8 mx-auto mt-4 mb-0">
@@ -12,11 +17,39 @@
 	</div>
 </s:if>
 
-<c:if test="${exception != null && (actionErrors == null || empty actionErrors ) }">
+<%-- handle all other errors ie. errors thrown from JSPs --%>
+<c:if test="${(exception != null || pageContext.exception != null) && (actionErrors == null || empty actionErrors ) }">
 	<div class="col-md-6 mx-auto alert alert-dismissible alert-danger mt-4 mb-0">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong>Sorry...</strong> Something went wrong on our end. Feel free to email us at
 		<a href="mailto:seasonggfeedback@gmail.com">seasonggfeedback@gmail.com</a> with a description
 		of the problem if this keeps occuring.
 	</div>
+	
+	<c:if test="${pageContext.exception != null}" >
+	
+		<c:set var="errorPath" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
+		<c:set var="errorParams" value="${requestScope['javax.servlet.forward.query_string']}"/>
+		
+		<%
+			String requestPath = (String) pageContext.getAttribute("errorPath");
+			String requestParams = (String) pageContext.getAttribute("errorParams");
+		
+			String fullErrorPath = "";
+			
+			if (requestPath != null) {
+				fullErrorPath = requestPath;
+			}
+			
+			if (requestParams != null && fullErrorPath != null) {
+				fullErrorPath = fullErrorPath + "?" + requestParams;
+			}
+			
+			final Logger LOG = LogManager.getLogger(fullErrorPath); 
+			
+			LOG.error("JSP exception caught", exception);
+		%>
+		
+	</c:if>
+	
 </c:if>
