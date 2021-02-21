@@ -1,7 +1,7 @@
-<div class="row season-gg-carousel-height season-gg-carousel-width bg-primary py-2 px-4 my-sm-4 mx-lg-auto">
-				
-	<div id="carousel-text-0" class="col-7 col-sm-6 pl-sm-5 text-white my-auto">
+<div class="row season-gg-carousel-height season-gg-carousel-width bg-primary py-2 px-4 my-4 mx-lg-auto">
 	
+	<div id="carousel-text-0" class="col-7 col-sm-6 pl-sm-5 text-white my-auto">
+		
 		<p class="season-gg-carousel-title-text font-weight-bold">Create a Season</p>
 	
 		<p class="season-gg-carousel-text">
@@ -21,7 +21,7 @@
 		<p class="season-gg-carousel-title-text font-weight-bold">Play Rounds</p>
 	
 		<p class="season-gg-carousel-text">
-			Fight it out amongst your friends to get in first place as often as possible.
+			Fight amongst your friends to get first place as often as possible.
 			The better you play each round, the better your rank becomes for the overall season.
 		</p>
 	

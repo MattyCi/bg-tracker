@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	<a class="navbar-brand" href="/"> <img class="logo-small" src="/resources/img/logo-small.png"
-		alt="">
+	<a class="navbar-brand d-md-none" href="/"> <img src="/resources/img/logo-small.png"
+		alt="Season GG Logo Image">
+	</a>
+	<a class="navbar-brand d-none d-md-block" href="/"> <img class=nav-logo-img src="/resources/img/logo.png"
+		alt="Season GG Logo Image">
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
 		aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">

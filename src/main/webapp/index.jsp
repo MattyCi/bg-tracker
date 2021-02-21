@@ -30,8 +30,17 @@
 		<shiro:notAuthenticated>
 			
 			<div class="row d-md-none">	
-				<div class="col my-4">
+				<div class="col mt-4">
 					<img class="logo-img" src="/resources/img/logo.png" alt="logo">
+				</div>
+			</div>
+			
+			<div class="row mt-4 d-none d-md-block">	
+				<div class="col text-center">
+					<h1 class="display-4">
+					  <span class="text-success font-weight-bold">Season GG</span>
+					  <small class="text-secondary">take board game rivalry to the next level.</small>
+					</h1>
 				</div>
 			</div>
 
