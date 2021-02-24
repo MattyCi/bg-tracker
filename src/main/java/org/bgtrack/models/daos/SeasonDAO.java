@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.Season;
 import org.bgtrack.models.SeasonStanding;
@@ -169,7 +172,7 @@ public class SeasonDAO {
 		
 	}
 	
-	public static List<Season> getPaginatedSeasonList(int page, boolean isUserSeasonsOnly) throws NumberFormatException, IOException {
+	public static List<Season> getPaginatedSeasonList(int page, boolean isUserSeasonsOnly) throws Exception {
 		
 		int resultsPerPage = Integer.parseInt(PropertiesLoader.getPropertyValue("NUM_SEASONS_PER_PAGE", PropertiesSelector.SEASON));
 		int offset = page * resultsPerPage;
@@ -178,9 +181,15 @@ public class SeasonDAO {
 		session.beginTransaction();
 		
 		String query;
-		String currentUserId = UserUtils.getCurrentUserId();
 		
 		if (isUserSeasonsOnly) {
+			
+			Subject currentUser = SecurityUtils.getSubject();
+			
+			if (!currentUser.isAuthenticated()) {
+				throw new AuthorizationException("You must be logged in to perform this action.");
+			}
+			
 			query = "from Season as season where season.seasonId in "
 				+ "(select ss.season.seasonId from SeasonStanding as ss where ss.reguser.userId=:currentUserId) "
 				+ "or season.creator.userId=:currentUserId "
@@ -192,8 +201,9 @@ public class SeasonDAO {
 		@SuppressWarnings("unchecked")
 		 Query finalQuery = session.createQuery(query).setFirstResult(offset).setMaxResults(resultsPerPage);
 		
-		if (isUserSeasonsOnly)
-			finalQuery.setParameter("currentUserId", currentUserId);
+		if (isUserSeasonsOnly) {
+			finalQuery.setParameter("currentUserId", UserUtils.getCurrentUserId());
+		}
 		
 		 List<Season> listOfSeasons = (List<Season>) finalQuery.list();
 		
