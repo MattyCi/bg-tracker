@@ -1,52 +1,77 @@
 <%@ page import="org.bgtrack.models.SeasonStatus" %>
 
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Start Date</th>
-      <th scope="col">End Date</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  	<jsp:useBean id="currentDate" class="java.util.Date"/>
-  	
-  	<c:forEach var = "season" items="${seasonsList}" >
-	    
-	    <c:if test="${season.endDate lt currentDate}">
-	    	${SeasonDAO.markSeasonAsInactive(season.seasonId)}
-	    </c:if>
-	    
+<c:if test="${not empty seasonsList}">
+	<div class="col-12">
+		<p class="mb-0">
+			<i aria-hidden="true" class="fas fa-circle fa-xs text-success"></i> Season Active
+			<i aria-hidden="true" class="fas fa-circle fa-xs text-danger pl-2"></i> Season Ended
+		</p>
+	</div>
+</c:if>
+
+<div class="col-12">
+	<table class="table">
+	  <thead class="thead-light">
 	    <tr>
-	    	<td>
-	    		<a class="pr-2" href="/viewSeason?seasonId=${season.getSeasonId()}">
-	    			<e:forHtml value="${season.name}" />
-    			</a>
-    			
-	    		<c:if test="${season.status == SeasonStatus.INACTIVE.toString()}"> 
-					<span class="badge badge-danger">Season Ended</span>
-				</c:if>
-    		</td>
-	    	<td>
-				<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getStartDate()}" />
-			</td>
-	    	<td>
-	      		<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getEndDate()}" />
-      		</td>
+	      <th scope="col">Name</th>
+	      <th scope="col">Start Date</th>
+	      <th scope="col">End Date</th>
 	    </tr>
-	    
-    </c:forEach>
-  </tbody>
-</table>
+	  </thead>
+	  <tbody>
+	  
+	  	<jsp:useBean id="currentDate" class="java.util.Date"/>
+	  	
+	  	<c:forEach var = "season" items="${seasonsList}" >
+		    
+		    <c:if test="${season.endDate lt currentDate}">
+		    	${SeasonDAO.markSeasonAsInactive(season.seasonId)}
+		    </c:if>
+		    
+		    <tr>
+		    	<td>
+		    		<a class="pr-2" href="/viewSeason?seasonId=${season.getSeasonId()}">
+		    			<e:forHtml value="${season.name}" />
+	    			</a>
+	    			
+		    		<c:if test=""> 
+						<span class="badge badge-danger">Season Ended</span>
+					</c:if>
+					
+					<c:choose>
+					   <c:when test="${season.status == SeasonStatus.INACTIVE.toString()}">
+							<c:set var="statusColor" value="text-danger" />
+					   </c:when>
+					   <c:otherwise>
+							<c:set var="statusColor" value="text-success" />
+					   </c:otherwise>
+					</c:choose>
+					
+					<i aria-hidden="true" class="fas fa-circle fa-xs ${statusColor}"></i>
+					
+	    		</td>
+		    	<td>
+					<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getStartDate()}" />
+				</td>
+		    	<td>
+		      		<fmt:formatDate pattern = "MM/dd/yyyy" value="${season.getEndDate()}" />
+	      		</td>
+		    </tr>
+		    
+	    </c:forEach>
+	  </tbody>
+	</table>
+</div>
 
 <fmt:bundle basename="season">
 	<fmt:message var="numElementsPerPage" key="NUM_SEASONS_PER_PAGE" />
 </fmt:bundle>
-
-<c:import url="../../snippets/PaginationSnippet.jsp">
-	<c:param name="numElements" value="${numSeasons}"/>
-	<c:param name="numElementsPerPage" value="${numElementsPerPage}"/>
-	<c:param name="currentPage" value="${seasonPage}"/>
-	<c:param name="pageNumberLink" value="${seasonListLink}"/>
-</c:import>
+	
+<div class="col-12">
+	<c:import url="../../snippets/PaginationSnippet.jsp">
+		<c:param name="numElements" value="${numSeasons}"/>
+		<c:param name="numElementsPerPage" value="${numElementsPerPage}"/>
+		<c:param name="currentPage" value="${seasonPage}"/>
+		<c:param name="pageNumberLink" value="${seasonListLink}"/>
+	</c:import>
+</div>

@@ -8,7 +8,7 @@
 
 <c:if test="${numPages > 1}">
 	<div class="mx-auto mt-3">
-		<ul class="pagination">
+		<ul class="pagination justify-content-center">
 		
 			<li class="page-item <c:if test="${param.currentPage == 0}">disabled</c:if>">
 				<a class="page-link" href="${param.pageNumberLink}${param.currentPage - 1}">&laquo;</a>
