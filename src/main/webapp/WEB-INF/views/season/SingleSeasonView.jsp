@@ -57,79 +57,6 @@
 			</div>
 
 		</div>
-			
-		<div class="d-flex justify-content-center">
-		
-			<div class="p-2">
-				<div class="btn-group">
-					<button type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">Season Options</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="/viewPlayerSeasonStats?selectedSeasonId=${season.seasonId}&selectedUserId=${regUser.userId}">View my Stats for Season</a>
-						<shiro:hasPermission name="season:seasonedit:${season.seasonId}">
-							<a class="dropdown-item" data-toggle="modal" data-target="#edit-season-modal" href="#">Edit Season</a>
-						</shiro:hasPermission>
-						<shiro:hasPermission name="season:seasondelete:${season.seasonId}">
-							<a class="dropdown-item" data-toggle="modal" data-target="#delete-season-modal" href="#">Delete Season</a>
-						</shiro:hasPermission>
-					</div>
-				</div>
-			</div>
-
-			<div class="modal" id="edit-season-modal" tabindex="-1" role="dialog" aria-labelledby="edit-season-modal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Season Edit</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<label for="new-season-end-date">New Season End Date</label>
-							<form id="season-edit-form" action="/editSeason">
-								<input name="seasonId" value="${season.seasonId}" type="hidden">
-								<input id="csrf-token" name="csrfToken" type="hidden" value="${csrfToken}">
-								<input name="seasonEndDate" type="text" class="form-control my-2" id="new-season-end-date" placeholder="Season End Date" autocomplete="off">
-								<small id="season-end-date-help" class="form-text text-muted">
-									Note that your current season end date cannot be before 
-									this season's start date of <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" />.
-								</small>
-								<label for="new-season-name" class="mt-2">New Season Name</label>
-								<input name="seasonName" type="text" class="form-control my-2" id="new-season-name" placeholder="New Season Name" autocomplete="off">
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							<button type="submit" form="season-edit-form" class="btn btn-primary">Submit Edit(s)</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="modal" id="delete-season-modal" tabindex="-1" role="dialog" aria-labelledby="delete-season-modal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Season Delete Confirm</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">Are you absolutely sure you wish to delete this season? This action <i>cannot</i> be undone.</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							<form id="delete-season-form" action="deleteSeason">
-								<input type="hidden" name="seasonId" value="${season.seasonId}">
-								<input name="csrfToken" type="hidden" value="${csrfToken}">
-								<button type="submit" class="btn btn-danger">Delete Season</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
 
 		<div class="row">
 			
@@ -177,6 +104,77 @@
 					</div>
 				</div>
 
+			</div>
+			
+			<div class="col-12 pt-xs-0 pt-sm-4">
+				<div class="d-flex justify-content-center">
+					<div class="btn-group">
+						<button type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Season Options</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="/viewPlayerSeasonStats?selectedSeasonId=${season.seasonId}&selectedUserId=${regUser.userId}">View my Stats for Season</a>
+							<shiro:hasPermission name="season:seasonedit:${season.seasonId}">
+								<a class="dropdown-item" data-toggle="modal" data-target="#edit-season-modal" href="#">Edit Season</a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="season:seasondelete:${season.seasonId}">
+								<a class="dropdown-item" data-toggle="modal" data-target="#delete-season-modal" href="#">Delete Season</a>
+							</shiro:hasPermission>
+						</div>
+					</div>
+		
+					<div class="modal" id="edit-season-modal" tabindex="-1" role="dialog" aria-labelledby="edit-season-modal" aria-hidden="true">
+						<div class="modal-dialog modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Season Edit</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<label for="new-season-end-date">New Season End Date</label>
+									<form id="season-edit-form" action="/editSeason">
+										<input name="seasonId" value="${season.seasonId}" type="hidden">
+										<input id="csrf-token" name="csrfToken" type="hidden" value="${csrfToken}">
+										<input name="seasonEndDate" type="text" class="form-control my-2" id="new-season-end-date" placeholder="Season End Date" autocomplete="off">
+										<small id="season-end-date-help" class="form-text text-muted">
+											Note that your current season end date cannot be before 
+											this season's start date of <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" />.
+										</small>
+										<label for="new-season-name" class="mt-2">New Season Name</label>
+										<input name="seasonName" type="text" class="form-control my-2" id="new-season-name" placeholder="New Season Name" autocomplete="off">
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+									<button type="submit" form="season-edit-form" class="btn btn-primary">Submit Edit(s)</button>
+								</div>
+							</div>
+						</div>
+					</div>
+		
+					<div class="modal" id="delete-season-modal" tabindex="-1" role="dialog" aria-labelledby="delete-season-modal" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Season Delete Confirm</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">Are you absolutely sure you wish to delete this season? This action <i>cannot</i> be undone.</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+									<form id="delete-season-form" action="deleteSeason">
+										<input type="hidden" name="seasonId" value="${season.seasonId}">
+										<input name="csrfToken" type="hidden" value="${csrfToken}">
+										<button type="submit" class="btn btn-danger">Delete Season</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			
 			<hr style="width: 100%; ; height: 1px; background-color: #EEEEEE;">
