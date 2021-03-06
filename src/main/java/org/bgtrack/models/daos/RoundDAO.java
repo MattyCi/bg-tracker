@@ -46,7 +46,7 @@ public class RoundDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -76,7 +76,7 @@ public class RoundDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -104,7 +104,7 @@ public class RoundDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -136,7 +136,7 @@ public class RoundDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -164,7 +164,7 @@ public class RoundDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -201,7 +201,7 @@ public class RoundDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();

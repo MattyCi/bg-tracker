@@ -31,7 +31,7 @@ public class AuthorizationDAO {
 			
 			session.getTransaction().rollback();
 			LOG.error("Unexpected error occurred ", e);
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -59,7 +59,7 @@ public class AuthorizationDAO {
 			
 			session.getTransaction().rollback();
 			LOG.error("Unexpected error occurred ", e);
-			throw e;
+			return;
 			
 		} finally {
 			session.close();
@@ -93,7 +93,7 @@ public class AuthorizationDAO {
 			
 			session.getTransaction().rollback();
 			LOG.error("Unexpected error occurred ", e);
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();

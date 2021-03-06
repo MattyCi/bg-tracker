@@ -83,7 +83,6 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 			tx.rollback();
 			LOG.error("Exception occured while registering user: "+e);
 			errorsOccured = true;
-			throw e;
 		} finally {
 			session.close();
 		}

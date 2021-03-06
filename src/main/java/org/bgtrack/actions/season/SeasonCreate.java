@@ -152,7 +152,7 @@ public class SeasonCreate extends ShiroBaseAction {
 			tx.rollback();
 			LOG.error("Unexpected error occured: "+e);
 			errorsOccured = true;
-			throw e;
+			return;
 		} finally {
 			session.close();
 		}
@@ -182,7 +182,6 @@ public class SeasonCreate extends ShiroBaseAction {
 			LOG.error("Unexpected error occured: "+e);
 			addActionError(BGTConstants.GENERIC_ERROR);
 			errorsOccured = true;
-			throw e;
 		} finally {
 			session.close();
 		}

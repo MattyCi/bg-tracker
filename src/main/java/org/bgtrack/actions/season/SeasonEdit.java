@@ -176,7 +176,7 @@ public class SeasonEdit extends ShiroBaseAction {
 
 			errorsOccurred = true;
 			
-			throw e;
+			return;
 			
 		} finally {
 			session.close();

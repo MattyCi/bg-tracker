@@ -56,7 +56,6 @@ public class HibernateUtil {
 			tx.rollback();
 			LOG.error("Unexpected error occured: "+e);
 			errorsOccured = true;
-			throw e;
 		} finally {
 			session.close();
 		}
@@ -89,7 +88,7 @@ public class HibernateUtil {
 		} catch (Exception e) {
 			tx.rollback();
 			LOG.error("Unexpected error occured: "+e);
-			throw e;
+			return;
 		} finally {
 			session.close();
 		}

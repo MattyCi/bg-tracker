@@ -43,7 +43,7 @@ public class SeasonDAO extends BaseDAO {
 		} catch (Exception e) {
 			
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -67,7 +67,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -96,7 +96,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -127,7 +127,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -166,7 +166,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -196,7 +196,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -223,7 +223,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -255,7 +255,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
@@ -318,7 +318,7 @@ public class SeasonDAO extends BaseDAO {
 			
 			LOG.error("Unexpected error occurred ", e);
 			session.getTransaction().rollback();
-			throw e;
+			return null;
 			
 		} finally {
 			session.close();
