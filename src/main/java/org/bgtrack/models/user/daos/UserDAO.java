@@ -1,9 +1,12 @@
 package org.bgtrack.models.user.daos;
 
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import org.bgtrack.models.daos.BaseDAO;
 import org.bgtrack.models.user.AccountRedeemToken;
 import org.bgtrack.models.user.Reguser;
 import org.bgtrack.utils.HibernateUtil;
@@ -13,37 +16,80 @@ import org.bgtrack.utils.HibernateUtil;
  * @author Matt
  */
 public class UserDAO {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(UserDAO.class);
+	
 	public static Reguser getUserByUsername(String username) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getNewSession();
 		
-		String query = "from Reguser where username=:username";
-		Reguser user = (Reguser) session.createQuery(query)
-				.setParameter("username", username).uniqueResult();
-		session.getTransaction().commit();
-		session.close();
+		Reguser user;
+		
+		try {
+			
+			String query = "from Reguser where username=:username";
+			user = (Reguser) session.createQuery(query)
+					.setParameter("username", username).uniqueResult();
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error occurred ", e);
+			session.getTransaction().rollback();
+			throw e;
+			
+		} finally {
+			session.close();
+		}
+		
 		return user;
 	}
 	
 	public static Reguser getUserByID(String userId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String query = "from Reguser where userId=:userId";
-		Reguser user = (Reguser) session.createQuery(query)
-				.setParameter("userId", userId).uniqueResult();
-		session.getTransaction().commit();
+		Reguser user;
+		
+		try {
+			
+			String query = "from Reguser where userId=:userId";
+			user = (Reguser) session.createQuery(query)
+					.setParameter("userId", userId).uniqueResult();
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error occurred ", e);
+			session.getTransaction().rollback();
+			throw e;
+			
+		} finally {
+			session.close();
+		}
+
 		return user;
 	}
 	
 	public static List<Reguser> getAllUsers() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
+		
+		List<Reguser> listOfUsers;
+		
+		try {
 			
-		String query = "from Reguser order by FIRST_NAME ASC";
-		@SuppressWarnings("unchecked")
-		List<Reguser> listOfUsers = (List<Reguser>) session.createQuery(query).list();
-		session.getTransaction().commit();
+			String query = "from Reguser order by FIRST_NAME ASC";
+			
+			listOfUsers = (List<Reguser>) session.createQuery(query).list();
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error occurred ", e);
+			session.getTransaction().rollback();
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 
 		return listOfUsers;
 	}
@@ -52,46 +98,82 @@ public class UserDAO {
 	 * TODO: Use a contains function instead and set up an index on these columns for much better performance...
 	 */
 	public static List<Reguser> getUsersByUsername(String username) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String query = "from Reguser where username like :username";
+		List<Reguser> matchedUsers;
 		
-		List<Reguser> matchedUsers = (List<Reguser>) session.createQuery(query)
-				.setParameter("username", "%"+username+"%").list();
-		
-		session.getTransaction().commit();
-		session.close();
+		try {
+			
+			String query = "from Reguser where username like :username";
+			
+			matchedUsers = (List<Reguser>) session.createQuery(query)
+					.setParameter("username", "%"+username+"%").list();
+			
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error occurred ", e);
+			session.getTransaction().rollback();
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 		
 		return matchedUsers;
 	}
 	
 	public static List<AccountRedeemToken> getAccountRedeemTokensUserCreated(String userId) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String query = "from AccountRedeemToken where CREATOR=:userId";
+		List<AccountRedeemToken> matchedUsers;
 		
-		List<AccountRedeemToken> matchedUsers = (List<AccountRedeemToken>) session.createQuery(query)
-				.setParameter("userId", userId).list();
-		
-		session.getTransaction().commit();
-		session.close();
+		try {
+			
+			String query = "from AccountRedeemToken where CREATOR=:userId";
+			
+			matchedUsers = (List<AccountRedeemToken>) session.createQuery(query)
+					.setParameter("userId", userId).list();
+			
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error occurred ", e);
+			session.getTransaction().rollback();
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 		
 		return matchedUsers;
 	}
 	
 	public static AccountRedeemToken getAccountRedeemToken(String token) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String query = "from AccountRedeemToken where redeemToken=:token";
+		AccountRedeemToken tokenResult;
 		
-		AccountRedeemToken tokenResult = (AccountRedeemToken) session.createQuery(query)
-				.setParameter("token", token).uniqueResult();
-		
-		session.getTransaction().commit();
-		session.close();
+		try {
+			
+			String query = "from AccountRedeemToken where redeemToken=:token";
+			
+			tokenResult = (AccountRedeemToken) session.createQuery(query)
+					.setParameter("token", token).uniqueResult();
+			
+			session.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			LOG.error("Unexpected error occurred ", e);
+			session.getTransaction().rollback();
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 		
 		return tokenResult;
 	}

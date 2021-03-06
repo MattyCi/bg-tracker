@@ -3,7 +3,6 @@ package org.bgtrack.models.user;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import org.bgtrack.models.user.AccountRedeemToken;
 import org.bgtrack.models.RoundResult;
 
 import java.sql.Timestamp;

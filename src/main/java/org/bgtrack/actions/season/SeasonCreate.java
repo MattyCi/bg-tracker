@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -149,9 +148,9 @@ public class SeasonCreate extends ShiroBaseAction {
 			addActionError(SEASON_NAME_EXISTS_ERROR_TEXT);
 			errorsOccured = true;
 			return;
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			tx.rollback();
-			LOG.error("Hibernate error occured: "+e);
+			LOG.error("Unexpected error occured: "+e);
 			errorsOccured = true;
 			throw e;
 		} finally {
@@ -178,9 +177,9 @@ public class SeasonCreate extends ShiroBaseAction {
 			tx = session.beginTransaction();
 			session.save(bggGame);
 			tx.commit();
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			tx.rollback();
-			LOG.error("Hibernate error occured: "+e);
+			LOG.error("Unexpected error occured: "+e);
 			addActionError(BGTConstants.GENERIC_ERROR);
 			errorsOccured = true;
 			throw e;

@@ -2,7 +2,6 @@ package org.bgtrack.auth;
 
 import java.sql.Timestamp;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.bgtrack.utils.BGTConstants;
@@ -80,9 +79,9 @@ public class ShiroRegisterAction extends ShiroBaseAction {
 			tx = session.beginTransaction();
 			session.save(this.regUser);
 			tx.commit();
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			tx.rollback();
-			LOG.error("Hibernate error occured while registering user: "+e);
+			LOG.error("Exception occured while registering user: "+e);
 			errorsOccured = true;
 			throw e;
 		} finally {

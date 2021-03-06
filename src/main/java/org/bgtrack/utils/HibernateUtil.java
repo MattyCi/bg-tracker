@@ -8,7 +8,6 @@ import javax.persistence.EntityManagerFactory;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -53,9 +52,9 @@ public class HibernateUtil {
 			em.getTransaction().commit();
 			em.close();
 			tx.commit();
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			tx.rollback();
-			LOG.error("Hibernate error occured: "+e);
+			LOG.error("Unexpected error occured: "+e);
 			errorsOccured = true;
 			throw e;
 		} finally {
@@ -71,9 +70,9 @@ public class HibernateUtil {
 			tx = session.beginTransaction();
 			session.update(obj);
 			tx.commit();
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			tx.rollback();
-			LOG.error("Hibernate error occured: "+e);
+			LOG.error("Unexpected error occured: "+e);
 			throw e;
 		} finally {
 			session.close();
@@ -87,9 +86,9 @@ public class HibernateUtil {
 			tx = session.beginTransaction();
 			session.delete(obj);
 			tx.commit();
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			tx.rollback();
-			LOG.error("Hibernate error occured: "+e);
+			LOG.error("Unexpected error occured: "+e);
 			throw e;
 		} finally {
 			session.close();

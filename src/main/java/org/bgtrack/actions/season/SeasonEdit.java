@@ -2,7 +2,6 @@ package org.bgtrack.actions.season;
 
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -11,8 +10,6 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.persistence.PersistenceException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -166,7 +163,7 @@ public class SeasonEdit extends ShiroBaseAction {
 			tx = session.beginTransaction();
 			session.update(season);
 			tx.commit();
-		} catch (PersistenceException e) {
+		} catch (Exception e) {
 			
 			if (e.getCause() instanceof ConstraintViolationException) {
 				

@@ -7,37 +7,63 @@ import org.bgtrack.models.user.authorization.Permission;
 import org.bgtrack.models.user.authorization.UserPermission;
 import org.bgtrack.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AuthorizationDAO {
 	
+	private static final Logger LOG = LoggerFactory.getLogger(AuthorizationDAO.class);
+	
 	public static Permission getPermissionByValue(String permissionValue) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String query = "from Permission where PERM_VALUE=:permissionValue";
+		Permission permission = null;
 		
-		Permission permission = (Permission) session.createQuery(query).setParameter("permissionValue", permissionValue).uniqueResult();
-		
-		session.getTransaction().commit();
-		
-		session.close();
+		try {
+			
+			String query = "from Permission where PERM_VALUE=:permissionValue";
+			
+			permission = (Permission) session.createQuery(query).setParameter("permissionValue", permissionValue).uniqueResult();
+			
+			session.getTransaction().commit();
+			
+		} catch(Exception e) {
+			
+			session.getTransaction().rollback();
+			LOG.error("Unexpected error occurred ", e);
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 		
 		return permission;
 		
 	}
 	
 	public static void deletePermissionForUser(Reguser user, Permission permissionToRevoke) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String query = "from UserPermission where USER_ID=:userId and PERM_ID=:permId";
+		List<UserPermission> permissionsForUser = null;
 		
-		List<UserPermission> permissionsForUser = (List<UserPermission>) session.createQuery(query).setParameter("userId", user.getUserId())
-				.setParameter("permId", permissionToRevoke.getPermId()).list();
-		
-		session.getTransaction().commit();
-		
-		session.close();
+		try {
+			
+			String query = "from UserPermission where USER_ID=:userId and PERM_ID=:permId";
+			
+			permissionsForUser = (List<UserPermission>) session.createQuery(query).setParameter("userId", user.getUserId())
+					.setParameter("permId", permissionToRevoke.getPermId()).list();
+			
+			session.getTransaction().commit();
+			
+		} catch(Exception e) {
+			
+			session.getTransaction().rollback();
+			LOG.error("Unexpected error occurred ", e);
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 		
 		if (permissionsForUser == null)
 			return;
@@ -49,18 +75,29 @@ public class AuthorizationDAO {
 	}
 
 	public static List<Permission> getAllPermissionsForSeason(String seasonId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		Session session = BaseDAO.getCurrentSession();
 		
-		String permissionValue = "season:%:"+seasonId;
+		List<Permission> permissions = null;
 		
-		String query = "from Permission where PERM_VALUE like :permissionValue";
-		
-		List<Permission> permissions = (List<Permission>) session.createQuery(query).setParameter("permissionValue", permissionValue).list();
-		
-		session.getTransaction().commit();
-		
-		session.close();
+		try {
+			
+			String permissionValue = "season:%:"+seasonId;
+			
+			String query = "from Permission where PERM_VALUE like :permissionValue";
+			
+			permissions = (List<Permission>) session.createQuery(query).setParameter("permissionValue", permissionValue).list();
+			
+			session.getTransaction().commit();
+			
+		} catch(Exception e) {
+			
+			session.getTransaction().rollback();
+			LOG.error("Unexpected error occurred ", e);
+			throw e;
+			
+		} finally {
+			session.close();
+		}
 		
 		return permissions;
 	}
