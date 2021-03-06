@@ -1,13 +1,18 @@
 <%@ page import="org.bgtrack.models.SeasonStatus" %>
 
-<c:if test="${not empty seasonsList}">
-	<div class="col-12">
+<div class="col-12 col-sm-6 text-right text-sm-left">
+	<c:if test="${not empty seasonsList}">
 		<p class="mb-0">
 			<i aria-hidden="true" class="fas fa-circle fa-xs text-success"></i> Season Active
 			<i aria-hidden="true" class="fas fa-circle fa-xs text-danger pl-2"></i> Season Ended
 		</p>
-	</div>
-</c:if>
+	</c:if>
+</div>
+<div class="col-12 col-sm-6 text-right">
+	<shiro:authenticated>
+		<a href="${alternateSeasonListLink}" class="text-secondary">${seasonListLinkText}</a>
+	</shiro:authenticated>
+</div>
 
 <div class="col-12">
 	<table class="table">

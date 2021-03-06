@@ -59,11 +59,6 @@
 			<div class="col-12 text-center">
 				<h1 class="display-4">${seasonListHeaderText}</h1>
 			</div>
-			<shiro:authenticated>
-				<div class="col-12 text-right">
-					<a href="${alternateSeasonListLink}" class="text-secondary">${seasonListLinkText}</a>
-				</div>
-			</shiro:authenticated>
 		
 			<c:choose>
 				<c:when test="${empty seasonsList}">
