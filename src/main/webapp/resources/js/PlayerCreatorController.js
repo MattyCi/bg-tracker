@@ -169,9 +169,20 @@ var PlayerCreatorController = {
 
 $( document ).ready(function() {
 	
-	$( "#create-player-btn" ).click(function() {
+	$("#create-player-btn").click(function() {
 		
 		PlayerCreatorController.createPlayer();
+		
+	});
+	
+	$("#player-create-username").keydown(function(event) {
+		
+		if(event.keyCode == 13) {
+			
+			event.preventDefault();
+			PlayerCreatorController.createPlayer();
+			
+		}
 		
 	});
 	
