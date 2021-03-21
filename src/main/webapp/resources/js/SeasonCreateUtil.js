@@ -151,6 +151,10 @@ var SeasonCreateUtil = {
 		$("#bgg-container").addClass("border-bottom-0");
 		$("#selected-game-container").removeClass("d-none", "border-primary").addClass("border-success");
 		
+		$([document.documentElement, document.body]).animate({
+        	scrollTop: $("#selected-game-container").offset().top - 100
+	    }, 1000);
+		
 		setTimeout(function() {
 						
 			$("#selected-game-container").removeClass("border-success").addClass("border-primary");
