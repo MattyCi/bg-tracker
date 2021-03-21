@@ -159,7 +159,7 @@ var SeasonCreateUtil = {
 						
 			$("#selected-game-container").removeClass("border-success").addClass("border-primary");
 			
-		}, 1000);
+		}, 2000);
 		
 	},
 	
