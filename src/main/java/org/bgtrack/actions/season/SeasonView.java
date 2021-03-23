@@ -2,13 +2,14 @@ package org.bgtrack.actions.season;
 
 import org.bgtrack.utils.BGTConstants;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bgtrack.auth.SeasonUtils;
 import org.bgtrack.auth.ShiroBaseAction;
 import org.bgtrack.models.Round;
 import org.bgtrack.models.ScoringType;
@@ -16,7 +17,6 @@ import org.bgtrack.models.Season;
 import org.bgtrack.models.SeasonStatus;
 import org.bgtrack.models.daos.RoundDAO;
 import org.bgtrack.models.daos.SeasonDAO;
-import org.bgtrack.models.user.Reguser;
 
 public class SeasonView extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
@@ -25,12 +25,17 @@ public class SeasonView extends ShiroBaseAction {
 	private String seasonId;
 	private Season season;
 	private String scoringTypeFullText;
+	
+	int roundPage;
+	private List<Round> paginatedRounds;
 
 	private boolean errorsOccured = false;
-	private List<String> listofVictors;
+	private List<String> listofVictors = new ArrayList<String>();
 	
 	private static final String AVERAGED_FULL_TEXT = "Averaged";
 	private static final String HANDICAP_FULL_TEXT = "Handicap";
+	
+	private static final String PAGE_NUMBER_ERROR = "Sorry, the page number specified was invalid.";
 	
 	@SuppressWarnings("unused")
 	private boolean seasonStatus;
@@ -51,10 +56,17 @@ public class SeasonView extends ShiroBaseAction {
 			this.setSeason(SeasonDAO.getSeasonById(Integer.parseInt(seasonId), true));
 		} catch (NumberFormatException e) {
 			addActionError(BGTConstants.SEASON_ID_ERROR);
-			return BGTConstants.ERROR; 
+			return BGTConstants.ERROR;
 		}
 		
-		buildVictors(this.getSeason().getRounds());
+		try {
+			paginatedRounds = RoundDAO.getPaginatedRoundsList(roundPage, seasonId);
+		} catch (NumberFormatException | IOException e) {
+			addActionError(PAGE_NUMBER_ERROR);
+			return BGTConstants.ERROR;
+		}
+		
+		this.setListofVictors(SeasonUtils.buildVictors(paginatedRounds));
 		
 		if (SeasonStatus.ACTIVE.toString().equals(season.getStatus()))
 			determineSeasonStatus();
@@ -66,43 +78,6 @@ public class SeasonView extends ShiroBaseAction {
 		}
 
 		return BGTConstants.SUCCESS;
-	}
-
-	private void buildVictors(List<Round> rounds) {
-		this.setListofVictors(new ArrayList<String>());
-		
-		for (Round round : rounds) {
-			List<Reguser> victors = RoundDAO.getVictorsForRound(round.getRoundId());
-			
-			if (victors.size() != 1) {
-
-				LOG.debug("there is a tie for roundId {}", round.getRoundId());
-				
-				StringBuilder tiedVictors = new StringBuilder();
-				ListIterator<Reguser> iterator = victors.listIterator();
-				
-				while(iterator.hasNext()) {
-					Reguser tempRegUser = iterator.next();
-					tiedVictors.append(tempRegUser.getUsername()+" ");
-					if (iterator.hasNext()) {
-						tiedVictors.append("AND ");
-					}
-				}
-				
-				tiedVictors.append("(TIE)");
-				
-				LOG.debug("users {} tied for roundId {}", tiedVictors.toString(), round.getRoundId());
-				
-				this.getListofVictors().add(tiedVictors.toString());
-			
-			} else {
-				
-				LOG.debug("user {} is victor for roundId {}", shiroUser.getPrincipal(), round.getRoundId());
-				
-				this.getListofVictors().add(victors.get(0).getUsername());
-				
-			}
-		}
 	}
 	
 	private void determineSeasonStatus() {
@@ -172,6 +147,22 @@ public class SeasonView extends ShiroBaseAction {
 
 	public void setScoringTypeFullText(String scoringTypeFullText) {
 		this.scoringTypeFullText = scoringTypeFullText;
+	}
+
+	public int getRoundPage() {
+		return roundPage;
+	}
+
+	public void setRoundPage(int roundPage) {
+		this.roundPage = roundPage;
+	}
+
+	public List<Round> getPaginatedRounds() {
+		return paginatedRounds;
+	}
+
+	public void setPaginatedRounds(List<Round> paginatedRounds) {
+		this.paginatedRounds = paginatedRounds;
 	}
 	
 }

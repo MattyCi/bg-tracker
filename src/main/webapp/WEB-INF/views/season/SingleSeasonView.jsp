@@ -412,7 +412,7 @@
 				</c:otherwise>
 			</c:choose>
 		
-			<c:set var="snippetListOfRounds" value="${RoundDAO.getPaginatedRoundsList(roundPage, season.seasonId)}" />
+			<c:set var="snippetListOfRounds" value="${paginatedRounds}" />
 			<c:set var="snippetListofVictors" value="${listofVictors}" />
 			<c:set var="snippetSelectedUser" value="${regUser}" />
 			<c:set var="pageName" value="SeasonView" />
