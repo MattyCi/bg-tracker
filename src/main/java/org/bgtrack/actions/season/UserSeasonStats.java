@@ -1,5 +1,6 @@
 package org.bgtrack.actions.season;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ import org.bgtrack.models.user.Reguser;
 public class UserSeasonStats {
 	private List<SeasonStanding> seasonStandingList;
 
+	int roundPage;
+	private List<Round> paginatedRounds;
 	private List<Round> roundsUserParticipatedIn;
 	
 	private List<String> listofVictors;
@@ -29,28 +32,39 @@ public class UserSeasonStats {
 
 	private HashMap<BigInteger, Integer> placeOccurances;
 
-	public UserSeasonStats(Season selectedSeason, Reguser selectedUser) {
+	public UserSeasonStats(Season selectedSeason, Reguser selectedUser, int roundPage) throws NumberFormatException, IOException {
 		
 		this.setSeason(selectedSeason);
 		this.setSelectedUser(selectedUser);
+		this.setRoundPage(roundPage);
 		
 		setSeasonStanding();
+		
+		buildPaginatedRoundList();
 		
 		buildPlaceFinishes();
 		
 		determineWinRatio();
 		
-		this.setListofVictors(SeasonUtils.buildVictors(roundsUserParticipatedIn));
+		this.setListofVictors(SeasonUtils.buildVictors(paginatedRounds));
 	}
 
 	private void setSeasonStanding() {
 		this.seasonStandingList = SeasonDAO.getSeasonStandingForUserInSeason(season.getSeasonId(), selectedUser.getUserId());
 	}
 	
-	private void buildPlaceFinishes() {
+	private void buildPaginatedRoundList() throws NumberFormatException, IOException {
+		
+		this.paginatedRounds = new ArrayList<Round>();
+		System.out.println("roundPage: " + roundPage);
+		this.paginatedRounds = RoundDAO.getRoundsForUserBySeasonId(season.getSeasonId(), selectedUser.getUserId(), roundPage);
+		
+	}
+	
+	private void buildPlaceFinishes() throws NumberFormatException, IOException {
 		
 		this.roundsUserParticipatedIn = new ArrayList<Round>();
-		this.roundsUserParticipatedIn = RoundDAO.getRoundsForUserBySeasonId(season.getSeasonId(), selectedUser.getUserId());
+		this.roundsUserParticipatedIn = RoundDAO.getRoundsForUserBySeasonId(season.getSeasonId(), selectedUser.getUserId(), -1);
 		
 		extractPlaceFinishesFromRoundResults();
 
@@ -172,6 +186,22 @@ public class UserSeasonStats {
 
 	public void setListofVictors(List<String> listofVictors) {
 		this.listofVictors = listofVictors;
+	}
+	
+	public int getRoundPage() {
+		return roundPage;
+	}
+
+	public void setRoundPage(int roundPage) {
+		this.roundPage = roundPage;
+	}
+
+	public List<Round> getPaginatedRounds() {
+		return paginatedRounds;
+	}
+
+	public void setPaginatedRounds(List<Round> paginatedRounds) {
+		this.paginatedRounds = paginatedRounds;
 	}
 	
 }

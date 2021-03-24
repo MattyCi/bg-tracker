@@ -113,18 +113,35 @@ public class RoundDAO {
 		return rounds;
 	}
 	
-	public static List<Round> getRoundsForUserBySeasonId(BigInteger seasonId, String userId) {
+	public static List<Round> getRoundsForUserBySeasonId(BigInteger seasonId, String userId, int page) throws NumberFormatException, IOException {
+		
 		Session session = BaseDAO.getCurrentSession();
 		
 		List<Round> rounds;
 		
 		try {
 			
+			int resultsPerPage = 0;
+			int offset = 0;
+			
+			if (page != -1) {
+				resultsPerPage = Integer.parseInt(PropertiesLoader.getPropertyValue("NUM_ROUNDS_PER_PAGE", PropertiesSelector.ROUND));
+				offset = page * resultsPerPage;
+			}
+			
 			String query = "from Round as r where r.roundId in "
 					+ "(select rr.round.roundId from RoundResult as rr where rr.reguser.userId=:userId) and r.season.seasonId=:seasonId";
 
-			rounds = (List<Round>) session.createQuery(query).setParameter("seasonId", seasonId)
-					.setParameter("userId", userId).list();
+			Query finalQuery;
+			
+			if (page != -1) {
+				finalQuery =  session.createQuery(query).setParameter("seasonId", seasonId)
+					.setParameter("userId", userId).setFirstResult(offset).setMaxResults(resultsPerPage);
+			} else {
+				finalQuery = session.createQuery(query).setParameter("seasonId", seasonId).setParameter("userId", userId);
+			}
+			
+			rounds = finalQuery.list();
 			
 			for (Round round : rounds) {
 				Hibernate.initialize(round.getRoundResults());
@@ -187,7 +204,7 @@ public class RoundDAO {
 			String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE asc";
 			
 			@SuppressWarnings("unchecked")
-			 Query finalQuery = session.createQuery(query).setParameter("seasonId", seasonId).setFirstResult(offset).setMaxResults(resultsPerPage);
+			Query finalQuery = session.createQuery(query).setParameter("seasonId", seasonId).setFirstResult(offset).setMaxResults(resultsPerPage);
 			
 			listOfRounds = (List<Round>) finalQuery.list();
 			 

@@ -403,27 +403,28 @@
 		</div>
 		
 		<div class="row mb-5">
-			<c:choose>
-				<c:when test="${empty param.roundPage}">
-					<c:set var="roundPage" value="0" />
-				</c:when>
-				<c:otherwise>
-					<c:set var="roundPage" value="${param.roundPage}" />
-				</c:otherwise>
-			</c:choose>
 		
 			<c:set var="snippetListOfRounds" value="${paginatedRounds}" />
 			<c:set var="snippetListofVictors" value="${listofVictors}" />
 			<c:set var="snippetSelectedUser" value="${regUser}" />
 			<c:set var="pageName" value="SeasonView" />
 			<%@ include file="./RoundResultsSnippet.jspf" %>
-			
-			<fmt:bundle basename="round">
-				<fmt:message var="numElementsPerPage" key="NUM_ROUNDS_PER_PAGE" />
-			</fmt:bundle>
 						
 			<c:set var="singleSeasonListLink" value="/viewSeason?seasonId=${season.seasonId}&roundPage=" />
 		</div>
+		
+		<c:choose>
+			<c:when test="${empty param.roundPage}">
+				<c:set var="roundPage" value="0" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="roundPage" value="${param.roundPage}" />
+			</c:otherwise>
+		</c:choose>
+		
+		<fmt:bundle basename="round">
+			<fmt:message var="numElementsPerPage" key="NUM_ROUNDS_PER_PAGE" />
+		</fmt:bundle>
 		
 		<div class="row mb-5">
 			<c:import url="../../snippets/PaginationSnippet.jsp">

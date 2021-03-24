@@ -82,12 +82,37 @@
 					<i class="fas fa-exclamation-circle text-warning"></i> Only showing round results that ${playerName} participated in for this season.
 				</p>
 			</div>
-			<c:set var="snippetListOfRounds" value="${UserSeasonStats.roundsUserParticipatedIn}" />
+			
+			<c:set var="snippetListOfRounds" value="${UserSeasonStats.paginatedRounds}" />
 			<c:set var="snippetListofVictors" value="${UserSeasonStats.listofVictors}" />
 			<c:set var="snippetSelectedUser" value="${UserSeasonStats.selectedUser}" />
 			<%@ include file="./RoundResultsSnippet.jspf" %>
 			
 		</div>
+		
+		<c:choose>
+			<c:when test="${empty param.roundPage}">
+				<c:set var="roundPage" value="0" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="roundPage" value="${param.roundPage}" />
+			</c:otherwise>
+		</c:choose>
+		
+		<fmt:bundle basename="round">
+			<fmt:message var="numElementsPerPage" key="NUM_ROUNDS_PER_PAGE" />
+		</fmt:bundle>
+		
+		<c:set var="singleUserSeasonStatsListLink" value="/viewPlayerSeasonStats?selectedSeasonId=${UserSeasonStats.season.seasonId}&selectedUserId=${UserSeasonStats.selectedUser.userId}&roundPage=" />
+		
+		<div class="row mb-5">
+			<c:import url="../../snippets/PaginationSnippet.jsp">
+				<c:param name="numElements" value="${UserSeasonStats.season.rounds.size()}"/>
+				<c:param name="numElementsPerPage" value="${numElementsPerPage}"/>
+				<c:param name="currentPage" value="${roundPage}"/>
+				<c:param name="pageNumberLink" value="${singleUserSeasonStatsListLink}"/>
+			</c:import>
+		</div>	
 		
 	</div>
 	
