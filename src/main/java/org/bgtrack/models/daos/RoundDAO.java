@@ -31,7 +31,7 @@ public class RoundDAO {
 		
 		try {
 			
-			String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE asc";
+			String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE desc";
 			rounds = (List<Round>) session.createQuery(query).setParameter("seasonId", seasonId).list();
 
 			if (eagerLoad) {
@@ -201,7 +201,7 @@ public class RoundDAO {
 		
 		try {
 			
-			String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE asc";
+			String query = "from Round where SEASON_ID=:seasonId order by ROUND_DATE desc";
 			
 			@SuppressWarnings("unchecked")
 			Query finalQuery = session.createQuery(query).setParameter("seasonId", seasonId).setFirstResult(offset).setMaxResults(resultsPerPage);
