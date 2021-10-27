@@ -188,6 +188,13 @@ footer {
 	width: 100%;
 }
 
+.horizontal-spacer {
+	width: 100%;
+	color: #EEEEEE;
+	height: 1px;
+	background-color: #EEEEEE;
+}
+
 @media (min-width: 576px) {
 	
 	.verticle-line {

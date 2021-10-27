@@ -89,7 +89,7 @@
 </table>
 <small class="text-muted pl-2">
 	<i class="fas fa-exclamation-circle text-warning"></i>
-	<a href="javascript:void(0);" title="Player Ineligibility" data-container="body"
+	<a href="#;" title="Player Ineligibility" data-container="body"
 		data-toggle="popover" data-placement="top"
 		data-content="Players that haven't played at least half the average of games played by other
 			players are considered ineligible. They must participate in more games before they can be

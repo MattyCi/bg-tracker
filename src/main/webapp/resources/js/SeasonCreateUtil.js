@@ -204,6 +204,11 @@ var SeasonCreateUtil = {
 
 $(document).ready(function() {
 	
+	var picker = new Pikaday({
+    	field: document.getElementById('datepicker'),
+    	minDate: new Date()
+    });
+	
 	SeasonCreateUtil.populateInitialGamesList();
 	
 	$("#game-search-input").keydown(function(event) {

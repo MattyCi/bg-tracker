@@ -85,7 +85,7 @@
 					
 					<shiro:hasPermission name="season:deleteround:${season.seasonId}">
 					
-						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger btn-sm" 
+						<button id="delete-round-modal-${round.roundId}" type="button" class="btn btn-danger btn-sm" 
 							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal">
 							Delete Round
 						</button>
@@ -94,24 +94,12 @@
 					
 					<shiro:lacksPermission name="season:deleteround:${season.seasonId}">
 						
-						<button id="delete-round-modal-${loop.index}" type="button" class="btn btn-danger btn-sm disabled" 
+						<button id="delete-round-modal-${round.roundId}" type="button" class="btn btn-danger btn-sm disabled" 
 							data-round-id="${round.roundId}" data-toggle="modal" data-target="#delete-round-modal" disabled="">
 							Delete Round
 						</button>
 						<p class="text-muted small pt-2">Only season creators can delete rounds.</p>
 					</shiro:lacksPermission>
-					
-					<script>
-					
-						$("#delete-round-modal-${loop.index}").click(function() {
-							
-							var roundId = $(this).attr("data-round-id");
-							
-							RoundController.confirmDeleteRound(roundId);
-							
-						});
-						
-					</script>
 					
 				</div>
 			</div>

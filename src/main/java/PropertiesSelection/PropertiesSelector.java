@@ -2,5 +2,6 @@ package PropertiesSelection;
 
 public enum PropertiesSelector {
 	SEASON,
-	ROUND
+	ROUND,
+	SECURITY
 }

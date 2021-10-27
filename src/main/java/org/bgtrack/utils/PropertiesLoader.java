@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import PropertiesSelection.PropertiesSelector;
 
 public class PropertiesLoader {
-	
+		
 	private static final Logger LOG = LogManager.getLogger(PropertiesLoader.class);
 	
 	private static final String NO_PROP_FILE_FOUND = "No property file found.";
@@ -30,6 +30,8 @@ public class PropertiesLoader {
 				propFileName = "season.properties";
 			} else if (propertiesSelection == PropertiesSelector.ROUND) {
 				propFileName = "round.properties";
+			} else if (propertiesSelection == PropertiesSelector.SECURITY) {
+				propFileName = "security.properties";
 			} else {
 				throw new Exception("No property file provided for round pagination.");
 			}

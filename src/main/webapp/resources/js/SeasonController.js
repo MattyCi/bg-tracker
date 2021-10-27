@@ -259,15 +259,25 @@ var SeasonController = {
 
 window.onload = function(){
 	
+	var picker = new Pikaday({
+		field : document.getElementById('new-season-end-date')
+	});
+	
     var roundCreateConfirmPopup = document.getElementById("round-create-confirm-popup"),
     	playerSearchResultsPopup = document.getElementById("player-search-results-popup"),
     	roundCreateButton = document.getElementById("round-create-btn"),
     	roundCreateConfirmButton = document.getElementById("round-create-confirm-btn"),
     	roundCancelButton = document.getElementById("round-create-cancel-btn"),
     	initialPlayerSearchButton = document.getElementById("player-search-btn-0"),
-    	playerSearchResultsPopupCloseButton = document.getElementById("player-search-results-popup-close-btn");
-	
-    
+    	playerSearchResultsPopupCloseButton = document.getElementById("player-search-results-popup-close-btn"),
+		playerAddButton = document.getElementById("add-player-btn");
+
+    if(typeof playerAddButton !== 'undefined' && playerAddButton !== null) {
+        playerAddButton.onclick = function(){
+        	SeasonController.addPlayerInputToCreateRoundForm();
+        };
+    }
+
     if(typeof roundCreateButton !== 'undefined' && roundCreateButton !== null) {
         roundCreateButton.onclick = function(){
         	SeasonController.confirmAddRound(document.getElementById('round-create-form'));

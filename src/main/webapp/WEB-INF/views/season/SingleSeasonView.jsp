@@ -60,7 +60,7 @@
 
 		<div class="row">
 			
-			<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+			<hr class="horizontal-spacer">
 			
 			<div class="col-12 col-sm-6 mx-auto text-center verticle-line">
 				<h5 id="season-game-name" data-bgg-id="${season.game.gameId}">${season.game.gameName}</h5>
@@ -78,7 +78,8 @@
 				<h5>
 					${scoringTypeFullText} Scoring
 					<small>
-						<a href="javascript:void(0);" data-toggle="modal" data-target="#scoringDescriptionModal">(What is this?)</a>
+						<a href="#;" data-toggle="modal" data-target="#scoringDescriptionModal">
+							(What is this?)</a>
 					</small>
 				</h5>
 				
@@ -177,7 +178,7 @@
 				</div>
 			</div>
 			
-			<hr style="width: 100%; ; height: 1px; background-color: #EEEEEE;">
+			<hr class="horizontal-spacer">
 			
 		</div>
 		
@@ -242,10 +243,10 @@
 							</select> 
 						</div>
 						<div class="col pt-4">
-							<i id="remove-player-button-0" class="text-danger fas fa-minus-circle fa-lg d-none" style="cursor: pointer;"></i>
+							<i id="remove-player-button-0" class="text-danger clickable fas fa-minus-circle fa-lg d-none"></i>
 						</div>
 
-						<hr class="my-4" style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+						<hr class="my-4 horizontal-spacer">
 						
 					</div>
 					
@@ -253,7 +254,7 @@
 					
 						<div class="col-12">
 							<p>
-								Need to create a new player account for a friend? <a id="create-user-link" href="javascript:void(0);"
+								Need to create a new player account for a friend? <a id="create-user-link" href="#;"
 								data-toggle="modal" data-target="#create-user-modal"> Click here!</a>
 							</p>
 						</div>
@@ -289,7 +290,7 @@
 							
 							<c:choose>
 								<c:when test="${roundCreateDisabled eq false}">
-									<button type="button" class="btn btn-primary btn-block mb-2" onClick="SeasonController.addPlayerInputToCreateRoundForm();">Add Player</button>
+									<button type="button" id="add-player-btn" class="btn btn-primary btn-block mb-2">Add Player</button>
 								</c:when>
 								<c:otherwise>
 									<button type="button" class="btn btn-primary btn-block mb-2 disabled" disabled>Add Player</button>
@@ -362,7 +363,7 @@
 							
 							<p class="text-primary">You can also add another player below:</p>
 							
-							<hr style="width: 100%; color: #EEEEEE; height: 1px; background-color: #EEEEEE;">
+							<hr class="horizontal-spacer">
 							
 						</div>
 						
@@ -498,12 +499,6 @@
 		</div>
 
 	</div>
-
-	<script>
-		var picker = new Pikaday({
-			field : document.getElementById('new-season-end-date')
-		});
-	</script>
 
 	<%@ include file="/WEB-INF/snippets/Footer.jspf" %>
 

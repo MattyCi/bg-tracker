@@ -18,7 +18,7 @@
 					<img class="logo-small" src="/resources/img/logo-small.png">
 				</a>
 				
-				<a href="javascript:void(0);" title="Contact Us" data-container="body"
+				<a href="#;" title="Contact Us" data-container="body"
 					data-toggle="popover" data-placement="top"
 					data-content="Please email us at seasonggfeedback@gmail.com to report a bug, leave feedback,
 					or for any other customer support related questions."
