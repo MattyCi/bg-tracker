@@ -124,7 +124,7 @@ public class SeasonEdit extends ShiroBaseAction {
 	// TODO: move this operation into a season facade... duplicate code exists in season create now
 	private void changeSeasonEndDate() throws Exception {
 		
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy");
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 	    Date parsedDate = dateFormat.parse(seasonEndDate);
 	    
 	    Timestamp currentTime = new Timestamp(System.currentTimeMillis());

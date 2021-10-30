@@ -205,8 +205,11 @@ var SeasonCreateUtil = {
 $(document).ready(function() {
 	
 	var picker = new Pikaday({
-    	field: document.getElementById('datepicker'),
-    	minDate: new Date()
+		field: document.getElementById('datepicker'),
+		minDate: new Date(),
+		onSelect: function(date) {
+			SGGCommonUtils.formatDate(date)
+		}
     });
 	
 	SeasonCreateUtil.populateInitialGamesList();

@@ -37,7 +37,8 @@ public class SeasonCreate extends ShiroBaseAction {
 	
 	private static final String NO_GAME_SELECTED_ERROR_TEXT = "Please select a game to be played throughout the season.";
 
-	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please choose a valid date and try again.";
+	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please "
+			+ "choose a valid date with the format mm/dd/yyyy and try again.";
 	private static final String SEASON_NAME_EXISTS_ERROR_TEXT = "Sorry, but the season name you provided already exists.";
 	
 	@Override
@@ -89,7 +90,7 @@ public class SeasonCreate extends ShiroBaseAction {
 		Timestamp seasonEndTimestamp = null;
 		
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 		    Date parsedDate = dateFormat.parse(seasonEndDate);
 		    seasonEndTimestamp = new java.sql.Timestamp(parsedDate.getTime());
 		    

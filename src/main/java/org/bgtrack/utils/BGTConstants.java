@@ -21,7 +21,8 @@ public final class BGTConstants {
 	public static final String AUTHENTICATION_ERROR = "User not authenticated, please log in once more.";
 	public static final String AUTHORIZATION_ERROR = "User not authorized to run this command.";
 	public static final String LOG_IN_PROMPT = "Please log in to perform this action.";
-	public static final String DATE_ERROR = "There was an error with the format of the date provided.";
+	public static final String DATE_ERROR = "There was an error with the format of the date provided. Please ensure the "
+			+ "date is formatted as mm/dd/yyyy.";
 	public static final String SEASON_ID_ERROR = "The season ID was incorrect.";
 	public static final String SEASON_INACTIVE_ERROR = "This season has ended, so rounds cannot be created for it.";
 	public static final String SCORING_TYPE_EMPTY = "Please provide a season scoring type.";

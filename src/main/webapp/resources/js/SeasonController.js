@@ -260,7 +260,10 @@ var SeasonController = {
 window.onload = function(){
 	
 	var picker = new Pikaday({
-		field : document.getElementById('new-season-end-date')
+		field : document.getElementById('datepicker'),
+		onSelect: function(date) {
+			SGGCommonUtils.formatDate(date)
+		}
 	});
 	
     var roundCreateConfirmPopup = document.getElementById("round-create-confirm-popup"),

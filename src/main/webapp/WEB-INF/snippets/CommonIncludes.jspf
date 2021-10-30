@@ -25,6 +25,6 @@
 <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-add-css="false"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-<script src="./resources/js/Common.js"></script>
+<script src="./resources/js/CommonUtils.js"></script>
 <script src="./resources/js/PlayerSearchUtil.js"></script>
 <script src="./resources/js/SeasonController.js"></script>

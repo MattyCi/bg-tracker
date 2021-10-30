@@ -133,11 +133,11 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<label for="new-season-end-date">New Season End Date</label>
-									<form id="season-edit-form" action="/editSeason">
+									<label for="datepicker">New Season End Date</label>
+									<form id="season-edit-form" action="/editSeason" method="POST">
 										<input name="seasonId" value="${season.seasonId}" type="hidden">
 										<input id="csrf-token" name="csrfToken" type="hidden" value="${csrfToken}">
-										<input name="seasonEndDate" type="text" class="form-control my-2" id="new-season-end-date" placeholder="Season End Date" autocomplete="off">
+										<input name="seasonEndDate" type="text" class="form-control my-2" id="datepicker" placeholder="Season End Date" autocomplete="off">
 										<small id="season-end-date-help" class="form-text text-muted">
 											Note that your current season end date cannot be before 
 											this season's start date of <fmt:formatDate pattern = "MM/dd/yyyy" value="${season.startDate}" />.
