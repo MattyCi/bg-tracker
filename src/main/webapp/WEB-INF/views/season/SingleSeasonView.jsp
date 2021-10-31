@@ -243,7 +243,9 @@
 							</select> 
 						</div>
 						<div class="col pt-4">
-							<i id="remove-player-button-0" class="text-danger clickable fas fa-minus-circle fa-lg d-none"></i>
+							<span id="remove-player-button-0" class="d-none">
+								<i class="text-danger clickable fas fa-minus-circle fa-lg"></i>
+							</span>
 						</div>
 
 						<hr class="my-4 horizontal-spacer">
