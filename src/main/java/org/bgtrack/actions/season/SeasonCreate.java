@@ -34,6 +34,8 @@ public class SeasonCreate extends ShiroBaseAction {
 	private boolean errorsOccured = false;
 
 	private String createdSeasonId;
+	private String seasonCreateSuccessMessage = "Your season is created and you're now viewing your season page. "
+			+ "Here you will find your season standings, round results, and more!";
 	
 	private static final String NO_GAME_SELECTED_ERROR_TEXT = "Please select a game to be played throughout the season.";
 
@@ -82,6 +84,7 @@ public class SeasonCreate extends ShiroBaseAction {
 			return BGTConstants.ERROR;
 		}
 
+		this.setPopupMessage(seasonCreateSuccessMessage);
 		return BGTConstants.SUCCESS;
 	}
 
@@ -90,7 +93,7 @@ public class SeasonCreate extends ShiroBaseAction {
 		Timestamp seasonEndTimestamp = null;
 		
 		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		    Date parsedDate = dateFormat.parse(seasonEndDate);
 		    seasonEndTimestamp = new java.sql.Timestamp(parsedDate.getTime());
 		    
