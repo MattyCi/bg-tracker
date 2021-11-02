@@ -24,10 +24,29 @@ var SeasonCreateUtil = {
 	},
 	
 	searchForGame : function(searchTerm) {
-			
+		
 		this.resetBGGContainer();
 		
+		let startTime = new Date();
+		
 		var searchResultGames = boardGameGeekAPI.getGamesBySearchTerm(searchTerm);
+		
+		let endTime = new Date(),
+			timeDiff = endTime - startTime;
+		
+		if (timeDiff < 1000) {
+			
+			setTimeout(function() {
+				SeasonCreateUtil.processSearchResults(searchResultGames);
+			}, (1000));
+
+		} else {
+			this.processSearchResults(searchResultGames);
+		}
+		
+	},
+
+	processSearchResults : function(searchResultGames) {
 		
 		if (searchResultGames.length == 0) {
 			

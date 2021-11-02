@@ -106,6 +106,7 @@
     	<result name="success" type="redirectAction">
     		<param name="actionName">viewSeason</param>
     		<param name="seasonId">${createdSeasonId}</param>
+    		<param name="popupMessage">${popupMessage}</param>
     	</result>
     	<result name="input">/index.jsp</result>
 		<result name="error">/index.jsp</result>
