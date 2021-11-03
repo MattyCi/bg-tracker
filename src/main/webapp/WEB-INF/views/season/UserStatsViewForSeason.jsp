@@ -107,7 +107,7 @@
 		
 		<div class="row mb-5">
 			<c:import url="../../snippets/PaginationSnippet.jsp">
-				<c:param name="numElements" value="${UserSeasonStats.season.rounds.size()}"/>
+				<c:param name="numElements" value="${UserSeasonStats.seasonStandingList[0].getGamesPlayed()}"/>
 				<c:param name="numElementsPerPage" value="${numElementsPerPage}"/>
 				<c:param name="currentPage" value="${roundPage}"/>
 				<c:param name="pageNumberLink" value="${singleUserSeasonStatsListLink}"/>

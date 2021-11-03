@@ -56,7 +56,7 @@ public class UserSeasonStats {
 	private void buildPaginatedRoundList() throws NumberFormatException, IOException {
 		
 		this.paginatedRounds = new ArrayList<Round>();
-		System.out.println("roundPage: " + roundPage);
+		
 		this.paginatedRounds = RoundDAO.getRoundsForUserBySeasonId(season.getSeasonId(), selectedUser.getUserId(), roundPage);
 		
 	}
