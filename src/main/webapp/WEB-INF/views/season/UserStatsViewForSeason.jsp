@@ -38,7 +38,7 @@
 					<e:forHtml value="${UserSeasonStats.season.name}" />
 				</p>
 			</div>
-			<div class="col-12 col-lg-7 mx-auto mt-2">
+			<div class="col-12 col-lg-7 mx-auto mt-4">
 				<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
 			</div>
 			<div class="col-12 col-lg-5 mx-auto text-center mt-4">
