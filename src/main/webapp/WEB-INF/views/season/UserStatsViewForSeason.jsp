@@ -66,7 +66,7 @@
 
 		<div class="row mt-3">
 			<div class="col-12">
-				<p class="h4 text-center">${playerName}'s Round Results</p>
+				<p id="round-results-section" class="h4 text-center">${playerName}'s Round Results</p>
 			</div>
 			
 			<c:if test="${empty UserSeasonStats.season.getRounds()}">

@@ -393,7 +393,7 @@
 
 		<div class="row">
 			<div class="col-12 mx-auto text-center">
-				<p class="h4">Round Results</p>
+				<p id="round-results-section" class="h4">Round Results</p>
 				
 				<c:if test="${empty season.getRounds()}">
 					<div class="col-12 col-md-8 mx-auto text-center bg-warning mt-1">

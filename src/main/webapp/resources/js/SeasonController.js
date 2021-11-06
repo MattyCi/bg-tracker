@@ -274,7 +274,7 @@ window.onload = function(){
     	initialPlayerSearchButton = document.getElementById("player-search-btn-0"),
     	playerSearchResultsPopupCloseButton = document.getElementById("player-search-results-popup-close-btn"),
 		playerAddButton = document.getElementById("add-player-btn");
-
+		
     if(typeof playerAddButton !== 'undefined' && playerAddButton !== null) {
         playerAddButton.onclick = function(){
         	SeasonController.addPlayerInputToCreateRoundForm();
@@ -324,5 +324,18 @@ window.onload = function(){
 	    	playerSearchResultsPopup.classList.add("d-none");
 	    };
     }
-    
+
+	var urlString = window.location.href,
+		url = new URL(urlString),
+		roundPageParam = url.searchParams.get("roundPage");
+		
+    if(typeof roundPageParam !== 'undefined' && roundPageParam !== null) {
+		
+		
+		
+		$([document.documentElement, document.body]).animate({
+			scrollTop: $("#round-results-section").offset().top - 100
+		}, 2000);
+		
+	}
 }
