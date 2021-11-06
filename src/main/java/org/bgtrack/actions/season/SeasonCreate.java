@@ -69,7 +69,7 @@ public class SeasonCreate extends ShiroBaseAction {
 	private void validateSeasonName() {
 		
 		if (seasonName == null || seasonName.isEmpty()) {
-			addActionError(INVALID_SEASON_NAME_ERROR_TEXT);
+			addActionError(SEASON_NAME_TOO_SHORT_ERROR_TEXT);
 			return;
 		}
 		
