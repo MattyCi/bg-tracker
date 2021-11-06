@@ -62,7 +62,7 @@ public class UserBuilder {
 		
 		username = username.trim();
 		
-		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9]");
+		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9'-]");
 		
 		Matcher specialCharMatcher = specialCharRegex.matcher(username);
 		

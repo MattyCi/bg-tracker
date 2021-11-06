@@ -83,7 +83,7 @@ public class SeasonCreate extends ShiroBaseAction {
 			return;
 		}
 		
-		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9\\/|\\-\\.\\+ ]");
+		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9\\\\|\\-\\.\\+ ']");
 		
 		Matcher specialCharMatcher = specialCharRegex.matcher(seasonName);
 		
