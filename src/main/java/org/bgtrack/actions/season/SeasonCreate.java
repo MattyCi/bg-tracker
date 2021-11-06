@@ -39,8 +39,8 @@ public class SeasonCreate extends ShiroBaseAction {
 	private String seasonCreateSuccessMessage = "Your season is created and you're now viewing your season page. "
 			+ "Here you will find your season standings, round results, and more!";
 	
-	private static final String INVALID_SEASON_NAME_ERROR_TEXT = "Season names must be at least 4 characters long"
-			+ " and may only contain alphanumeric characters (or the following special characters: | - . + and /).";
+	private static final String INVALID_SEASON_NAME_ERROR_TEXT = "Sorry, your season name contained invalid characters. Please try again.";
+	private static final String SEASON_NAME_TOO_SHORT_ERROR_TEXT = "Season names must be at least 4 characters long.";
 	private static final String SEASON_NAME_TOO_LONG_ERROR_TEXT = "Season names cannot be more than 56 characters long.";
 	
 	private static final String NO_GAME_SELECTED_ERROR_TEXT = "Please select a game to be played throughout the season.";
@@ -76,7 +76,7 @@ public class SeasonCreate extends ShiroBaseAction {
 		seasonName = seasonName.trim();
 		
 		if (seasonName.length() < 4) {
-			addActionError(INVALID_SEASON_NAME_ERROR_TEXT);
+			addActionError(SEASON_NAME_TOO_SHORT_ERROR_TEXT);
 			return;
 		} else if (seasonName.length() > 56) {
 			addActionError(SEASON_NAME_TOO_LONG_ERROR_TEXT);
