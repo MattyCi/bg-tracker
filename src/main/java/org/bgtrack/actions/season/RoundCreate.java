@@ -116,6 +116,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 		}
 		
+		// TODO - validate roundPlayer and playerPlace params (ensure they are numbers)
+		
 	}
 	
 	private boolean multiplePlayersPlayed() {

@@ -3,8 +3,6 @@ package org.bgtrack.actions.season;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -39,7 +37,6 @@ public class SeasonCreate extends ShiroBaseAction {
 	private String seasonCreateSuccessMessage = "Your season is created and you're now viewing your season page. "
 			+ "Here you will find your season standings, round results, and more!";
 	
-	private static final String INVALID_SEASON_NAME_ERROR_TEXT = "Sorry, your season name contained invalid characters. Please try again.";
 	private static final String SEASON_NAME_TOO_SHORT_ERROR_TEXT = "Season names must be at least 4 characters long.";
 	private static final String SEASON_NAME_TOO_LONG_ERROR_TEXT = "Season names cannot be more than 56 characters long.";
 	
@@ -64,8 +61,10 @@ public class SeasonCreate extends ShiroBaseAction {
 		
 		validateSeasonName();
 		
+		validateSeasonEndDate();
+		
 	}
-	
+
 	private void validateSeasonName() {
 		
 		if (seasonName == null || seasonName.isEmpty()) {
@@ -82,14 +81,12 @@ public class SeasonCreate extends ShiroBaseAction {
 			addActionError(SEASON_NAME_TOO_LONG_ERROR_TEXT);
 			return;
 		}
+				
+	}
+	
+	private void validateSeasonEndDate() {
 		
-		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9\\\\|\\-\\.\\+ ']");
 		
-		Matcher specialCharMatcher = specialCharRegex.matcher(seasonName);
-		
-		if (specialCharMatcher.find()) {
-			addActionError(INVALID_SEASON_NAME_ERROR_TEXT);
-		}
 		
 	}
 
