@@ -4,6 +4,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="/WEB-INF/snippets/CommonJSTLIncludes.jspf" %>
 
@@ -30,7 +31,8 @@
 					<h2>My Account</h2>
 					<img src="/resources/img/user.png" alt="User" width="140" height="140">
 
-					<c:if test="${!empty popupMessage && fn:startsWith(popupMessage, 'Welcome')}">
+					<%-- TODO: this is ugly... send a separate parameter to check for this. --%>
+					<c:if test="${!empty popupMessage && fn:startsWith(popupMessage, 'ACCOUNT_REDEEM_SUCCESS')}">
 						<c:set var="isAccountRedeemed" value="true" />
 					</c:if>
 

@@ -18,7 +18,7 @@ public final class BGTConstants {
 	public static final String ALREADY_LOGGED_IN = "It seems you are already logged in as a user. "
 			+ "Please log out and try to register again.";
 	public static String CHECK_FIELDS = "Please check the data submitted and try again.";
-	public static final String AUTHENTICATION_ERROR = "User not authenticated, please log in once more.";
+	public static final String AUTHENTICATION_ERROR = "Please log in to perform this action.";
 	public static final String AUTHORIZATION_ERROR = "User not authorized to run this command.";
 	public static final String LOG_IN_PROMPT = "Please log in to perform this action.";
 	public static final String DATE_ERROR = "There was an error with the format of the date provided. Please ensure the "

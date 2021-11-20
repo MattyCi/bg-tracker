@@ -2,6 +2,8 @@ package org.bgtrack.auth;
 
 import org.bgtrack.utils.HibernateUtil;
 
+import PropertiesSelection.PopupMessages;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,8 +22,6 @@ public class ShiroDeleteAction extends ShiroBaseAction {
 	
 	private static final String CURRENT_PASSWORD_NOT_PROVIDED_ERROR_TEXT = "You must provide your current password to make any account changes.";
 	private static final String CURRENT_PASSWORD_INVALID_ERROR_TEXT = "The current password provided was invalid, please try again.";
-	
-	private static final String ACCOUNT_DELETE_SUCCESS_TEXT = "Account deleted successfully.";
 	
 	@Override
 	public Boolean isCsrfProtected() {
@@ -70,7 +70,7 @@ public class ShiroDeleteAction extends ShiroBaseAction {
 		
 		shiroUser.logout();
 		
-		setPopupMessage(ACCOUNT_DELETE_SUCCESS_TEXT);
+		setPopupMessage(PopupMessages.ACCOUNT_DELETE_SUCCESS);
 		
 		return SUCCESS;
 	}
