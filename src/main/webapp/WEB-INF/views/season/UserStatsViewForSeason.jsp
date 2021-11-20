@@ -38,7 +38,7 @@
 					<e:forHtml value="${UserSeasonStats.season.name}" />
 				</p>
 			</div>
-			<div class="col-12 col-lg-7 mx-auto mt-2">
+			<div class="col-12 col-lg-7 mx-auto mt-4">
 				<%@ include file="../../views/season/SeasonStandingsSnippet.jspf" %>
 			</div>
 			<div class="col-12 col-lg-5 mx-auto text-center mt-4">
@@ -66,7 +66,7 @@
 
 		<div class="row mt-3">
 			<div class="col-12">
-				<p class="h4 text-center">${playerName}'s Round Results</p>
+				<p id="round-results-section" class="h4 text-center">${playerName}'s Round Results</p>
 			</div>
 			
 			<c:if test="${empty UserSeasonStats.season.getRounds()}">

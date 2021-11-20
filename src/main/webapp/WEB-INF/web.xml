@@ -52,4 +52,9 @@
 		<session-timeout>180</session-timeout>
 	</session-config>
 	
+	<error-page>
+		<exception-type>javax.servlet.ServletException</exception-type>
+		<location>/ServletErrorPage.jsp</location>
+	</error-page>
+	
 </web-app>

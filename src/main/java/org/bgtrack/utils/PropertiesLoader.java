@@ -33,7 +33,7 @@ public class PropertiesLoader {
 			} else if (propertiesSelection == PropertiesSelector.SECURITY) {
 				propFileName = "security.properties";
 			} else {
-				throw new Exception("No property file provided for round pagination.");
+				throw new Exception(NO_PROP_FILE_FOUND);
 			}
 			
 

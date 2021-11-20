@@ -7,6 +7,9 @@ import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
+
+import PropertiesSelection.PopupMessages;
+
 import org.bgtrack.utils.BGTConstants;
 
 import org.bgtrack.utils.HibernateUtil;
@@ -30,17 +33,23 @@ public class SeasonCreate extends ShiroBaseAction {
 	private String seasonGameName;
 	
 	private String seasonEndDate;
+	private Timestamp seasonEndTimestamp = null;
+	private Timestamp seasonStartTimestamp = new Timestamp(System.currentTimeMillis());
+	
 	private String seasonScoringType;
 	private boolean errorsOccured = false;
 
 	private String createdSeasonId;
-	private String seasonCreateSuccessMessage = "Your season is created and you're now viewing your season page. "
-			+ "Here you will find your season standings, round results, and more!";
+	
+	private static final String SEASON_NAME_TOO_SHORT_ERROR_TEXT = "Season names must be at least 4 characters long.";
+	private static final String SEASON_NAME_TOO_LONG_ERROR_TEXT = "Season names cannot be more than 56 characters long.";
 	
 	private static final String NO_GAME_SELECTED_ERROR_TEXT = "Please select a game to be played throughout the season.";
 
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided was invalid, please "
 			+ "choose a valid date with the format mm/dd/yyyy and try again.";
+	private static final String END_DATE_BEFORE_START_ERROR_TEXT = "Please choose a date in the future for your season end date.";
+	
 	private static final String SEASON_NAME_EXISTS_ERROR_TEXT = "Sorry, but the season name you provided already exists.";
 	
 	@Override
@@ -50,16 +59,80 @@ public class SeasonCreate extends ShiroBaseAction {
 	
 	@Override
 	public void validate() {
+		
 		super.validate();
 		
-		if (seasonGameId == null || seasonGameId.isEmpty() || 
-				seasonGameName == null || seasonGameName.isEmpty()) {
-			addActionError(NO_GAME_SELECTED_ERROR_TEXT);
+		validateSeasonName();
+		
+		validateSeasonDates();
+		
+		validateGameId();
+		
+	}
+
+	private void validateSeasonName() {
+		
+		if (seasonName == null || seasonName.isEmpty()) {
+			addActionError(SEASON_NAME_TOO_SHORT_ERROR_TEXT);
+			return;
+		}
+		
+		seasonName = seasonName.trim();
+		
+		if (seasonName.length() < 4) {
+			addActionError(SEASON_NAME_TOO_SHORT_ERROR_TEXT);
+			return;
+		} else if (seasonName.length() > 56) {
+			addActionError(SEASON_NAME_TOO_LONG_ERROR_TEXT);
+			return;
+		}
+				
+	}
+	
+	private void validateSeasonDates() {
+		
+		if (seasonEndDate == null || seasonEndDate.isEmpty()) {
+			addActionError(INVALID_END_DATE_ERROR_TEXT);
+			return;
+		}
+		
+		try {
+			
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		    Date parsedDate = dateFormat.parse(seasonEndDate);
+		    seasonEndTimestamp = new java.sql.Timestamp(parsedDate.getTime());
+		    
+		    if (seasonEndTimestamp.before(seasonStartTimestamp)) {
+		    	
+		    	LOG.info("seasonEndTimestamp is before seasonStartTimestamp: " + shiroUser.getPrincipal());
+		    	
+		    	addActionError(END_DATE_BEFORE_START_ERROR_TEXT);
+		    	
+		    }
+		    
+		} catch (Exception e) {
+			
+			LOG.error("unexpected error validating season end date: " + shiroUser.getPrincipal(), e);
+			
+			addActionError(INVALID_END_DATE_ERROR_TEXT);
+			
 		}
 		
 	}
 	
-	public String execute() {
+	private void validateGameId() {
+		
+		if (seasonGameId == null || seasonGameId.isEmpty()) {
+			
+			LOG.info("no game selected: " + shiroUser.getPrincipal());
+			
+			addActionError(NO_GAME_SELECTED_ERROR_TEXT);
+			return;
+		}
+		
+	}
+
+	public String execute() throws NumberFormatException, Exception {
 		
 		if (!this.shiroUser.isAuthenticated()) {
 			
@@ -69,52 +142,20 @@ public class SeasonCreate extends ShiroBaseAction {
 			return BGTConstants.ERROR;
 		}
 		
-		if (seasonName.isEmpty() || seasonGameId.isEmpty() || seasonEndDate.isEmpty() || seasonName.length() == 0 || 
-				seasonGameId.length() == 0 || seasonEndDate.length() == 0) {
-			
-			LOG.info("either the season name, gameId or start or end dates were empty: " + shiroUser.getPrincipal());
-			
-			addActionError(BGTConstants.CHECK_FIELDS);
-			return BGTConstants.ERROR;
-		}
-
-		createSeason(seasonName, Integer.parseInt(seasonGameId), seasonEndDate);
+		createSeason(seasonName, Integer.parseInt(seasonGameId));
 
 		if (errorsOccured) {
 			return BGTConstants.ERROR;
 		}
 
-		this.setPopupMessage(seasonCreateSuccessMessage);
+		this.setPopupMessage(PopupMessages.SEASON_CREATE_CONFIRMATION);
 		return BGTConstants.SUCCESS;
 	}
 
-	public void createSeason(String seasonName, int seasonGameId, String seasonEndDate) {
-		Timestamp seasonStartTimestamp = new Timestamp(System.currentTimeMillis());
-		Timestamp seasonEndTimestamp = null;
+	public void createSeason(String seasonName, int seasonGameId) throws Exception {
+
 		
-		try {
-		    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		    Date parsedDate = dateFormat.parse(seasonEndDate);
-		    seasonEndTimestamp = new java.sql.Timestamp(parsedDate.getTime());
-		    
-		    if (seasonEndTimestamp.before(seasonStartTimestamp)) {
-		    	
-		    	LOG.info("seasonEndTimestamp is before seasonStartTimestamp: " + shiroUser.getPrincipal());
-		    	
-		    	addActionError(INVALID_END_DATE_ERROR_TEXT);
-		    	errorsOccured = true;
-		    	return;
-		    }
-		    
-		} catch(Exception e) {
-			
-			LOG.info("user entered invalid date to create season: " + shiroUser.getPrincipal());
-			
-			addActionError(BGTConstants.DATE_ERROR);
-			errorsOccured = true;
-			return;
-		}
-		
+				
 		Game bggGame = GameDAO.getGameById(seasonGameId);
 		
 		if (bggGame == null) {

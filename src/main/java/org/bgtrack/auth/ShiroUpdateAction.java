@@ -1,6 +1,9 @@
 package org.bgtrack.auth;
 
 import org.bgtrack.utils.HibernateUtil;
+
+import PropertiesSelection.PopupMessages;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
@@ -11,7 +14,7 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 	private static final long serialVersionUID = -6328260956217475993L;
 	
 	private static final Logger LOG = LogManager.getLogger(ShiroUpdateAction.class);
-		
+	
 	private String username;
 	private String password;
 	private String passwordVerify;
@@ -22,8 +25,6 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 	private static final String NO_INPUT_ERROR_TEXT = "Please provide a value to update.";
 	private static final String CURRENT_PASSWORD_NOT_PROVIDED_ERROR_TEXT = "You must provide your current password to make any account changes.";
 	private static final String CURRENT_PASSWORD_INVALID_ERROR_TEXT = "The current password provided was invalid, please try again.";
-	
-	private static final String ACCOUNT_UPDATE_SUCCESS_TEXT = "Account updated successfully!";
 	
 	@Override
 	public Boolean isCsrfProtected() {
@@ -81,7 +82,7 @@ public class ShiroUpdateAction extends ShiroBaseAction {
 		
 		resetShiroInfo();
 		
-		setPopupMessage(ACCOUNT_UPDATE_SUCCESS_TEXT);
+		setPopupMessage(PopupMessages.ACCOUNT_UPDATE_SUCCESS);
 		
 		return SUCCESS;
 	}

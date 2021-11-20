@@ -18,7 +18,8 @@
 		<%@ include file="WEB-INF/snippets/Nav.jspf" %>
 	
 		<div class="container content">
-		
+			
+			<c:set var="servletErrorPage" value="true" />
 			<%@ include file="WEB-INF/snippets/Header.jspf" %>
 			
 			<div class="col text-center mt-4">

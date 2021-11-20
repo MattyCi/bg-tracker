@@ -14,13 +14,14 @@ import org.bgtrack.models.user.authorization.Permission;
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
 
+import PropertiesSelection.PopupMessages;
+
 public class RoundDelete extends ShiroBaseAction {
 	private static final long serialVersionUID = 8752947492063852728L;
 	
 	private static final Logger LOG = LogManager.getLogger(RoundDelete.class);
 	
 	private static final String ROUND_DELETE_PERMISSIONS_ERROR_TEXT = "Sorry, only a season's creator or admin can delete a round!";
-	private static final String ROUND_DELETE_CONFIRMATION_TEXT = "Done! Round deleted successfully!";
 	
 	private String roundId;
 	private String seasonId;
@@ -73,7 +74,7 @@ public class RoundDelete extends ShiroBaseAction {
 		
 		reassignPermissions();
 		
-		this.setPopupMessage(ROUND_DELETE_CONFIRMATION_TEXT);
+		this.setPopupMessage(PopupMessages.ROUND_DELETE_CONFIRMATION);
 		
 		return BGTConstants.SUCCESS;
 	}

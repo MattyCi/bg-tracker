@@ -3,27 +3,38 @@
 <%@page import="org.apache.logging.log4j.LogManager"%>
 <%@ page isErrorPage="true" %>
 
-<%-- handle errors from struts action classes --%>
-<s:if test="hasActionErrors()">
-	<div class="row">
-		<div class="col-12 col-md-8 mx-auto mt-4 mb-0">
-			<div class="alert alert-dismissible alert-danger">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<s:iterator var="error" value="%{actionErrors}">
-					<s:property value="%{error}" />
-				</s:iterator>
+<c:if test="${not servletErrorPage}">
+	<%-- handle errors from struts action classes --%>
+	<s:if test="hasActionErrors()">
+		<div class="row">
+			<div class="col-12 col-md-8 mx-auto mt-4 mb-0">
+				<div class="alert alert-dismissible alert-danger">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<s:iterator value="actionErrors" begin="0" end="0">
+						<s:property/>
+					</s:iterator>
+				</div>
 			</div>
 		</div>
-	</div>
-</s:if>
+	</s:if>
+</c:if>
 
 <%-- handle all other errors ie. errors thrown from JSPs --%>
 <c:if test="${(exception != null || pageContext.exception != null) && (actionErrors == null || empty actionErrors ) }">
 	<div class="col-md-6 mx-auto alert alert-dismissible alert-danger mt-4 mb-0">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>Sorry...</strong> Something went wrong on our end. Feel free to email us at
-		<a href="mailto:seasonggfeedback@gmail.com">seasonggfeedback@gmail.com</a> with a description
-		of the problem if this keeps occuring.
+
+		<c:choose>
+			<c:when test="${not empty invalidInput}">
+				Sorry, but we detected one or more prohibited characters for the following request parameter: ${invalidInput}
+			</c:when>
+			<c:otherwise>
+				<strong>Sorry...</strong> Something went wrong on our end. Feel free to email us at
+				<a href="mailto:seasonggfeedback@gmail.com">seasonggfeedback@gmail.com</a> with a description
+				of the problem if this keeps occuring.
+			</c:otherwise>
+		</c:choose>
+	
 	</div>
 	
 	<c:if test="${pageContext.exception != null}" >

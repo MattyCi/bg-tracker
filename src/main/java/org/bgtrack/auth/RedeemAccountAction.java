@@ -8,6 +8,8 @@ import org.bgtrack.models.user.Reguser;
 import org.bgtrack.models.user.daos.UserDAO;
 import org.bgtrack.utils.HibernateUtil;
 
+import PropertiesSelection.PopupMessages;
+
 public class RedeemAccountAction extends ShiroBaseAction {
 	private static final long serialVersionUID = 1L;
 	
@@ -15,9 +17,6 @@ public class RedeemAccountAction extends ShiroBaseAction {
 	
 	private static final String MISSING_TOKEN_ERROR_TEXT = "The provided token was empty or missing.";
 	private static final String TOKEN_NOT_FOUND_ERROR_TEXT = "We were unable to find a user associated with the provided token.";
-	
-	private static final String SUCCESS_TEXT = "Welcome to SeasonGG! You redeemed your account. "
-			+ "Please take note of your username and password, since you will need those to log in again.";
 	
 	private String submittedToken;
 	
@@ -73,7 +72,7 @@ public class RedeemAccountAction extends ShiroBaseAction {
 		}
 		
 		this.setUsername(redeemedUser.getUsername());
-		this.setPopupMessage(SUCCESS_TEXT);
+		this.setPopupMessage(PopupMessages.ACCOUNT_REDEEM_SUCCESS);
 		
 		HibernateUtil.deleteEntity(acctRedeemToken);
 		

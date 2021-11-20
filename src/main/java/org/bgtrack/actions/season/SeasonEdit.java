@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
+import PropertiesSelection.PopupMessages;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +37,6 @@ public class SeasonEdit extends ShiroBaseAction {
 	private static final String SEASON_EDIT_PERMISSIONS_ERROR_TEXT = "Sorry, only a season admin may edit the season!";
 	private static final String INVALID_END_DATE_ERROR_TEXT = "The season end date provided is earlier than the season start date, please choose a valid date and try again.";
 	private static final String GENERIC_SEASON_UPDATE_ERROR_TEXT = "Sorry... something went wrong and we were unable to update the season data.";
-	private static final String SEASON_EDIT_CONFIRMATION_TEXT = "Done! Season edited successfully.";
 	
 	private static final String SEASON_NAME_EXISTS_ERROR_TEXT = "Sorry, but the season name you provided already exists.";
 	
@@ -116,7 +117,7 @@ public class SeasonEdit extends ShiroBaseAction {
 		if (errorsOccurred)
 			return ERROR;
 		
-		setPopupMessage(SEASON_EDIT_CONFIRMATION_TEXT);
+		setPopupMessage(PopupMessages.SEASON_EDIT_CONFIRMATION);
 		
 		return SUCCESS;
 	}

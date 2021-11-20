@@ -3,6 +3,8 @@ package org.bgtrack.actions.season;
 import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
 
+import PropertiesSelection.PopupMessages;
+
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +27,6 @@ public class SeasonDelete extends ShiroBaseAction {
 	private String deleteSeasonPermissionValue;
 	
 	private static final String SEASON_DELETE_PERMISSIONS_ERROR_TEXT = "Sorry, only the season creator may delete the season!";
-	private static final String SEASON_DELETE_CONFIRMATION_TEXT = "Done! Season deleted successfully.";
 	
 	@Override
 	public Boolean isCsrfProtected() {
@@ -80,7 +81,7 @@ public class SeasonDelete extends ShiroBaseAction {
 		
 		deleteAllPermissionsForSeason();
 
-		setPopupMessage(SEASON_DELETE_CONFIRMATION_TEXT);
+		setPopupMessage(PopupMessages.SEASON_DELETE_CONFIRMATION);
 		
 		return BGTConstants.SUCCESS;
 	}

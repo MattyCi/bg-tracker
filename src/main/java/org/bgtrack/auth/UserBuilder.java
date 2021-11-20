@@ -60,7 +60,9 @@ public class UserBuilder {
 		if (username.length() > 35)
 			throw new UserBuilderException(USERNAME_TOO_LONG_ERROR_TEXT);
 		
-		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9]");
+		username = username.trim();
+		
+		Pattern specialCharRegex = Pattern.compile("[^A-Za-z0-9'-]");
 		
 		Matcher specialCharMatcher = specialCharRegex.matcher(username);
 		
@@ -71,8 +73,6 @@ public class UserBuilder {
 		if(UserDAO.getUserByUsername(username) != null) {
 			throw new UserBuilderException(USERNAME_ALREADY_EXISTS_ERROR_TEXT);
 		}
-		
-		username = username.trim();
 				
 		this.regUser.setUsername(username);
 		
