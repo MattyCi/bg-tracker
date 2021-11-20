@@ -1,22 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-  </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<a class="navbar-brand d-md-none" href="/"> <img src="/resources/img/logo-small.png"
+		alt="Season GG Logo Image">
+	</a>
+	<a class="navbar-brand d-none d-md-block" href="/"> <img class=nav-logo-img src="/resources/img/logo.png"
+		alt="Season GG Logo Image">
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+		aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarColor01">
+		<ul class="navbar-nav mr-auto">
+			<shiro:notAuthenticated>
+				<li class="nav-item">
+					<a class="nav-link" href="/accountRedeem">Redeem an Account</a>
+				</li>
+			</shiro:notAuthenticated>
+			<li class="nav-item">
+				<a class="nav-link" href="/viewSeasonList?view=allSeasonsList">All Seasons</a>
+			</li>
+			<shiro:authenticated>
+				<li class="nav-item">
+					<a class="nav-link" href="/viewSeasonList?view=usersSeasonsList">Your Seasons</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/viewMyAccount">My Account</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-danger" href="/userLogOut">Log Out</a>
+				</li>
+			</shiro:authenticated>
+		</ul>
+	</div>
 </nav>
