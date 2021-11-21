@@ -6,6 +6,7 @@ public class PopupMessages {
 	public static final String SEASON_DELETE_CONFIRMATION = "SEASON_DELETE_CONFIRMATION";
 	public static final String SEASON_EDIT_CONFIRMATION = "SEASON_EDIT_CONFIRMATION";
 	
+	public static final String ROUND_CREATE_CONFIRMATION = "ROUND_CREATE_CONFIRMATION";
 	public static final String ROUND_DELETE_CONFIRMATION = "ROUND_DELETE_CONFIRMATION";
 	
 	public static final String ACCOUNT_REDEEM_SUCCESS = "ACCOUNT_REDEEM_SUCCESS";

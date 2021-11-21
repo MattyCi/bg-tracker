@@ -11,6 +11,9 @@ import org.bgtrack.utils.BGTConstants;
 import org.bgtrack.utils.HibernateUtil;
 import org.bgtrack.utils.RoundResultArrayList;
 import org.bgtrack.utils.RoundResultArrayListImpl;
+
+import PropertiesSelection.PopupMessages;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationException;
@@ -232,6 +235,8 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			return BGTConstants.ERROR;
 		}
 
+		setPopupMessage(PopupMessages.ROUND_CREATE_CONFIRMATION);
+		
 		return BGTConstants.SUCCESS;
 	}
 
