@@ -3,6 +3,8 @@ package org.bgtrack.actions.season;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bgtrack.utils.BGTConstants;
 
@@ -50,7 +52,10 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 	private static final String ROUND_CREATE_PERMISSIONS_ERROR_TEXT = "Sorry, only current players of a season can create rounds!";
 	private static final String MORE_PLAYERS_REQUIRED_ERROR_TEXT = "More than one player is required to create a round.";
 	private static final String TWO_OF_SAME_PLAYER_ERROR_TEXT = "The same player was added to the round twice. Please try again.";
-	private static final String PLACES_INVALID_ERROR_TEXT = "The places submitted were not in a valid order.";
+	
+	private static final String PLACES_INVALID_ERROR_TEXT = "The places submitted or the userIds were in an invalid format.";
+	private static final String PLACES_INVALID_ORDER_ERROR_TEXT = "The places submitted were not in a valid order.";
+	
 	
 	@Override
 	public Boolean isCsrfProtected() {
@@ -116,10 +121,51 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			
 		}
 		
-		// TODO - validate roundPlayer and playerPlace params (ensure they are numbers)
+		validatePlayerPlaceParams();
 		
 	}
 	
+	private void validatePlayerPlaceParams() {
+		
+		// 12 max players
+		for (int i = 0; i < 11; i++ ) {
+			
+			if (this.getParameters().contains("roundPlayer" + i)) {
+				
+				String playerUserId = this.getParameters().get("roundPlayer"+i).toString();
+				
+				Pattern specialCharRegex = Pattern.compile("[^0-9]");
+				
+				Matcher specialCharMatcher = specialCharRegex.matcher(playerUserId);
+				
+				if (specialCharMatcher.find()) {
+					addActionError(PLACES_INVALID_ERROR_TEXT);
+				}
+				
+			} else {
+				break;
+			}
+			
+			if (this.getParameters().contains("playerPlace" + i)) {
+				
+				String playerPlace = this.getParameters().get("playerPlace"+i).toString();
+				
+				Pattern specialCharRegex = Pattern.compile("[^0-9]");
+				
+				Matcher specialCharMatcher = specialCharRegex.matcher(playerPlace);
+				
+				if (specialCharMatcher.find()) {
+					addActionError(PLACES_INVALID_ERROR_TEXT);
+				}
+				
+			} else {
+				break;
+			}
+			
+		}
+		
+	}
+
 	private boolean multiplePlayersPlayed() {
 		if(!this.getParameters().contains("roundPlayer1"))
 			return false;
@@ -170,7 +216,7 @@ public class RoundCreate extends ShiroBaseAction implements HttpParametersAware 
 			LOG.info("user " + shiroUser.getPrincipal() + " is trying to add a round to season "+ seasonId + ", but they've added "
 					+ "places which don't make sense.");
 			
-			addActionError(PLACES_INVALID_ERROR_TEXT);
+			addActionError(PLACES_INVALID_ORDER_ERROR_TEXT);
 			return ERROR;
 		}
 		
