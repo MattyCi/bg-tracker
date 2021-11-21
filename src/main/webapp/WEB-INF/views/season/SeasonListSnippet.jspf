@@ -8,7 +8,7 @@
 	<c:if test="${not empty seasonsList}">
 		<p class="mb-0">
 			<i aria-hidden="true" class="fas fa-circle fa-xs text-success"></i> Season Active
-			<i aria-hidden="true" class="fas fa-circle fa-xs text-danger pl-2"></i> Season Ended
+			<i aria-hidden="true" class="fas fa-circle fa-xs text-danger"></i> Season Ended
 		</p>
 	</c:if>
 </div>
