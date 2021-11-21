@@ -31,13 +31,13 @@
 		
 		<shiro:notAuthenticated>
 			
-			<div class="row d-md-none">	
-				<div class="col mt-4">
+			<div class="row d-md-none mt-3">	
+				<div class="col">
 					<img class="logo-img" src="/resources/img/logo.png" alt="logo">
 				</div>
 			</div>
 			
-			<div class="row mt-4 d-none d-md-block">	
+			<div class="row mt-3 d-none d-md-block">	
 				<div class="col text-center">
 					<h1 class="display-4">
 					  <span class="text-success font-weight-bold">Season GG</span>
@@ -48,7 +48,7 @@
 
 			<%@ include file="/WEB-INF/snippets/Carousel.jspf" %>
 
-			<div class="row text-center mt-4">
+			<div class="row text-center mt-3">
 				
 				<div class="col-lg-4 bg-light border pt-4 mt-lg-0">
 					<img
@@ -92,7 +92,7 @@
 				
 			</div>
 		
-			<div class="row py-4">
+			<div class="row my-3">
 	
 				<div class="col-md-6 my-2 my-lg-0">
 					<form id="loginForm" action="/userLogIn" method="POST">

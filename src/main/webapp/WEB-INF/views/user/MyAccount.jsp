@@ -25,7 +25,7 @@
 		<%@ include file="../../snippets/PopupMessage.jspf" %>
 		
 		<shiro:authenticated>
-			<div class="row mt-2">
+			<div class="row mt-3">
 				
 				<div class="col-md-6 mx-auto text-center">
 					<h2>My Account</h2>

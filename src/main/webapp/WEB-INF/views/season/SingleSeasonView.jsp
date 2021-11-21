@@ -35,7 +35,7 @@
 		
 		<%@ include file="../../snippets/PopupMessage.jspf" %>
 
-		<div class="row mt-4">
+		<div class="row mt-2">
 		
 			<div class="col-12 mx-auto text-center">
 				<p class="h3">

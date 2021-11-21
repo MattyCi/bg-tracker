@@ -8,9 +8,9 @@
 
 <%@ page import="org.bgtrack.models.ScoringType" %>
 
-<div class="row pt-4">
+<div class="row mt-3">
 
-	<div class="col-12 col-md-10 col-lg-8 mx-auto mb-4 text-center text-primary bg-light">
+	<div class="col-12 col-md-10 col-lg-8 mx-auto mb-3 text-center text-primary bg-light">
 		<p class="h3 pt-2">View Seasons</p>
 		<p class="lead">
 			View seasons which are currently in progress or have already finished.

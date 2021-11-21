@@ -55,7 +55,7 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<div id="your-seasons" class="row pt-4">
+		<div id="your-seasons" class="row mt-3">
 			<div class="col-12 text-center">
 				<h1 class="display-4">${seasonListHeaderText}</h1>
 			</div>

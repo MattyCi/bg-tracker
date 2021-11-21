@@ -7,8 +7,8 @@
 	<%-- handle errors from struts action classes --%>
 	<s:if test="hasActionErrors()">
 		<div class="row">
-			<div class="col-12 col-md-8 mx-auto mt-4 mb-0">
-				<div class="alert alert-dismissible alert-danger">
+			<div class="col-md-8 mx-auto">
+				<div class="alert alert-dismissible alert-danger mb-0 mt-3">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<s:iterator value="actionErrors" begin="0" end="0">
 						<s:property/>
@@ -21,7 +21,7 @@
 
 <%-- handle all other errors ie. errors thrown from JSPs --%>
 <c:if test="${(exception != null || pageContext.exception != null) && (actionErrors == null || empty actionErrors ) }">
-	<div class="col-md-6 mx-auto alert alert-dismissible alert-danger mt-4 mb-0">
+	<div class="col-md-8 mx-auto alert alert-dismissible alert-danger mb-0 mt-3">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 
 		<c:choose>

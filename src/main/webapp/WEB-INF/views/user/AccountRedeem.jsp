@@ -25,13 +25,13 @@
 		
 		<div class="row">
 			
-			<div class="col-md-10 col-lg-6 mx-auto mt-4 text-center">
+			<div class="col-md-10 col-lg-6 mx-auto mt-3 text-center">
 				<h2>Redeem your Account</h2>
 				<img class="my-2" src="/resources/img/user.png" alt="User" width="140" height="140">
 			</div>
 			
 			<div class="col-12">
-				<hr class="my-4">
+				<hr class="my-3">
 			</div>
 			
 			<shiro:authenticated>
