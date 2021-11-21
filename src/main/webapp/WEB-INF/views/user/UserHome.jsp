@@ -4,8 +4,6 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 
-<%@ include file="../../snippets/PopupMessage.jspf" %>
-
 <%@ page import="org.bgtrack.models.ScoringType" %>
 
 <div class="row mt-3">
