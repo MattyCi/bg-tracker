@@ -2,7 +2,7 @@
 <c:if test="${not empty param.popupMessage}">
 	
 	<fmt:bundle basename="messages">
-		<fmt:message var="popupMessageText" key="ACCOUNT_REDEEM_SUCCESS" />
+		<fmt:message var="popupMessageText" key="${param.popupMessage}" />
 	</fmt:bundle>
 	
 	<div class="row pt-2">
