@@ -9,14 +9,14 @@ html {
 }
 
 body {
-	margin-bottom: 200px; /* Margin bottom by footer height */
+	margin-bottom: 200px; /* Must remain consistent as footer height */
 }
 
 .footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	height: 200px;
+	height: 200px; /* Must remain consistent as body margin-bottom */
 }
 
 .sgg-d-none {
