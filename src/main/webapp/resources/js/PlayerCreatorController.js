@@ -1,35 +1,53 @@
 
 var PlayerCreatorController = {
 	createPlayerForm : null,
+	isPlayerCreateSuccess : false,
 
 	createPlayer : function() {
 		
 		this.createPlayerForm = $("#create-guest-player-form");
 		
+		this.hideSuccessContainer();
 		this.hidePlayerCreateForm();
 		
 		this.showSpinner();
 		
-		var createPlayerParams = this.buildPlayerCreateParams(),
+		var startTime = new Date(),
+			createPlayerParams = this.buildPlayerCreateParams(),
 			createPlayerUrl = this.createPlayerForm.attr("action"),
 			createPlayerPostRequest = jQuery.post( createPlayerUrl, createPlayerParams );
 		
 		createPlayerPostRequest.done(function(playerCreateResponse) {
 			
+			PlayerCreatorController.isPlayerCreateSuccess = true;
 			PlayerCreatorController.processCreatePlayerResponse(playerCreateResponse);
 			
 		});
 	
 		createPlayerPostRequest.fail(function() {
 	
-			PlayerCreatorController.showPlayerCreateForm();
+			PlayerCreatorController.isPlayerCreateSuccess = false;
+			PlayerCreatorController.showErrorMessage(null);
 	
 		});
 	
 		createPlayerPostRequest.always(function() {
-	
-			PlayerCreatorController.removeSpinner();
-	
+			
+			let endTime = new Date(),
+				timeDiff = endTime - startTime;
+			
+			if (timeDiff < 1000) {
+				
+				setTimeout(function() {
+					PlayerCreatorController.requestPostProcess();
+				}, (1000));
+				
+			} else {
+				
+				PlayerCreatorController.requestPostProcess();
+				
+			}
+			
 		});
 		
 	},
@@ -56,6 +74,7 @@ var PlayerCreatorController = {
 		if (playerCreateResponse.statusCode == null || playerCreateResponse.statusCode == undefined || 
 				playerCreateResponse.statusCode != 0) {
 			
+			PlayerCreatorController.isPlayerCreateSuccess = false;
 			this.showErrorMessage(playerCreateResponse.errorMessage);
 			return;
 			
@@ -64,10 +83,6 @@ var PlayerCreatorController = {
 		}
 		
 		this.buildSuccessMessages(playerCreateResponse);
-
-		this.showSuccessContainer();
-		
-		this.showPlayerCreateForm();
 
 		this.clearPlayerCreateForm();
 		
@@ -84,8 +99,15 @@ var PlayerCreatorController = {
 		}
 		
 		errMsgElement.removeClass("d-none");
-		
-		this.showPlayerCreateForm();
+
+	},
+	
+	requestPostProcess : function() {
+
+		PlayerCreatorController.showPlayerCreateForm();
+		PlayerCreatorController.removeSpinner();
+		if (PlayerCreatorController.isPlayerCreateSuccess)
+			this.showSuccessContainer();
 
 	},
 	
@@ -127,6 +149,12 @@ var PlayerCreatorController = {
 	showSuccessContainer : function() {
 
 		$("#player-create-success-container").removeClass("d-none");
+
+	},
+	
+	hideSuccessContainer : function() {
+
+		$("#player-create-success-container").addClass("d-none");
 
 	},
 	
