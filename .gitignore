@@ -3,3 +3,5 @@
 Users
 /environment-specific
 /heroku_deploy.sh
+.idea
+*.iml
