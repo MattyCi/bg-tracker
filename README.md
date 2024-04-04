@@ -10,7 +10,7 @@ The project is still under construction and the code within is being migrated to
 Using `pom.xml` as a reference, set the necessary environment variables needed to connect to a local running instance
 of mysql.
 
-Start the mysql server locally (TODO: schema generation?)
+Start a mysql server locally (TODO: schema generation?)
 
 Run `mvn package`
 
